@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  Pressable,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  FlatList,
-} from "react-native";
+import { Modal, Pressable, Text, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
+import { getMealDetails, addMeal } from "../../utils/apis/api";
 
-const MealModal = () => {
+const MealModal = ({ mealId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [meal, setMeal] = useState({
     mealId: 1,
@@ -40,13 +33,15 @@ const MealModal = () => {
     ],
   });
 
-  //API Calls
-  //getMealDetails - return all meal information as everything needs to be deisplayed on teh details page
-  //addMeal - put meal to user.currentcart and send entire user
-
-  const addMeal = () => {
-    // console.log(`${meal.mealId} meal added`);
-  }
+  useEffect(() => {
+    getMealDetails(mealId)
+      .then((details) => {
+        setMeal(details);
+      })
+      .catch((err) => {
+        console.error("Error fetching meal info: ", err);
+      });
+  }, [mealId]);
 
   return (
     <View>
@@ -79,22 +74,36 @@ const MealModal = () => {
               {meal.description}
             </Text>
             <View className="flex-row flex-wrap items-center justify-center">
-            <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
-              {meal.dietType}
-            </Text>
-            <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
-              {meal.cuisine}
-            </Text>
+              {/*need to design better chips for these */}
+              <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
+                {meal.dietType}
+              </Text>
+              <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
+                {meal.cuisine}
+              </Text>
             </View>
             <View className="flex-row flex-wrap items-center mb-2">
-            <Text className="text-lg text-white font-main mx-2">Ingredients:</Text>
-            {meal.ingredients.map((ingredient) =>
-              <Text key={ingredient}className="text-base font-main text-white mx-2">{ingredient}</Text>
-            )}
+              <Text className="text-lg text-white font-main mx-2">
+                Ingredients:
+              </Text>
+              {meal.ingredients.map((ingredient) => (
+                <Text
+                  key={ingredient}
+                  className="text-base font-main text-white mx-2"
+                >
+                  {ingredient}
+                </Text>
+              ))}
             </View>
             <Nutrition nutrition={meal.nutrition} />
             <View className="absolute bottom-2 right-2">
-              <Pressable className="flex-row items-center" onPress={() => addMeal()}>
+              <Pressable
+                className="flex-row items-center"
+                onPress={() => addMeal(meal.mealId)}
+                // need to decide action after adding meal
+                // options: bring back to meal list
+                // or change to an incrementer with 1 in cart
+              >
                 <Text className="font-main text-white mr-2">Add to Cart</Text>
                 <Icon name="cart-plus" size={32} color="white" />
               </Pressable>
