@@ -5,24 +5,28 @@ import ProfileScreen from "../screens/ProfileScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import ChatScreen from "../screens/ChatScreen";
 import CartScreen from "../screens/CartScreen";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
 const MainTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    tabBarOptions={{
+      activeTintColor: '#FFF7C6',
+      inactiveTintColor: '#FFF7C6',
+      activeBackgroundColor: '#0E4000',
+      inactiveBackgroundColor: '#0E4000',
+      style: { backgroundColor: '#0E4000' },
+    }}
+    >
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "person" : "person-outline"}
-              size={size}
-              color={color}
-            />
+            <Icon name="user" size={24} color="#FFF7C6" />
           ),
         }}
       />
@@ -31,13 +35,9 @@ const MainTabs = () => {
         component={CalendarScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "calendar" : "calendar-outline"}
-              size={size}
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ color, size }) => (
+              <Icon name="calendar" size={24} color="#FFF7C6" />
+            ),
         }}
       />
       <Tab.Screen
@@ -45,12 +45,8 @@ const MainTabs = () => {
       component={HomeScreen}
       options={{
         headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => (
-          <Ionicons
-            name={focused ? "home" : "home-outline"}
-            size={size}
-            color={color}
-          />
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="cutlery" size={24} color="#FFF7C6" />
         ),
       }}
     />
@@ -59,12 +55,8 @@ const MainTabs = () => {
         component={ChatScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "chatbubble" : "chatbubble-outline"}
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="comments" size={24} color="#FFF7C6" />
           ),
         }}
       />
@@ -73,12 +65,8 @@ const MainTabs = () => {
         component={CartScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "cart" : "cart-outline"}
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="shopping-cart" size={24} color="#FFF7C6" />
           ),
         }}
       />
