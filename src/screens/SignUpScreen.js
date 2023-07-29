@@ -5,8 +5,8 @@ const SignUpScreen = ({navigation}) => {
 
   return (
     <>
-    <View className="flex-1 items-center">
-      <Text>This is the home page</Text>
+    <View className="flex-1 items-center justify-center">
+      <Text>This is the signup page</Text>
     </View>
     </>
   );
