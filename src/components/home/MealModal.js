@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Pressable, Text, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
@@ -29,19 +29,20 @@ const MealModal = ({ mealId }) => {
     nutrition: [
       { Calories: "120kcal" },
       { Sugar: "2g" },
-      { "Vitamin C": "10%" },
+      { VitaminC: "10%" },
     ],
   });
 
-  useEffect(() => {
-    getMealDetails(mealId)
-      .then((details) => {
-        setMeal(details);
-      })
-      .catch((err) => {
-        console.error("Error fetching meal info: ", err);
-      });
-  }, [mealId]);
+  // commenting out until ready to use
+  // useEffect(() => {
+  //   getMealDetails(mealId)
+  //     .then((details) => {
+  //       setMeal(details);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error fetching meal info: ", err);
+  //     });
+  // }, [mealId]);
 
   return (
     <View>
@@ -70,7 +71,7 @@ const MealModal = ({ mealId }) => {
               }}
               resizeMode="cover"
             />
-            <Text className="text-base text-white font-main m-2">
+            <Text className="text-sm text-white font-main m-2">
               {meal.description}
             </Text>
             <View className="flex-row flex-wrap items-center justify-center">
