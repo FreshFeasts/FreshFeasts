@@ -1,46 +1,47 @@
-import {  Text, View, StatusBar, ScrollView } from "react-native";
+import {  Text, View, StatusBar, ScrollView, Pressable } from "react-native";
+import React from 'react';
 
 import MealListCard from './MealListCard';
+import meals from './mealListData.js';
+
+const { useState, useEffect } = React;
 
 const MealList = () => {
-  console.log(MealList)
   return (
     <View className="m-2 p-4 border rounded h-2/4">
       <View className="mb-2">
         <Text>This is the Meal List</Text>
+        <SortSelector />
       </View>
       <ScrollView>
-        <MealListCard meal={exampleMeal} />
-        <MealListCard meal={exampleMeal} />
-        <MealListCard meal={exampleMeal} />
-        <MealListCard meal={exampleMeal} />
-        <MealListCard meal={exampleMeal} />
+        {meals ? meals.map((meal) => {
+          return (<MealListCard meal={meal} key={meal.id} />)
+        }) : ''}
       </ScrollView>
     </View>
   );
 };
 
-export default MealList;
-
-const exampleMeal = {
-  _id: 'IDString',
-  name: 'Fried Squidward',
-  active: 'Boolean',
-  description: 'Fried calamari—also known as calamari fritti—is a classic Italian antipasto.',
-  cuisine: 'Italian',
-  dietType: [],
-  numberOfRatings: 10,
-  ratings: {
-    1: 0,
-    2: 1,
-    3: 2,
-    4: 4,
-    5: 3,
-  },
-  recommended: true,
-  favorites: 'Number',
-  allergens: ['seafood'],
-  photo: 'https://www.thespruceeats.com/thmb/BSYlH-mloaBfGESJrYjXxOtJmeU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/fried-calamari-2019531-hero-01-e294f265d7e84c0f89d4b5759759ffbf.jpg',
-  ingredients: ['squid', 'flour', 'breadcrumbs', 'oil', 'egg'],
-  nutrition: 'Array',
+const SortSelector = () => {
+  return (
+    <View className="flex-row">
+      <Pressable
+        className="px-1 border-l border-y rounded-l-full border-[#0E4000] bg-[#A5E06B]"
+      >
+        <Text>Rating</Text>
+      </Pressable>
+      <Pressable
+        className="px-1 border border-[#0E4000] bg-[#A5E06B]"
+      >
+        <Text>Favorites</Text>
+      </Pressable>
+      <Pressable
+        className="px-1 border-r border-y rounded-r-full border-[#0E4000] bg-[#A5E06B]"
+      >
+        <Text>Recommended</Text>
+      </Pressable>
+    </View>
+  );
 };
+
+export default MealList;

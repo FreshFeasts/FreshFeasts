@@ -11,7 +11,7 @@ const MealListCard = ({meal}) => {
   };
 
   return (
-    <View className="m-2 p-2 rounded-lg bg-[#FFF7C6] shadow-sm">
+    <View className="m-1 p-2 rounded-lg bg-[#FFF7C6] shadow-sm">
       <View className="flex-row">
         <View>
           <Image className="h-24 w-24 rounded-lg"
