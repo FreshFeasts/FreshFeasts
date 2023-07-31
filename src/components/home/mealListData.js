@@ -1,3 +1,8 @@
+const user = {
+  dietChoice: [],
+  alergens: []
+};
+
 const meals = [
   {
     _id: 'meal1',
@@ -14,7 +19,7 @@ const meals = [
       4: 4,
       5: 3,
     },
-    recommended: true,
+    recommended: false,
     favorites: 10,
     allergens: ['seafood'],
     photo: 'https://www.thespruceeats.com/thmb/BSYlH-mloaBfGESJrYjXxOtJmeU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/fried-calamari-2019531-hero-01-e294f265d7e84c0f89d4b5759759ffbf.jpg',
@@ -37,7 +42,7 @@ const meals = [
       5: 15,
     },
     recommended: true,
-    favorites: 15,
+    favorites: 8,
     allergens: ['seafood', 'gluten'],
     photo: 'https://static.wikia.nocookie.net/spongebob/images/2/2f/Krusty_Krab_Training_Video_081.png/revision/latest/scale-to-width-down/300?cb=20211125123843',
     ingredients: ['frozen patty', 'lettuce','onions', 'tomatoes', 'sea cheese', 'pickles', 'mustard', 'ketchup', 'secret formula'],
@@ -58,7 +63,7 @@ const meals = [
       4: 4,
       5: 1,
     },
-    recommended: false,
+    recommended: true,
     favorites: 1,
     allergens: ['seafood'],
     photo: 'https://static.wikia.nocookie.net/spongebob/images/e/e2/Chum_Bucket_chum_stock_art.png/revision/latest?cb=20230124082042',
@@ -67,4 +72,4 @@ const meals = [
   },
 ]
 
-export default meals;
+export { user, meals };
