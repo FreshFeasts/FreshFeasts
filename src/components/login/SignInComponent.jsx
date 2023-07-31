@@ -1,18 +1,21 @@
 import { useContext, useState } from "react";
 import { Text, View, StatusBar, TouchableHighlight } from "react-native";
 import InputWithLabel from "../../utils/components/InputComponent"
+import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
 const SignInComponent = () => {
-  const { values, onChangeHandler } = useContext(LogInScreenContext);
-
+  const { setCreateAccountComp, onChangeHandler} = useContext(LogInScreenContext);
+  const onCreateAccountHandler = () => {
+    setCreateAccountComp(true);
+  }
   return (
     <>
-      <View className="flex-1 items-center justify-center bg-[#238A28]">
-        <View className="bg-[#A5E06B] p-6 rounded-2xl ">
-          <Text className="text-2xl font-semibold text-white text-center">
+      <View className="flex-1 items-center justify-center bg-forestgreen">
+        <View className="bg-yellowgreen p-6 rounded-2xl ">
+          <AppText className="text-2xl font-semibold text-white text-center">
             Sign in to FreshFeasts
-          </Text>
+          </AppText>
           <InputWithLabel
             label="Email:"
             labelStyle="text-white"
@@ -33,14 +36,14 @@ const SignInComponent = () => {
           />
           <View className="items-center">
             <TouchableHighlight className="bg-[#FFEB69] p-3 rounded-lg mt-4">
-              <Text className="text-black text-center">Sign in</Text>
+              <AppText className="text-black text-center">Sign in</AppText>
             </TouchableHighlight>
           </View>
-          <Text className="text-white text-center mt-4">
+          <AppText className="text-white text-center mt-4">
             Don't Have A FreshFeasts Account?
-          </Text>
-          <TouchableHighlight className="bg-[#ebd440] p-3 rounded-lg mt-4">
-            <Text className="text-black text-center">Create Account</Text>
+          </AppText>
+          <TouchableHighlight className="bg-[#ebd440] p-3 rounded-lg mt-4" onPress={onCreateAccountHandler}>
+            <AppText className="text-black text-center">Create Account</AppText>
           </TouchableHighlight>
         </View>
       </View>

@@ -1,8 +1,9 @@
 import { Text, View, StatusBa, TextInput } from "react-native";
+import AppText from './AppText.js';
 const InputWithLabel = ({ label,labelStyle,inputStyle,...otherProps }) => {
   return (
     <View className="flex-column p-4">
-      <Text className={labelStyle? labelStyle:''}>{label}</Text>
+      <AppText className={labelStyle? labelStyle:''}>{label}</AppText>
       <TextInput className={inputStyle? inputStyle:''} {...otherProps}/>
     </View>
   )

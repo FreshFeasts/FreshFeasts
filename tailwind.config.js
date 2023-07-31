@@ -13,6 +13,7 @@ module.exports = {
         yellowgreen: '#A5E06B',
         maize: '#FFEB69',
         lemonchiffon: '#FFF7C6',
+        darklemonchiffron: '#ebd440',
       },
     },
   },
