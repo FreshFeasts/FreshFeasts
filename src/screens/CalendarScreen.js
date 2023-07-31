@@ -55,12 +55,17 @@ const renderItem = (item) => {
 }
   return (
     <>
+<<<<<<< HEAD
     <View style ={{flex:1}}>
     <Agenda
     items={items}
     loadItemsForMonth ={loadItems}
     // renderItem={renderItem}
     />
+=======
+    <View className="flex-1 items-center justify-center">
+      <Text className="font-main">This is the Calendar page</Text>
+>>>>>>> dev
     </View>
     </>
   );
