@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Dimensions, Text, View, StyleSheet, Image, Pressable } from 'react-native';
 import ViewPropTypes from 'deprecated-react-native-prop-types';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import AppText from '../../utils/components/AppText'
+import MealModal from './MealModal';
 
 const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
@@ -26,19 +28,22 @@ const data = [
 
 const MealCarousel = () => {
   const [index, setIndex] = useState(0);
-  const isCarousel = useRef(null);
+  const [isClicked, setIsClicked] = useState(false);
+  const carouselRef = useRef(null);
 
   const renderItem = ({ item }) => {
     return (
       <Pressable className=' bg-transparent items-center' onPress={handlePress}>
         <Image className='object-cover h-full w-full rounded-xl' source={{url: item.imgUrl}} />
-        <Text className='absolute text-center top-4 left-5 text-white text-xl font-bold'>{item.title}</Text>
+        <AppText className='absolute text-center top-4 left-5 text-white text-xl'>{item.title}</AppText>
       </Pressable>
     )
   };
 
   const handlePress = () => {
     console.log('pressed!')
+    carouselRef.current.stopAutoplay();
+    setIsClicked(true);
   };
 
 
@@ -46,7 +51,7 @@ const MealCarousel = () => {
     <>
       <View className='h-44'>
         <Carousel
-          ref={isCarousel}
+          ref={(c) => (carouselRef.current = c)}
           data={data}
           renderItem={renderItem}
           sliderWidth={SLIDER_WIDTH}
@@ -60,7 +65,7 @@ const MealCarousel = () => {
           containerStyle={styles.paginationContainer}
           dotsLength={data.length}
           activeDotIndex={index}
-          carouselRef={isCarousel}
+          carouselRef={carouselRef}
           dotStyle={{
             width:10,
             height:10,
@@ -69,6 +74,7 @@ const MealCarousel = () => {
             backgroundColor: 'white'
           }}
         />
+        {/* {isClicked && <MealModal />} */}
       </View>
     </>
   );
