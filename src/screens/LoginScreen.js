@@ -1,14 +1,18 @@
-import {  Text, View, StatusBar } from "react-native";
+import { Text, View, StatusBar } from "react-native";
+import { LogInScreenContextProvider } from "../contexts/LogInScreenContext.jsx";
+import SignInComponent from "../components/login/SignInComponent.jsx";
 
-
-const LoginScreen = ({navigation}) => {
-
+const LoginScreen = ({ navigation }) => {
   return (
-    <>
-    <View className="flex-1 items-center justify-center">
-      <Text>This is the login page</Text>
-    </View>
-    </>
+    <LogInScreenContextProvider>
+      <SignInComponent />
+    </LogInScreenContextProvider>
   );
 };
 export default LoginScreen;
+
+{
+  /* <View className="flex-1 items-center justify-center">
+  <Text>This is the login screen?</Text>
+</View>; */
+}
