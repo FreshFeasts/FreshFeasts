@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import MainTabs from './src/navigation/BottomTabNav';
+import { useFonts } from 'expo-font';
 // import * as firebaseConfig from './firebaseConfig';
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -21,6 +22,15 @@ export default function App() {
   //     setUser(user);
   //   });
   // }, [auth]);
+
+  const [fontsLoaded] = useFonts({
+    Comfortaa: require('./assets/fonts/Comfortaa-Regular.ttf'),
+    ComfortaaBold: require('./assets/fonts/Comfortaa-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <NavigationContainer>
