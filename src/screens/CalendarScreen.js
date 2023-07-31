@@ -59,7 +59,7 @@ const renderItem = (item) => {
     <Agenda
     items={items}
     loadItemsForMonth ={loadItems}
-    renderItem={renderItem}
+    // renderItem={renderItem}
     />
     </View>
     </>
