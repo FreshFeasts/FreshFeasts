@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {  Pressable, ScrollView, Text, View } from "react-native";
 import HistoryCard from './HistoryCard';
 import AppText from '../../utils/components/AppText'
-import {getOrders, getMeals, rateMeal} from "../../utils/apis/api";
+import {getOrders, getMeals } from "../../utils/apis/api";
 
 const OrderHistory = ({userId, history, setHistory}) => {
   const [ orders, setOrders ] = useState(null);
   const cart = {
     deliveryDate: 'August 1, 2023', //will update with proper dateFNS
-    orderDate: 'August 1, 2023',
+    orderDate: 'July 30, 2023',
     meals: [{
       name: 'Spaghetti',
       url: 'https://images.pexels.com/photos/128408/pexels-photo-128408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
@@ -20,10 +20,6 @@ const OrderHistory = ({userId, history, setHistory}) => {
       url: "https://static.wikia.nocookie.net/spongebob/images/0/0b/The_Krabby_Patty_That_Ate_Bikini_Bottom_072.png/revision/latest/scale-to-width-down/1000?cb=20221028203009"
     }]
   }
-
-  //API Calls
-    //getAllOrders - returns all values from order for a particular user
-      //order date, delivery date, array of meals
 
     // useEffect(() => {
     //   try {

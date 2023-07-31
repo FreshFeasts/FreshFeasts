@@ -3,35 +3,65 @@ import { Modal, Pressable, Text, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
 import { getMealDetails, addMeal } from "../../utils/apis/api";
-import DietChip from '../../utils/components/DietChip'
+import DietChip from "../../utils/components/DietChip";
+import AppText from "../../utils/components/AppText";
+import CartIncrementor from "../../utils/components/CartIncrementor";
+import { calcAverageRating } from "../../utils/helpers";
 
 const MealModal = ({ mealId }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [added, setAdded] = useState(false);
   const [meal, setMeal] = useState({
-    mealId: 1,
-    name: "Spaghetti",
+    _id: "64c59c1d32ab87d43f2bec71",
+    name: "Chef Basil's Bliss",
     description:
-      "Delight in the timeless comfort of al dente spaghetti paired with your choice of savory sauces and delectable toppings, a classic Italian favorite for all taste buds to savor.",
+      "A delightful vegetable medley layered with fresh ingredients and a touch of love. Inspired by the famous dish from the movie Ratatouille.",
+    cuisine: "French",
+    dietType: "Protein Plus",
+    numberOfRatings: 150,
     ratings: {
-      1: 10,
-      2: 5,
-      3: 5,
-      4: 20,
-      5: 25,
+      1: 5,
+      2: 10,
+      3: 20,
+      4: 45,
+      5: 70,
     },
-    num_reviews: 65,
-    favorites: 20,
     recommended: true,
-    url: "https://images.pexels.com/photos/128408/pexels-photo-128408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    dietName: 'Chef\'s Choice',
-    cuisine: "Italian",
-    allergies: ["gluten", "tomato"],
-    ingredients: ["pasta, tomato, beef, onion, starch, water, salt, pepper"],
-    nutrition: [
-      { Calories: "120kcal" },
-      { Sugar: "2g" },
-      { VitaminC: "10%" },
+    favorites: 85,
+    allergens: [],
+    photo:
+      "https://www.allrecipes.com/thmb/nu4Y5_nZgI82TzfaFaRHFX7MteI=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/165649roasted-vegetable-medley-DDMFS-001-4x3-f9c51738278e4c92aa53d51250f4ed10.jpg",
+    ingredients: [
+      "Eggplant",
+      "Zucchini",
+      "Red Bell Pepper",
+      "Yellow Bell Pepper",
+      "Tomato",
+      "Basil",
+      "Garlic",
+      "Olive Oil",
     ],
+    nutrition: [
+      {
+        calories: "180",
+      },
+      {
+        protein: "5g",
+      },
+      {
+        carbohydrates: "25g",
+      },
+      {
+        fat: "7g",
+      },
+      {
+        fiber: "6g",
+      },
+      {
+        sugar: "8g",
+      },
+    ],
+    mealId: "64c59c1d32ab87d43f2bec71",
   });
 
   return (
@@ -45,50 +75,62 @@ const MealModal = ({ mealId }) => {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="bg-forestgreen w-11/12 h-4/5 items-center rounded-lg">
+          <View className="bg-forestgreen w-11/12 h-4/6 items-center rounded-lg">
             <View className="absolute top-2 right-2">
               <Pressable onPress={() => setModalVisible(!modalVisible)}>
                 <Icon name="times-circle" size={24} color="white" />
               </Pressable>
             </View>
-            <Text className="text-xl text-white font-main m-2">
+            <AppText className="font-bold text-xl text-white m-2">
               {meal.name}
-            </Text>
+            </AppText>
             <Image
-              className="w-10/12 h-1/6 rounded-lg mb-2"
+              className="w-11/12 h-1/6 rounded-lg mb-2"
               source={{
-                uri: meal.url,
+                uri: meal.photo,
               }}
               resizeMode="cover"
             />
-            <Text className="text-sm text-white font-main m-2">
+            <AppText className="text-sm text-white m-2">
               {meal.description}
-            </Text>
-            <View className="flex-row flex-wrap items-center justify-center">
-              {/*need to design better chips for these */}
-              <DietChip dietName={meal.dietName} />
-              <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
-                {meal.cuisine}
-              </Text>
+            </AppText>
+            <View className="flex-row flex-wrap items-center">
+              <DietChip dietName={meal.dietType} />
+              <View className="h-8 w-20 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
+                <AppText className="text-xs">{meal.cuisine}</AppText>
+              </View>
+              <View className="h-8 w-32 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
+                <AppText className="text-xs">
+                  Rating: {calcAverageRating(meal.ratings)}
+                   <Icon name="star" size={12} color="#0E4000" />
+                </AppText>
+              </View>
             </View>
-            <View className="flex-row flex-wrap items-center mb-2">
-              <Text className="text-lg text-white font-main mx-2">
+            <View className="flex-row flex-wrap mx-2 my-3">
+              <AppText className="text-xs text-white mr-1">
                 Ingredients:
-              </Text>
+              </AppText>
               {meal.ingredients.map((ingredient) => (
-                <Text
-                  key={ingredient}
-                  className="text-base font-main text-white mx-2"
-                >
-                  {ingredient}
-                </Text>
+                <AppText key={ingredient} className="text-xs text-white mr-1">
+                  {ingredient} |
+                </AppText>
               ))}
             </View>
             <Nutrition nutrition={meal.nutrition} />
+            <View className="absolute bottom-2 left-2 w-56">
+              <AppText className='text-xs text-white'>{meal.favorites} other FreshFeast customers favorited this meal!</AppText>
+            </View>
+            {added ?
             <View className="absolute bottom-2 right-2">
+            <CartIncrementor added={added} setAdded={setAdded}/>
+            </View>
+            :<View className="absolute bottom-2 right-2">
               <Pressable
                 className="flex-row items-center"
-                onPress={() => addMeal(meal.mealId)}
+                onPress={() => {
+                  addMeal(meal.mealId);
+                  setAdded(true);
+                }}
                 // need to decide action after adding meal
                 // options: bring back to meal list
                 // or change to an incrementer with 1 in cart
@@ -96,7 +138,7 @@ const MealModal = ({ mealId }) => {
                 <Text className="font-main text-white mr-2">Add to Cart</Text>
                 <Icon name="cart-plus" size={32} color="white" />
               </Pressable>
-            </View>
+            </View> }
           </View>
         </View>
       </Modal>
@@ -104,7 +146,7 @@ const MealModal = ({ mealId }) => {
         className="px-4 py-2 bg-pakistangreen rounded-md"
         onPress={() => setModalVisible(true)}
       >
-        <Text className="font-main text-lemonchiffon">Open Modal</Text>
+        <AppText className="text-lemonchiffon">Open Modal</AppText>
       </Pressable>
     </View>
   );

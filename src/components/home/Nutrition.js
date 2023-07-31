@@ -1,4 +1,5 @@
 import { Text, View, FlatList } from "react-native";
+import AppText from "../../utils/components/AppText";
 
 const Nutrition = ({ nutrition }) => {
   const renderItem = ({ item }) => {
@@ -6,20 +7,21 @@ const Nutrition = ({ nutrition }) => {
     const value = item[key];
 
     return (
-      <View className="flex-row justify-between px-4 py-2 border border-gray-300 w-80">
-        <Text className="text-sm font-main text-white"> {key}</Text>
-        <Text className="text-sm text-white font-main">{value}</Text>
+      <View className="flex-row justify-between px-2 py-1 border border-gray-300 w-60">
+        <AppText className="text-xs text-white"> {key}</AppText>
+        <AppText className="text-xs text-white">{value}</AppText>
       </View>
     );
   };
 
   return (
-    <View>
-      <Text className="text-lg text-white font-main">Nutrition Facts</Text>
+    <View className="justify-start">
+      <AppText className="text-xs text-white">Nutrition Facts</AppText>
       <FlatList
         data={nutrition}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
+        scrollEnabled ={false}
       />
     </View>
   );

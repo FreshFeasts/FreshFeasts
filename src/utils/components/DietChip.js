@@ -43,13 +43,24 @@ const DietChip = ({dietName}) => {
     return null; // You can render a loading indicator or fallback UI here if needed
   }
   return(
-    <View className="h-14 w-28 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-2">
-      <View className={`${diet.color} rounded-full p-1`}>
-      <Icon name={diet.icon} size={24} color='white' />
-      </View>
-      <AppText className='text-xs'>{diet.name}</AppText>
+    <>
+    <View className="flex-row h-8 w-28 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
+    <View className={`${diet.color} rounded-full p-1 mx-1`}>
+    <Icon name={diet.icon} size={12} color='white' />
     </View>
+    <AppText className='text-xs mr-1'>{diet.name}</AppText>
+  </View>
+  </>
   )
 };
 
 export default DietChip;
+
+
+// fat diet chip code
+// <View className="h-14 w-28 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-2">
+// <View className={`${diet.color} rounded-full p-1`}>
+// <Icon name={diet.icon} size={24} color='white' />
+// </View>
+// <AppText className='text-xs'>{diet.name}</AppText>
+// </View>
