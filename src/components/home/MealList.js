@@ -34,6 +34,17 @@ const MealList = ({/* meals, userData */}) => { // add meals and user data once 
     };
   };
 
+  const handleUpdateFilters = (option) => {
+    if (filterOption.includes(option)) {
+      let newOptions = filterOption.filter((value) => (value !== option));
+      setFilterOption([...newOptions]);
+      return;
+    } else {
+      setFilterOption([...filterOption, option]);
+      return;
+    }
+  };
+
   useEffect(() => {
     setFinalMeals([]);
     let sorted = [];
@@ -70,12 +81,15 @@ const MealList = ({/* meals, userData */}) => { // add meals and user data once 
   }, [sortOption]);
 
   return (
-    <View className="m-2 p-4 border rounded h-2/4">
+    <View className="m-2 p-4 border-t rounded h-4/6">
       <View className="mb-2">
-        <Text className="font-main">This is the Meal List</Text>
         <SortSelector
           sortOption={sortOption}
           handleUpdateSort={handleUpdateSort}
+        />
+        <FilterSelector
+          filterOption={filterOption}
+          handleUpdateFilters={handleUpdateFilters}
         />
       </View>
       <ScrollView>
@@ -100,22 +114,50 @@ const SortSelector = ({sortOption, handleUpdateSort}) => {
   return (
     <View className="flex-row my-1 shadow-sm">
       <Pressable
-        className={`pl-2 pr-1 py-0.5 border-l border-y rounded-l-full border-pakistangreen ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}
+        className={`pl-2 pr-1 py-1 border-l border-y rounded-l-full border-pakistangreen ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('rating') }}
       >
-        <Text className={`text-xs ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}>Rating</Text>
+        <Text className={`font-main text-xs text-center ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}>Rating</Text>
       </Pressable>
       <Pressable
-        className={`px-1 py-0.5 border border-pakistangreen ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}
+        className={`px-1 py-1 border border-pakistangreen ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('favorites') }}
       >
-        <Text className={`text-xs ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}>Favorites</Text>
+        <Text className={`font-main text-xs text-center ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}>Favorites</Text>
       </Pressable>
       <Pressable
-        className={`pr-2 pl-1 py-0.5 border-r border-y rounded-r-full border-pakistangreen ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}
+        className={`pr-2 pl-1 py-1 border-r border-y rounded-r-full border-pakistangreen ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('recommended') }}
       >
-        <Text className={`text-xs ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}>Recommended</Text>
+        <Text className={`font-main text-xs text-center ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}>Recommended</Text>
+      </Pressable>
+    </View>
+  );
+};
+
+const FilterSelector = ({filterOption, handleUpdateFilters}) => {
+  const getStyle = (type) => {
+    switch (type) {
+      case 'selected':
+        return "mr-1 px-1.5 py-px border border-pakistangreen rounded-full bg-forestgreen text-white font-main text-xs text-center";
+      case 'notSelected':
+        return "mr-1 px-1.5 py-px border border-pakistangreen rounded-full bg-yellowgreen font-main text-xs text-center";
+    }
+  };
+
+  return (
+    <View className="flex-row my-1 shadow-sm">
+      <Pressable
+        className={filterOption.includes('diets') ? getStyle('selected') : getStyle('notSelected')}
+        onPress={() => { handleUpdateFilters('diets') }}
+      >
+        <Text className={filterOption.includes('diets') ? getStyle('selected') : getStyle('notSelected')}>{filterOption.includes('diets') ? 'My Diet  X' : 'My Diet'}</Text>
+      </Pressable>
+      <Pressable
+        className={filterOption.includes('alergies') ? getStyle('selected') : getStyle('notSelected')}
+        onPress={() => { handleUpdateFilters('alergies') }}
+      >
+        <Text className={filterOption.includes('alergies') ? getStyle('selected') : getStyle('notSelected')}>{filterOption.includes('alergies') ? 'My Alergies  X' : 'My Alergies'}</Text>
       </Pressable>
     </View>
   );
