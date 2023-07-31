@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {  Pressable, ScrollView, Text, View } from "react-native";
 import HistoryCard from './HistoryCard';
 import AppText from '../../utils/components/AppText'
-//import {getAllOrder, getMealBasics, rateMeal} from "../../utils/apis/api";
+import {getOrders, getMeals, rateMeal} from "../../utils/apis/api";
 
 const OrderHistory = ({userId, history, setHistory}) => {
+  const [ orders, setOrders ] = useState(null);
   const cart = {
     deliveryDate: 'August 1, 2023', //will update with proper dateFNS
     orderDate: 'August 1, 2023',
@@ -23,12 +24,24 @@ const OrderHistory = ({userId, history, setHistory}) => {
   //API Calls
     //getAllOrders - returns all values from order for a particular user
       //order date, delivery date, array of meals
-    //getMealBasics - returns meal name, image
-    //rateMeal - put request to increment rating. calc average on frontend
+
+    // useEffect(() => {
+    //   try {
+    //     let orderData = await getOrders(userId);
+    //     setOrders(orderData);
+    //   } catch(err) {
+    //     console.error(err);
+    //   }
+    // },[])
 
   return (
     <ScrollView bounces={false}>
     <View className="flex-1 justify-center items-center">
+      {/* set up orders map
+      {orders.map((order) => {
+        insert everything below
+      })}
+      */}
       <AppText className="text-xl">{cart.deliveryDate}</AppText>
       {cart.meals.map((meal) =>
         <HistoryCard key={meal.name} meal={meal}/>
