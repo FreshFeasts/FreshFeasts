@@ -9,6 +9,7 @@ const initialValues = {
 
 export const LogInScreenContextProvider = ({ children }) => {
   const [values, setValues] = useState(initialValues);
+  const [createAccountComp, setCreateAccountComp] = useState(false);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -18,7 +19,7 @@ export const LogInScreenContextProvider = ({ children }) => {
     });
   };
   return (
-    <LogInScreenContext.Provider value={{ values, setValues }}>
+    <LogInScreenContext.Provider value={{ values, setValues, createAccountComp, setCreateAccountComp }}>
       {children}
     </LogInScreenContext.Provider>
   );
