@@ -5,7 +5,7 @@ const CartScreen = ({navigation}) => {
   return (
     <>
     <View className="flex-1 items-center justify-center">
-      <Text>This is the Cart page</Text>
+      <Text className="font-main">This is the Cart page</Text>
     </View>
     </>
   );
