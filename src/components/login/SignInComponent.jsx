@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Text, View, StatusBar, TouchableHighlight } from "react-native";
-import InputWithLabel from "../../utilityComponent/InputComponent.jsx";
+import InputWithLabel from "../../utils/components/InputComponent"
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
 const SignInComponent = () => {
