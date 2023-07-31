@@ -32,7 +32,7 @@ const MealCarousel = () => {
     return (
       <Pressable className=' bg-transparent items-center' onPress={handlePress}>
         <Image className='object-cover h-full w-full rounded-xl' source={{url: item.imgUrl}} />
-        <Text className='absolute text-center bottom-1 text-white text-lg font-bold'>{item.title}</Text>
+        <Text className='absolute text-center top-4 left-5 text-white text-xl font-bold'>{item.title}</Text>
       </Pressable>
     )
   };
@@ -44,17 +44,20 @@ const MealCarousel = () => {
 
   return (
     <>
-      <View className='h-56'>
+      <View className='h-44'>
         <Carousel
           ref={isCarousel}
           data={data}
           renderItem={renderItem}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
-          item
+          loop={true}
+          autoplay={true}
+          autoplayInterval={2000}
           onSnapToItem={index => setIndex(index)}
         />
         <Pagination
+          containerStyle={styles.paginationContainer}
           dotsLength={data.length}
           activeDotIndex={index}
           carouselRef={isCarousel}
@@ -62,13 +65,21 @@ const MealCarousel = () => {
             width:10,
             height:10,
             borderRadius:10,
-            marginHorizontal: 10,
-            backgroundColor: 'green'
+            marginHorizontal: 5,
+            backgroundColor: 'white'
           }}
         />
       </View>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  paginationContainer: {
+    position: 'absolute',
+    bottom: -15,
+    alignSelf: 'center'
+  }
+})
 
 export default MealCarousel;
