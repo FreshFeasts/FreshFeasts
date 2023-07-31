@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const getMealDetails = async (mealId) => {
+export const getMeals = async () => {
   try {
     //update urls after confirmation from backend team
-    const mealDetails = await axios.get(`/meals?mealId=${mealId}`);
-    return mealDetails.data;
+    const meals = await axios.get('/meals');
+    return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
     throw error;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {  Pressable, ScrollView, Text, View } from "react-native";
 import HistoryCard from './HistoryCard';
+import AppText from '../../utils/components/AppText'
 //import {getAllOrder, getMealBasics, rateMeal} from "../../utils/apis/api";
 
 const OrderHistory = ({userId, history, setHistory}) => {
@@ -24,15 +25,16 @@ const OrderHistory = ({userId, history, setHistory}) => {
       //order date, delivery date, array of meals
     //getMealBasics - returns meal name, image
     //rateMeal - put request to increment rating. calc average on frontend
+
   return (
     <ScrollView bounces={false}>
     <View className="flex-1 justify-center items-center">
-      <Text className="font-main text-xl">{cart.deliveryDate}</Text>
+      <AppText className="text-xl">{cart.deliveryDate}</AppText>
       {cart.meals.map((meal) =>
         <HistoryCard key={meal.name} meal={meal}/>
       )}
       <Pressable className="px-4 py-2 bg-pakistangreen rounded-md" onPress={() => setHistory(!history)}>
-          <Text className="text-lemonchiffon font-main"> Close History </Text>
+          <AppText className="text-lemonchiffon"> Close History </AppText>
         </Pressable>
     </View>
     </ScrollView>
