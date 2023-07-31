@@ -12,7 +12,7 @@ const MealListCard = ({meal}) => {
 
   return (
     <Pressable>
-      <View className="m-1 p-2 rounded-lg bg-[#FFF7C6] shadow-sm">
+      <View className="m-1 p-2 rounded-lg bg-lemonchiffon shadow-sm">
         <View className="flex-row">
           <View>
             <Image className="h-24 w-24 rounded-lg"
@@ -21,10 +21,10 @@ const MealListCard = ({meal}) => {
           </View>
           <View className="w-9/12">
             <View className="flex-row justify-between">
-              <Text className="mx-4 font-bold">{meal.name}</Text>
-              <Text className="mr-4">{`${getRating()} Stars`}</Text>
+              <Text className="mx-4 font-main">{meal.name}</Text>
+              <Text className="mr-4 font-main">{`${getRating()} Stars`}</Text>
             </View>
-            <Text className="p-4">{meal.description}</Text>
+            <Text className="p-4 font-main text-xs">{meal.description}</Text>
           </View>
         </View>
       </View>

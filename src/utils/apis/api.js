@@ -4,7 +4,7 @@ export const getMeals = async () => {
   try {
     //update urls after confirmation from backend team
     const meals = await axios.get('/meals');
-    return meals.data;
+    return meals;
   } catch (error) {
     console.error('Error fetching meals: ', error);
     throw error;

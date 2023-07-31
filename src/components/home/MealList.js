@@ -26,7 +26,7 @@ const MealList = () => {
   return (
     <View className="m-2 p-4 border rounded h-2/4">
       <View className="mb-2">
-        <Text>This is the Meal List</Text>
+        <Text className="font-main">This is the Meal List</Text>
         <SortSelector
           sortOption={sortOption}
           handleUpdateSort={handleUpdateSort}
@@ -45,31 +45,31 @@ const SortSelector = ({sortOption, handleUpdateSort}) => {
   const getStyle = (type) => {
     switch (type) {
       case 'selected':
-        return 'bg-[#238A28] text-white';
+        return 'bg-forestgreen text-white';
       case 'notSelected':
-        return 'bg-[#A5E06B]';
+        return 'bg-yellowgreen';
     };
   };
 
   return (
-    <View className="flex-row">
+    <View className="flex-row my-1">
       <Pressable
-        className={`pl-2 pr-1 border-l border-y rounded-l-full border-[#0E4000] ${getStyle(sortOption === 'rating' ? 'selected'  : 'notSelected')}`}
+        className={`pl-2 pr-1 py-0.5 border-l border-y rounded-l-full border-pakistangreen ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('rating') }}
       >
-        <Text className={`${getStyle(sortOption === 'rating' ? 'selected'  : 'notSelected')}`}>Rating</Text>
+        <Text className={`text-xs ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}>Rating</Text>
       </Pressable>
       <Pressable
-        className={`px-1 border border-[#0E4000] bg-[#A5E06B] ${getStyle(sortOption === 'favorites' ? 'selected'  : 'notSelected')}`}
+        className={`px-1 py-0.5 border border-pakistangreen ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('favorites') }}
       >
-        <Text className={getStyle(sortOption === 'favorites' ? 'selected'  : 'notSelected')}>Favorites</Text>
+        <Text className={`text-xs ${getStyle(sortOption === 'favorites' ? 'selected' : 'notSelected')}`}>Favorites</Text>
       </Pressable>
       <Pressable
-        className={`pr-2 pl-1 border-r border-y rounded-r-full border-[#0E4000] bg-[#A5E06B] ${getStyle(sortOption === 'recommended' ? 'selected'  : 'notSelected')}`}
+        className={`pr-2 pl-1 py-0.5 border-r border-y rounded-r-full border-pakistangreen ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('recommended') }}
       >
-        <Text className={getStyle(sortOption === 'recommended' ? 'selected'  : 'notSelected')}>Recommended</Text>
+        <Text className={`text-xs ${getStyle(sortOption === 'recommended' ? 'selected' : 'notSelected')}`}>Recommended</Text>
       </Pressable>
     </View>
   );
