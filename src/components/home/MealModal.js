@@ -3,6 +3,7 @@ import { Modal, Pressable, Text, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
 import { getMealDetails, addMeal } from "../../utils/apis/api";
+import DietChip from '../../utils/components/DietChip'
 
 const MealModal = ({ mealId }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,7 +23,7 @@ const MealModal = ({ mealId }) => {
     favorites: 20,
     recommended: true,
     url: "https://images.pexels.com/photos/128408/pexels-photo-128408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    dietType: "Carnivore",
+    dietName: 'Chef\'s Choice',
     cuisine: "Italian",
     allergies: ["gluten", "tomato"],
     ingredients: ["pasta, tomato, beef, onion, starch, water, salt, pepper"],
@@ -32,17 +33,6 @@ const MealModal = ({ mealId }) => {
       { VitaminC: "10%" },
     ],
   });
-
-  // commenting out until ready to use
-  // useEffect(() => {
-  //   getMealDetails(mealId)
-  //     .then((details) => {
-  //       setMeal(details);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error fetching meal info: ", err);
-  //     });
-  // }, [mealId]);
 
   return (
     <View>
@@ -76,9 +66,7 @@ const MealModal = ({ mealId }) => {
             </Text>
             <View className="flex-row flex-wrap items-center justify-center">
               {/*need to design better chips for these */}
-              <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
-                {meal.dietType}
-              </Text>
+              <DietChip dietName={meal.dietName} />
               <Text className="bg-lemonchiffon px-4 py-2 text-base text-pakistangreen font-main m-2">
                 {meal.cuisine}
               </Text>
