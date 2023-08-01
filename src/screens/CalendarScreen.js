@@ -1,5 +1,6 @@
 import {  Text, View, StatusBar, TouchableOpacity, Modal, Pressable, Image, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import {Calendar, LocaleConfig,Agenda, DateData, AgendaEntry, AgendaSchedule} from 'react-native-calendars';
+import DropDownPicker from 'react-native-dropdown-picker';
 import React, {useState, useEffect} from 'react';
 
 
@@ -7,6 +8,27 @@ const CalendarScreen = ({navigation}) => {
 
   const [selected, setSelected] = useState(null);
   const [items, setItems] = useState({})
+  const [selectedDate, setSelectedDate] = useState();
+  const [deliveryDate, setDeliveryDate] = useState([])
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [days, setDays] = useState([
+    {label: '08/11/2023', value: 'Scheduled'},
+    {label: '08/15/2023', value: 'New Date'},
+    {label: 'Cancel Order', value: 'Cancel'}
+  ])
+  const highlightedDates = {
+    [selected]: {
+      selected: true,
+      disableTouchEvent: true,
+      selectedColor: '#FF0000', // Red color in hexadecimal format
+      todayTextColor: 'orange', // Set the color for today's date number
+      dayTextColor: '#FFA500', // Orange color for other days' text
+      selectedDayTextColor: '#FFFFFF', // White color for selected date's text
+      marked: true,
+    },
+  };
 
   //SAMPLE DATA TO TEST GET REQUESTS
   const orders = {
@@ -16,6 +38,7 @@ const CalendarScreen = ({navigation}) => {
     deliveryDate: '08/11/2023',
   };
 
+deliveryDate.push()
 
   const meals = orders.meals.map((food,index) => {
     //adding 1 to index so users will not see the 0th index at start and see #1.
@@ -26,13 +49,6 @@ const CalendarScreen = ({navigation}) => {
     )
   })
 
-  const showNestedModal = () => {
-    setNestedModalVisible(true);
-  };
-
-  const closeNestedModal = () => {
-    setNestedModalVisible(false);
-  };
 
   const renderItem = () => {
       return (
@@ -47,12 +63,12 @@ const CalendarScreen = ({navigation}) => {
         >
             <Pressable style={{ flex: 1}} onPress={() => setSelected(null)}>
 
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1}}>
             <View
               style={{
-                margin: 20,
+                margin: 30,
                 backgroundColor: "white",
-                borderRadius: 20,
+                borderRadius: 15,
                 padding: 35,
                 alignItems: "center",
                 shadowColor: "#000",
@@ -65,23 +81,33 @@ const CalendarScreen = ({navigation}) => {
                 elevation: 5,
               }}
             >
+
               <Text style={{ marginBottom: 15, textAlign: "center" }}>
                 Order Information
               </Text>
-              <Text>Delivery Date: {orders.deliveryDate}</Text>
+
               {meals}
-              <TouchableOpacity style={[
-                {
-                  borderRadius: 15,
-                  padding: 10,
-                  elevation: 5,
-                },
-                  {
-                    backgroundColor: "#A5E06B",
-                  },
-                ]}>
-              <Text>Edit Delivery Date</Text>
-              </TouchableOpacity>
+
+              <Text>Delivery Date:</Text>
+              <DropDownPicker
+              textStyle={{ fontSize: 12 }}
+              placeholder = {orders.deliveryDate}
+              placeholderStyle={{
+                color: 'black',
+              }}
+              containerStyle={{
+                width: 118,
+              }}
+              labelStyle={{
+                textAlign: 'center', // Center the text
+              }}
+              open={open}
+              value={value}
+               items={days}
+               setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+               />
             </View>
           </View>
         </Pressable>
@@ -93,7 +119,7 @@ const CalendarScreen = ({navigation}) => {
 
   return (
     <>
-      <View style={{ flex: 1}}>
+
         <Calendar
 
           //Send it as an object or JSON
@@ -102,19 +128,17 @@ const CalendarScreen = ({navigation}) => {
           onDayPress={(day) => {
             setSelected(day.dateString)
           }}
-          markedDates={{
-            [selected]: {
-              selected: true,
-              disableTouchEvent: true,
-              selectedColor: "#238A28",
-              todayTextColor: '#FFA500',
-              dayTextColor: '#FFA500',
-              selectedDayTextColor: '#ffffff',
-              marked: true,
-            },
+          theme={{
+            calendarBackground: '#ffffff',
+            textSectionTitleColor: '#b6c1cd',
+            selectedDayBackgroundColor: '#00adf5',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: 'orange', // Change this to your desired color
+            dayTextColor: '#2d4150',
           }}
+
         />
-      </View>
+
 
       {/* Conditionally render items for delivery dates */}
       {renderItem()}
