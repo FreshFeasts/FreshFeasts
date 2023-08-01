@@ -1,12 +1,13 @@
-import {  Text, View, StatusBar } from "react-native";
+import {  SafeAreaView, Text, View } from "react-native";
+import Checkout from '../components/cart/Checkout';
 
 const CartScreen = ({navigation}) => {
 
   return (
     <>
-    <View className="flex-1 items-center justify-center">
-      <Text className="font-main">This is the Cart page</Text>
-    </View>
+    <SafeAreaView>
+      <Checkout />
+    </SafeAreaView>
     </>
   );
 };
