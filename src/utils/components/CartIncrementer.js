@@ -3,7 +3,7 @@ import { View, Pressable } from "react-native";
 import AppText from "./AppText";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const CartIncrementor = ( {added, setAdded}) => {
+const CartIncrementer = ( {added, setAdded}) => {
   const [count, setCount] = useState(1);
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const CartIncrementor = ( {added, setAdded}) => {
   );
 };
 
-export default CartIncrementor;
+export default CartIncrementer;

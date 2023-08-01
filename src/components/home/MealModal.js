@@ -5,7 +5,7 @@ import Nutrition from "./Nutrition";
 import { getMealDetails, addMeal } from "../../utils/apis/api";
 import DietChip from "../../utils/components/DietChip";
 import AppText from "../../utils/components/AppText";
-import CartIncrementor from "../../utils/components/CartIncrementor";
+import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 
 const MealModal = ({ mealId }) => {
@@ -81,7 +81,7 @@ const MealModal = ({ mealId }) => {
                 <Icon name="times-circle" size={24} color="white" />
               </Pressable>
             </View>
-            <AppText className="font-bold text-xl text-white m-2">
+            <AppText className="font-[bold] text-xl text-white m-2" style={{ fontFamily: 'ComfortaaBold' }}>
               {meal.name}
             </AppText>
             <Image
@@ -122,7 +122,7 @@ const MealModal = ({ mealId }) => {
             </View>
             {added ?
             <View className="absolute bottom-2 right-2">
-            <CartIncrementor added={added} setAdded={setAdded}/>
+            <CartIncrementer added={added} setAdded={setAdded}/>
             </View>
             :<View className="absolute bottom-2 right-2">
               <Pressable

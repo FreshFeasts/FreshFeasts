@@ -22,7 +22,7 @@ export const getOrders = async (userId) => {
   }
 };
 
-export const addMeal = async (mealId) => {
+export const updateCart = async (userId) => {
   try {
     //update urls after confirmation from backend team
     // await axios.put(`/users/cart?mealId=${mealId}`);
