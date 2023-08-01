@@ -1,6 +1,6 @@
 const user = {
-  dietChoice: [],
-  allergens: []
+  dietChoice: ["Chef's Choice"],
+  allergens: ["Wheat"]
 };
 
 const meals = [

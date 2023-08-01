@@ -8,10 +8,10 @@ import MealModal from './MealModal';
 const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
 
-const MealCarousel = ({ mealList }) => {
+const MealCarousel = ({ meals }) => {
   const [index, setIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
-  const chefRecommendedMeals = mealList.filter((item) => {
+  const chefRecommendedMeals = meals.filter((item) => {
     return item.recommended === true;
   })
   const carouselRef = useRef(null);

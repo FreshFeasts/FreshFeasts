@@ -14,15 +14,15 @@ const MealListCard = ({meal}) => {
     <Pressable>
       <View className="m-1 p-2 rounded-lg bg-lemonchiffon shadow-sm">
         <View className="flex-row">
-          <View>
+          <View className="w-1/4">
             <Image className="h-24 w-24 rounded-lg"
               source={{uri: meal.photo}}
             />
           </View>
-          <View className="w-9/12">
+          <View className="w-3/4">
             <View className="flex-row justify-between">
-              <Text className="mx-4 font-main">{meal.name}</Text>
-              <Text className="mr-4 font-main">{`${getRating()} Stars`}</Text>
+              <Text className="ml-4 mr-2 font-main w-2/3">{meal.name}</Text>
+              <Text className="mr-4 font-main w-1/3">{`${getRating()} Stars`}</Text>
             </View>
             <Text className="p-4 font-main text-xs">{meal.description}</Text>
           </View>

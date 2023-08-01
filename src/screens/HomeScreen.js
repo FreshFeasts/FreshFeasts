@@ -6,33 +6,31 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const HomeScreen = ({navigation, authToken}) => {
-  const [mealList, setMealList] = useState([]);
+  const [meals, setMeals] = useState([]);
+
+  const fetchMeals = async () => {
+    try {
+      let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM3ZjZkMGU5N2M0MmNkMDA4ZjY0NjciLCJlbWFpbCI6IktlbmRhbGwzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwOTIzNzU5LCJleHAiOjE2OTEwMTAxNTl9.xEqBccd7KVjC_vI5GNurcAdQ5NUHDKF4wE7AvxD_liM` }});
+      console.log(response);
+      setMeals(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkFseXNoYV9LcmlzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwNzkwNzU2LCJleHAiOjE2OTA4NzcxNTZ9.kzlhZMe9hamshQywdgjFHJWrp67uMmgXfHb9bH6ArSw` }}).
-      then((response) => {
-        setMealList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    fetchMeals();
   }, []);
-
-
 
   return (
     <>
-    <View className="flex-1 items-center justify-center">
-      <Text className="font-main" >This is the home page</Text>
-      <MealModal />
-      <MealCarousel mealList={mealList} />
-      <MealList />
+    <View className="flex-1 items-center justify-center h-80">
+      {/* <MealModal /> */}
+      {/* <MealCarousel meals={meals} /> */}
+      <MealList meals={meals} />
     </View>
     </>
   );
 };
+
 export default HomeScreen;
-
-
-
-
