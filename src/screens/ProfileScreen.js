@@ -12,8 +12,8 @@ const ProfileScreen = ({ navigation }) => {
       ) : (
         <>
         <Text className="font-main text-2xl mb-2">Profile</Text>
-        <Pressable className="px-4 py-2 bg-pakistangreen rounded-md" onPress={() => setHistory(!history)}>
-          <Text className="text-lemonchiffon font-main"> Show History </Text>
+        <Pressable className="px-4 py-4 bg-pakistangreen rounded-md" onPress={() => setHistory(!history)}>
+          <Text className="text-lemonchiffon font-main"> View Order History </Text>
         </Pressable>
         </>
       )}
