@@ -8,7 +8,7 @@ const { useState, useEffect } = React;
 
 const MealList = ({/* meals, userData */}) => { // add meals and user data once connected to API
   const [sortOption, setSortOption] = useState('rating');
-  const [filterOption, setFilterOption] = useState(['alergies', 'diets']);
+  const [filterOption, setFilterOption] = useState(['allergies', 'diets']);
   const [finalMeals, setFinalMeals] = useState([]);
 
   const getRating = (meal) => {
@@ -54,14 +54,13 @@ const MealList = ({/* meals, userData */}) => { // add meals and user data once 
           let result =  getRating(b) - getRating(a);
           return result;
         });
-        setFinalMeals([...sorted]);
+        ;
         break;
       case 'favorites':
         sorted = meals.sort((a, b) => {
           let result = b.favorites - a.favorites;
           return result;
         });
-        setFinalMeals([...sorted]);
         break;
       case 'recommended':
         sorted = meals.sort((a, b) => {
@@ -75,10 +74,27 @@ const MealList = ({/* meals, userData */}) => { // add meals and user data once 
             return 1;
           }
         });
-        setFinalMeals([...sorted]);
         break;
     }
-  }, [sortOption]);
+    if (filterOption.length < 1) {
+      setFinalMeals([...sorted]);
+      return;
+    }
+    let filtered = [...sorted];
+    // filter diet types
+    if (filterOption.includes('diets') && user.dietChoice.length > 0) {
+      filtered = filtered.filter((meal) => {
+        return user.dietChoice.some(type => meal.dietType.includes(type));
+      });
+    }
+    // filter allergies
+    if (filterOption.includes('allergies') && user.allergens.length > 0) {
+      filtered = filtered.filter((meal) => {
+        return user.allergens.every(type => !meal.allergens.includes(type));
+      });
+    }
+    setFinalMeals([...filtered]);
+  }, [sortOption, filterOption]);
 
   return (
     <View className="m-2 p-4 border-t rounded h-4/6">
@@ -154,10 +170,10 @@ const FilterSelector = ({filterOption, handleUpdateFilters}) => {
         <Text className={filterOption.includes('diets') ? getStyle('selected') : getStyle('notSelected')}>{filterOption.includes('diets') ? 'My Diet  X' : 'My Diet'}</Text>
       </Pressable>
       <Pressable
-        className={filterOption.includes('alergies') ? getStyle('selected') : getStyle('notSelected')}
-        onPress={() => { handleUpdateFilters('alergies') }}
+        className={filterOption.includes('allergies') ? getStyle('selected') : getStyle('notSelected')}
+        onPress={() => { handleUpdateFilters('allergies') }}
       >
-        <Text className={filterOption.includes('alergies') ? getStyle('selected') : getStyle('notSelected')}>{filterOption.includes('alergies') ? 'My Alergies  X' : 'My Alergies'}</Text>
+        <Text className={filterOption.includes('allergies') ? getStyle('selected') : getStyle('notSelected')}>{filterOption.includes('allergies') ? 'My Allergies  X' : 'My Allergies'}</Text>
       </Pressable>
     </View>
   );

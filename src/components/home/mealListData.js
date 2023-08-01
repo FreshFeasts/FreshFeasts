@@ -1,6 +1,6 @@
 const user = {
   dietChoice: [],
-  alergens: []
+  allergens: []
 };
 
 const meals = [
@@ -54,7 +54,7 @@ const meals = [
     active: true,
     description: "Chum is the signature ingredient in all of Plankton's menu items. In real life, chum is bait used by fishermen, made out of chopped fish.",
     cuisine: 'Seafood',
-    dietType: [],
+    dietType: ['keto'],
     numberOfRatings: 35,
     ratings: {
       1: 10,
