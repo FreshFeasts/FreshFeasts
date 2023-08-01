@@ -5,21 +5,38 @@ const initialValues = {
   signInPassword: "",
   createUserEmail: "",
   createUserPassword: "",
+  firstName:'',
+  lastName: '',
+  address1:'',
+  address2:'',
+  city:'',
+  state:'',
+  zip:'',
+  DOB:'',
+  phone:'',
+
 };
 
 export const LogInScreenContextProvider = ({ children }) => {
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
+  const onChangeHandler = (text, input) => {
     setValues({
       ...values,
-      [name]: value,
+      [input]: text,
     });
   };
   return (
-    <LogInScreenContext.Provider value={{ values, setValues, createAccountComp, setCreateAccountComp }}>
+    <LogInScreenContext.Provider
+      value={{
+        values,
+        setValues,
+        createAccountComp,
+        setCreateAccountComp,
+        onChangeHandler,
+      }}
+    >
       {children}
     </LogInScreenContext.Provider>
   );
