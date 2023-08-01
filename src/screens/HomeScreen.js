@@ -8,7 +8,7 @@ const HomeScreen = ({navigation, authToken}) => {
   const [mealList, setMealList] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkFseXNoYV9LcmlzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwNzkwNzU2LCJleHAiOjE2OTA4NzcxNTZ9.kzlhZMe9hamshQywdgjFHJWrp67uMmgXfHb9bH6ArSw` }}).
+    axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }}).
       then((response) => {
         setMealList(response.data);
       })

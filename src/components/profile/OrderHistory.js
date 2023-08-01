@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {  Pressable, ScrollView, Text, View } from "react-native";
 import HistoryCard from './HistoryCard';
 import AppText from '../../utils/components/AppText'
-import {getOrders, getMeals } from "../../utils/apis/api";
+import {getUser, getOrders, getMeals } from "../../utils/apis/api";
+import { LogInScreenContext } from '../../contexts/LogInScreenContext.jsx'
 
-const OrderHistory = ({userId, history, setHistory}) => {
+const OrderHistory = ({ history, setHistory}) => {
+  const userId = '64c96db323bfcbd4a7159209';
   const [ orders, setOrders ] = useState(null);
   const cart = {
     deliveryDate: 'August 1, 2023', //will update with proper dateFNS
@@ -21,14 +23,14 @@ const OrderHistory = ({userId, history, setHistory}) => {
     }]
   }
 
-    // useEffect(() => {
-    //   try {
-    //     let orderData = await getOrders(userId);
-    //     setOrders(orderData);
-    //   } catch(err) {
-    //     console.error(err);
-    //   }
-    // },[])
+    useEffect(() => {
+        getOrders(userId). then((orderData) => {
+        console.log(orderData);
+        setOrders(orderData);
+       }).catch((err) => {
+        console.error(err);
+      })
+    },[])
 
   return (
     <ScrollView bounces={false}>

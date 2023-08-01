@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }}
+
 export const getMeals = async () => {
   try {
-    //update urls after confirmation from backend team
-    const meals = await axios.get('/meals');
+    const meals = await axios.get('http://localhost:3000/api/meals', headers);
+    console.log(meals.data);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -13,8 +15,8 @@ export const getMeals = async () => {
 
 export const getOrders = async (userId) => {
   try {
-    //update urls after confirmation from backend team
-    const orders = await axios.get(`/orders/user/${userId}`);
+    const orders = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, headers);
+    console.log(orders);
     return orders;
   } catch (error) {
     console.error('Error fetching orders: ', error);
@@ -22,12 +24,21 @@ export const getOrders = async (userId) => {
   }
 };
 
-export const updateCart = async (userId) => {
+export const updateCart = async (body) => {
   try {
-    //update urls after confirmation from backend team
-    // await axios.put(`/users/cart?mealId=${mealId}`);
-    // return true; //TBD what to return based on next action
-    console.log('meal id added: ', userId)
+    let cart = await axios.put('http://localhost:3000/api/users/cart', body, headers);
+    return true;
+  } catch (error) {
+    console.error('Error adding meal to cart: ', error);
+    throw error;
+  }
+};
+
+export const postCart = async (body) => {
+  try {
+    let cart = await axios.post('http://localhost:3000/api/users/cart', body, headers);
+    console.log(cart);
+    return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
     throw error;
@@ -39,9 +50,18 @@ export const rateMeal = async (rating) => {
     //update urls after confirmation from backend team,
     // await axios.put(`/orders/user/${userId}/${mealId}`, rating);
     // return true; //TBD what to return based on next action
-    console.log('meal rated: ', rating)
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
+    throw error;
+  }
+};
+
+export const getUser = async (email) => {
+  try {
+    let user = await axios.get(`http://localhost:3000/api/users/${email}`, headers);
+    return user.data;
+  } catch (error) {
+    console.error('Error getting user: ', error);
     throw error;
   }
 };
