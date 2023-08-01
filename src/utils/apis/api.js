@@ -27,7 +27,7 @@ export const updateCart = async (userId) => {
     //update urls after confirmation from backend team
     // await axios.put(`/users/cart?mealId=${mealId}`);
     // return true; //TBD what to return based on next action
-    console.log('meal id added: ', mealId)
+    console.log('meal id added: ', userId)
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
     throw error;
