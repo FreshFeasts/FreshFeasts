@@ -1,4 +1,4 @@
-import {  Text, View, StatusBar, StyleSheet } from "react-native";
+import {  Text, View, StatusBar, StyleSheet, SafeAreaView } from "react-native";
 import MealModal from '../components/home/MealModal';
 import MealCarousel from '../components/home/MealCarousel';
 import MealList from '../components/home/MealList';
@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 
 const HomeScreen = ({navigation, authToken}) => {
   const [meals, setMeals] = useState([]);
+
+
 
   const fetchMeals = async () => {
     try {
@@ -23,13 +25,13 @@ const HomeScreen = ({navigation, authToken}) => {
   }, []);
 
   return (
-    <>
-    <View className="flex-1 items-center justify-center h-80">
-      {/* <MealModal /> */}
-      {/* <MealCarousel meals={meals} /> */}
-      <MealList meals={meals} />
-    </View>
-    </>
+    <SafeAreaView className="h-full">
+      <View className="flex-1 items-center justify-between">
+        {/* <MealModal /> */}
+        <MealCarousel meals={meals} />
+        <MealList meals={meals} />
+      </View>
+    </SafeAreaView>
   );
 };
 

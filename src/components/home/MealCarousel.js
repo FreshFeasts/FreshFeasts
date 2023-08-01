@@ -33,7 +33,7 @@ const MealCarousel = ({ meals }) => {
 
 
   return (
-    <>
+    <View className="flex-1 justify-center">
       <View className='h-44'>
         <Carousel
           ref={(c) => (carouselRef.current = c)}
@@ -43,7 +43,7 @@ const MealCarousel = ({ meals }) => {
           itemWidth={ITEM_WIDTH}
           loop={true}
           autoplay={true}
-          autoplayInterval={2000}
+          autoplayInterval={4000}
           onSnapToItem={index => setIndex(index)}
         />
         <Pagination
@@ -61,7 +61,7 @@ const MealCarousel = ({ meals }) => {
         />
         {isClicked && <MealModal />}
       </View>
-    </>
+    </View>
   );
 };
 

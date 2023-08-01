@@ -94,10 +94,10 @@ const MealList = ({meals}) => { // add meals and user data once connected to API
       });
     }
     setFinalMeals([...filtered]);
-  }, [sortOption, filterOption]);
+  }, [meals, sortOption, filterOption]);
 
   return (
-    <View className="m-2 p-4 border-t rounded h-4/6">
+    <View className="flex-3 m-2 p-4 h-4/6 justify-center">
       <View className="mb-2">
         <SortSelector
           sortOption={sortOption}
