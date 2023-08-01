@@ -4,11 +4,15 @@ import InputWithLabel from "../../../../utils/components/InputComponent";
 import AppText from "../../../../utils/components/AppText.js";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
 const UserRegisterInfo = ({setPageOne, setPageTwo}) => {
-  const { onChangeHandler, values } = useContext(LogInScreenContext);
+  const { onChangeHandler, values, setCreateAccountComp } = useContext(LogInScreenContext);
 
   const onContinueHandler = () => {
     setPageOne(false);
     setPageTwo(true);
+  }
+  const onHaveAccountHandler = () => {
+    setPageOne(false);
+    setCreateAccountComp(false);
   }
   return (
     <View className="flex-1 items-center justify-center bg-forestgreen">
@@ -34,12 +38,20 @@ const UserRegisterInfo = ({setPageOne, setPageTwo}) => {
             inputStyle="border-solid border-black border-2 p-1 bg-white "
             onChangeText={(text) => onChangeHandler(text, "createUserPassword")}
           />
+          <View className="flex-row justify-evenly">
+          <TouchableOpacity
+            className="bg-maize p-3 rounded-lg mt-4"
+            onPress={onHaveAccountHandler}
+          >
+            <AppText className="text-black text-center">Have an account?</AppText>
+          </TouchableOpacity>
           <TouchableOpacity
             className="bg-maize p-3 rounded-lg mt-4"
             onPress={onContinueHandler}
           >
             <AppText className="text-black text-center">Continue</AppText>
           </TouchableOpacity>
+          </View>
         </View>
       </View>
   )
