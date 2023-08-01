@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Pressable, Text, View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
-import { getMealDetails, addMeal } from "../../utils/apis/api";
+import { getMealDetails, updateCart } from "../../utils/apis/api";
 import DietChip from "../../utils/components/DietChip";
 import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
@@ -140,7 +140,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               <Pressable
                 className="flex-row items-center"
                 onPress={() => {
-                  addMeal(meal.mealId);
+                  updateCart(meal.mealId);
                   setAdded(true);
                 }}
                 // need to decide action after adding meal
