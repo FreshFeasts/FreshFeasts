@@ -6,7 +6,7 @@ import { user } from './mealListData.js'; // remove once connected to API
 
 const { useState, useEffect } = React;
 
-const MealList = ({meals}) => { // add meals and user data once connected to API
+const MealList = ({meals, handleSelectMeal}) => { // add meals and user data once connected to API
   const [sortOption, setSortOption] = useState('rating');
   const [filterOption, setFilterOption] = useState([]);
   const [finalMeals, setFinalMeals] = useState([]);
@@ -110,7 +110,9 @@ const MealList = ({meals}) => { // add meals and user data once connected to API
       </View>
       <ScrollView>
         {finalMeals ? finalMeals.map((meal) => {
-          return (<MealListCard meal={meal} key={meal._id} />)
+          return (
+            <MealListCard key={meal._id} meal={meal} handleSelectMeal={handleSelectMeal} />
+          )
         }) : ''}
       </ScrollView>
     </View>

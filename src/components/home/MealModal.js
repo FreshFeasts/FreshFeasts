@@ -8,7 +8,7 @@ import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 
-const MealModal = ({ mealId }) => {
+const MealModal = ({ mealSelection }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [added, setAdded] = useState(false);
   const [meal, setMeal] = useState({
@@ -63,6 +63,15 @@ const MealModal = ({ mealId }) => {
     ],
     mealId: "64c59c1d32ab87d43f2bec71",
   });
+
+  useEffect(() => {
+    if (mealSelection) {
+      setMeal(mealSelection);
+      setModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
+  }, [mealSelection]);
 
   return (
     <View>
@@ -142,12 +151,6 @@ const MealModal = ({ mealId }) => {
           </View>
         </View>
       </Modal>
-      <Pressable
-        className="px-4 py-2 bg-pakistangreen rounded-md"
-        onPress={() => setModalVisible(true)}
-      >
-        <AppText className="text-lemonchiffon">Open Modal</AppText>
-      </Pressable>
     </View>
   );
 };

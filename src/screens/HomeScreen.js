@@ -7,8 +7,14 @@ import { useEffect, useState } from 'react';
 
 const HomeScreen = ({navigation, authToken}) => {
   const [meals, setMeals] = useState([]);
+  const [mealSelection, setMealSelection] = useState(null);
 
+  const handleSelectMeal = (meal) => {
+    console.log("CLICKED!", meal);
+    setMealSelection(meal);
+  };
 
+  useEffect(() => {}, []);
 
   const fetchMeals = async () => {
     try {
@@ -27,9 +33,9 @@ const HomeScreen = ({navigation, authToken}) => {
   return (
     <SafeAreaView className="h-full">
       <View className="flex-1 items-center justify-between">
-        {/* <MealModal /> */}
+        <MealModal mealSelection={mealSelection} />
         <MealCarousel meals={meals} />
-        <MealList meals={meals} />
+        <MealList meals={meals} handleSelectMeal={handleSelectMeal} />
       </View>
     </SafeAreaView>
   );

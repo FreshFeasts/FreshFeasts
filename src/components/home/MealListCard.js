@@ -1,6 +1,6 @@
 import {  Text, View, StatusBar, Image, Pressable } from "react-native";
 
-const MealListCard = ({meal}) => {
+const MealListCard = ({meal, handleSelectMeal}) => {
   const getRating = () => {
     let sum = 0;
     for (let i = 1; i < 6; i++) {
@@ -11,7 +11,11 @@ const MealListCard = ({meal}) => {
   };
 
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        handleSelectMeal(meal);
+      }}
+    >
       <View className="m-1 p-2 rounded-lg bg-lemonchiffon shadow-sm">
         <View className="flex-row">
           <View className="w-1/4">
