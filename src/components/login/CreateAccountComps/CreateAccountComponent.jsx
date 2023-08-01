@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Text, View, StatusBar, TouchableHighlight } from "react-native";
 import UserRegisterInfo from "./Pages/UserRegisterInfo";
-import PersonalInfoComponent from './Pages/PersonalInfoComponent';
+import PersonalInfoComponent from "./Pages/PersonalInfoComponent";
 // import { LogInScreenContext } from "../../../contexts/LogInScreenContext";
 const CreateAccountProcess = () => {
   const [pageOne, setPageOne] = useState(true);
@@ -32,8 +32,13 @@ const CreateAccountProcess = () => {
       {pageOne && (
         <UserRegisterInfo setPageOne={setPageOne} setPageTwo={setPageTwo} />
       )}
+
       {pageTwo && (
-        <PersonalInfoComponent setPageOne = {setPageOne}setPageTwo={setPageTwo} setPageThree={setPageThree} />
+        <PersonalInfoComponent
+          setPageOne={setPageOne}
+          setPageTwo={setPageTwo}
+          setPageThree={setPageThree}
+        />
       )}
     </>
   );

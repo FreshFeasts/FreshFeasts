@@ -18,18 +18,18 @@ const SignInComponent = () => {
           </AppText>
           <InputWithLabel
             label="Email:"
-            labelStyle="text-white"
+            labelStyle="text-black mb-0"
             keyboardType="email-address"
-            placeholder="email address"
-            inputStyle="border-solid border-black border-2 p-1 bg-white"
+            placeholder="example@example.com"
+            inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
             onChangeText={text => onChangeHandler(text, "signInEmail")}
           />
           <InputWithLabel
             label="Password:"
-            labelStyle="text-white"
+            labelStyle="text-black mb-0"
             secureTextEntry={true}
             placeholder="password"
-            inputStyle="border-solid border-black border-2 p-1 bg-white "
+            inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
             onChangeText={text => onChangeHandler(text, "signInPassword")}
           />
           <View className="items-center">
