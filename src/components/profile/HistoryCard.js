@@ -1,45 +1,48 @@
-import React from "react";
-import { Text, View, Image } from "react-native";
-import Stars from "react-native-stars";
+import React, {useState } from "react";
+import { Text, View, Image, Pressable } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { rateMeal } from '../../utils/apis/api'
 
 const HistoryCard = ({ meal }) => {
-  //API Calls
-  //getAllOrders - returns all values from order for a particular user
-  //order date, delivery date, array of meals
-  //getMealBasics - returns meal name, image
-  //rateMeal - put request to increment rating. calc average on frontend
+  const [rating, setRating] = useState(0);
 
-  const rateMeal = (val) => {
-    // console.log(val);
-  }
+  const changeRating = (newRating) => {
+    setRating(newRating);
+    rateMeal(newRating);
+  };
 
   return (
-    <View className="flex-1 items-center justify-center">
-    <View className='w-72 h-48 p-4 m-2 bg-white rounded-lg border-2 flex items-center'>
-      <Text className="font-main">{meal.name}</Text>
-      <Image
-        className="w-10/12 h-20 rounded-lg mb-2"
-        source={{
-          uri: meal.url,
-        }}
-        resizeMode="cover"
-      />
-      <Text className="font-main text-base">Rate this meal: </Text>
-      <Stars
-        half={true}
-        default={2.5}
-        update={(val) => {
-          rateMeal(val);
-        }}
-        spacing={4}
-        starSize={30}
-        count={5}
-        // fullStar={require('./images/starFilled.png')}
-        // emptyStar={require('./images/starEmpty.png')}
-        // halfStar={require('./images/starHalf.png')}
-      />
-
-    </View>
+    <View className="flex-1  items-center">
+      <View className='w-80 h-30 p-2 m-2 rounded-lg border-2 flex-row bg-lemonchiffon'>
+        <Image
+          className="w-24 h-24 rounded-lg mb-2 ml-2"
+          source={{
+            uri: meal.url,
+          }}
+          resizeMode="cover"
+        />
+        <View>
+          <Text className="font-main text-lg ml-2 mb-2">{meal.name}</Text>
+            <Text className="font-main text-sm ml-2">Rate this meal: </Text>
+            <View className="flex-row ml-2">
+            <Pressable onPress={() => changeRating(1)} className="m-1">
+              <Icon name={rating >= 1 ? 'star' : 'star-o'} size={24} color="#0E4000" />
+            </Pressable>
+            <Pressable onPress={() => changeRating(2)} className="m-1">
+              <Icon name={rating >= 2 ? 'star' : 'star-o'} size={24} color="#0E4000" />
+            </Pressable>
+            <Pressable onPress={() => changeRating(3)} className="m-1">
+              <Icon name={rating >= 3 ? 'star' : 'star-o'} size={24} color="#0E4000" />
+            </Pressable>
+            <Pressable onPress={() => changeRating(4)} className="m-1">
+              <Icon name={rating >= 4 ? 'star' : 'star-o'} size={24} color="#0E4000" />
+            </Pressable>
+            <Pressable onPress={() => changeRating(5)} className="m-1">
+              <Icon name={rating >= 5 ? 'star' : 'star-o'} size={24} color="#0E4000" />
+            </Pressable>
+            </View>
+        </View>
+      </View>
     </View>
   );
 };

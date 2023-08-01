@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       'main': ['Comfortaa', 'sans-serif'],
-      'bold':['Comfortaa-Bold', 'sans-serif']
+      'bold':['ComfortaaBold', 'sans-serif']
     },
     extend: {
       colors: {
