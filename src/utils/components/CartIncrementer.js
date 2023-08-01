@@ -3,7 +3,7 @@ import { View, Pressable } from "react-native";
 import AppText from "./AppText";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const CartIncrementer = ( {added, setAdded}) => {
+const CartIncrementer = ( {added, setAdded, color}) => {
   const [count, setCount] = useState(1);
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const CartIncrementer = ( {added, setAdded}) => {
   return (
     <View className="flex-row justify-center items-center">
       <Pressable onPress={handleDecrement}>
-        <Icon name="minus-square" size={24} color="white" />
+        <Icon name="minus-square" size={24} color={color} />
       </Pressable>
-      <AppText className="text-white mx-2 text-xl"> {count} </AppText>
+      <AppText className="text-{color} mx-2 text-xl"> {count} </AppText>
       <Pressable onPress={handleIncrement}>
-        <Icon name="plus-square" size={24} color="white" />
+        <Icon name="plus-square" size={24} color={color} />
       </Pressable>
     </View>
   );

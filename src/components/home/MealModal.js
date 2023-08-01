@@ -134,7 +134,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
             </View>
             {added ?
             <View className="absolute bottom-2 right-2">
-            <CartIncrementer added={added} setAdded={setAdded}/>
+            <CartIncrementer added={added} setAdded={setAdded} color="white"/>
             </View>
             :<View className="absolute bottom-2 right-2">
               <Pressable
