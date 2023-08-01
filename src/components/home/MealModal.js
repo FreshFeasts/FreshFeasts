@@ -8,7 +8,7 @@ import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 
-const MealModal = ({ mealSelection }) => {
+const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [added, setAdded] = useState(false);
   const [meal, setMeal] = useState({
@@ -86,7 +86,10 @@ const MealModal = ({ mealSelection }) => {
         <View className="flex-1 items-center justify-center">
           <View className="bg-forestgreen w-11/12 h-4/6 items-center rounded-lg">
             <View className="absolute top-2 right-2">
-              <Pressable onPress={() => setModalVisible(!modalVisible)}>
+              <Pressable onPress={() => {
+                handleSelectMeal(null);
+                setModalVisible(!modalVisible);
+              }}>
                 <Icon name="times-circle" size={24} color="white" />
               </Pressable>
             </View>

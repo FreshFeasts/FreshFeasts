@@ -33,8 +33,8 @@ const HomeScreen = ({navigation, authToken}) => {
   return (
     <SafeAreaView className="h-full">
       <View className="flex-1 items-center justify-between">
-        <MealModal mealSelection={mealSelection} />
-        <MealCarousel meals={meals} />
+        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
+        <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
         <MealList meals={meals} handleSelectMeal={handleSelectMeal} />
       </View>
     </SafeAreaView>
