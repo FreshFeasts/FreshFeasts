@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, StatusBar, Pressable } from "react-native";
 import OrderHistory from "../components/profile/OrderHistory";
+import ProfileComponent from "../components/profile/ProfileComponent";
 
 const ProfileScreen = ({ navigation }) => {
   const [history, setHistory] = useState(false);
@@ -17,6 +18,7 @@ const ProfileScreen = ({ navigation }) => {
         </Pressable>
         </>
       )}
+      <ProfileComponent/>
     </SafeAreaView>
   );
 };
