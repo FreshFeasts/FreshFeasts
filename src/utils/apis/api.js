@@ -5,7 +5,6 @@ const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5c
 export const getMeals = async () => {
   try {
     const meals = await axios.get('http://localhost:3000/api/meals', headers);
-    console.log(meals.data);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -59,6 +58,26 @@ export const rateMeal = async (rating) => {
 export const getUser = async (email) => {
   try {
     let user = await axios.get(`http://localhost:3000/api/users/${email}`, headers);
+    return user.data;
+  } catch (error) {
+    console.error('Error getting user: ', error);
+    throw error;
+  }
+};
+
+export const getUserContact = async (userId) => {
+  try {
+    let user = await axios.get(`http://localhost:3000/api/info/${userId}`, headers);
+    return user.data;
+  } catch (error) {
+    console.error('Error getting user: ', error);
+    throw error;
+  }
+};
+
+export const getPayment = async (userId) => {
+  try {
+    let user = await axios.get(`http://localhost:3000/api/cc/user/${userId}`, headers);
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
