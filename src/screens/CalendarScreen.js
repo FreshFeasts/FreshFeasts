@@ -26,38 +26,37 @@ const CalendarScreen = ({navigation}) => {
   const [value, setValue] = useState(null);
   const [mealsArr, setMealsArr] = useState([])
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/orders/:orderId', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM4MDA5OTYyNzU5Yzk4NWMyNjBiMDQiLCJlbWFpbCI6Ik9sYS5Nb3NjaXNraTEzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwOTM1MDA2fQ.vVRpJR6Jtv7HYXMPf0QGxA44fvOYgIXdM8u4g9qBiZg` }}).
-      then((response) => {
-        setOrderDate(response.data.orderDate);
-        setDeliveryDate(response.data.deliveryDate)
-        setMealsArr(response.data.meals)
-        // console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [selected]);
+  // useEffect(() => {
+  //   axios.get('http://localhost:3000/orders/:orderId', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM4MDA5OTYyNzU5Yzk4NWMyNjBiMDQiLCJlbWFpbCI6Ik9sYS5Nb3NjaXNraTEzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwOTM1MDA2fQ.vVRpJR6Jtv7HYXMPf0QGxA44fvOYgIXdM8u4g9qBiZg` }}).
+  //     then((response) => {
+  //       setOrderDate(response.data.orderDate);
+  //       setDeliveryDate(response.data.deliveryDate)
+  //       setMealsArr(response.data.meals)
+  //       // console.log(response.data)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }, [selected]);
 
-  useEffect(() => {
-    axios.put('http://localhost:3000/orders/update-delivery', {
-      "orderId": `{{orders_id}}`,
-      "userId": "{{ordersUser_id}}",
-      "orderDate": "{{today}}",
-      "deliveryDate": `${value}`
-  },{ headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM4MDA5OTYyNzU5Yzk4NWMyNjBiMDQiLCJlbWFpbCI6Ik9sYS5Nb3NjaXNraTEzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwOTM1MDA2fQ.vVRpJR6Jtv7HYXMPf0QGxA44fvOYgIXdM8u4g9qBiZg` }}).
-      then((response) => {
-        // console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [open]);
+  // useEffect(() => {
+  //   axios.put('http://localhost:3000/orders/update-delivery', {
+  //     "orderId": `{{orders_id}}`,
+  //     "userId": "{{ordersUser_id}}",
+  //     "orderDate": "{{today}}",
+  //     "deliveryDate": `${value}`
+  // },{ headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM4MDA5OTYyNzU5Yzk4NWMyNjBiMDQiLCJlbWFpbCI6Ik9sYS5Nb3NjaXNraTEzQGhvdG1haWwuY29tIiwiaWF0IjoxNjkwOTM1MDA2fQ.vVRpJR6Jtv7HYXMPf0QGxA44fvOYgIXdM8u4g9qBiZg` }}).
+  //     then((response) => {
+  //       // console.log(response.data)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }, [open]);
 
   const date = format(new Date(selected), 'MM-dd-yyyy');
   const orderDay = format(new Date(orders.orderDate), 'MM-dd-yyyy');
   const newDate = addBusinessDays(deliveryDate,restOfDays)
-  console.log(selected)
 
 
   const formatted = []
