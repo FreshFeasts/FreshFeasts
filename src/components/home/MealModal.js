@@ -8,7 +8,7 @@ import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 
-const MealModal = ({ mealSelection, handleSelectMeal }) => {
+const MealModal = ({ mealSelection, handleSelectMeal, cartRefresh, handleCartRefresh }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const email = "Enid.Johns@yahoo.com";
   const [added, setAdded] = useState(false);
@@ -55,7 +55,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [handleCartRefresh]);
 
   const handleAddMeal = () => {
     const userId = user._id;
@@ -64,6 +64,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
     setCart(update);
     updateCart(update);
     setAdded(!added);
+    handleCartRefresh();
   };
 
   return (
@@ -138,6 +139,9 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   color="white"
                   cart={cart}
                   setCart={setCart}
+                  meal={meal}
+                  cartRefresh={cartRefresh}
+                  handleCartRefresh={handleCartRefresh}
                 />
               </View>
             ) : (

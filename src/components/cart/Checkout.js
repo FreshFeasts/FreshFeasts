@@ -12,7 +12,7 @@ import {
 } from "../../utils/apis/api";
 import { format } from 'date-fns';
 
-const Checkout = () => {
+const Checkout = ({cartRefresh, handleCartRefresh}) => {
   const email = "Enid.Johns@yahoo.com";
   const [cartMeals, setCartMeals] = useState([]);
   const [cart, setCart] = useState({});
@@ -33,9 +33,7 @@ const Checkout = () => {
       userId: user._id,
       currentCart: {...cart, orderDate: Date.now()}
     }
-    console.log(final)
     let results = postCart(final);
-    console.log(results);
   };
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const Checkout = () => {
           console.error(err);
         });
     });
-  }, []);
+  }, [cartRefresh]);
 
   const getUserDetails = async (userId) => {
     try {
@@ -105,7 +103,8 @@ const Checkout = () => {
           </AppText>
           <ScrollView bounces={false} className="h-[250]" >
             {cartMeals.map((meal) => (
-              <CartCard meal={meal} key={meal.name} />
+              <CartCard meal={meal} key={meal.name} cart={cart} setCart={setCart} cartRefresh={cartRefresh}
+              handleCartRefresh={handleCartRefresh}/>
             ))}
           </ScrollView>
           <View className="bg-pakistangreen h-1 mt-1" />

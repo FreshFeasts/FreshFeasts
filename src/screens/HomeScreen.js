@@ -5,13 +5,14 @@ import MealList from '../components/home/MealList';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const HomeScreen = ({navigation, authToken}) => {
+const HomeScreen = ({navigation, authToken, cartRefresh, handleCartRefresh }) => {
   const [meals, setMeals] = useState([]);
   const [mealSelection, setMealSelection] = useState(null);
 
   const handleSelectMeal = (meal) => {
     setMealSelection(meal);
   };
+
 
   useEffect(() => {}, []);
 
@@ -31,7 +32,7 @@ const HomeScreen = ({navigation, authToken}) => {
   return (
     <SafeAreaView className="h-full">
       <View className="flex-1 items-center justify-between">
-        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
+        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} cartRefresh={cartRefresh} handleCartRefresh={handleCartRefresh} />
         <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
         <MealList meals={meals} handleSelectMeal={handleSelectMeal} />
       </View>

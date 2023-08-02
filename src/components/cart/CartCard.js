@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 
-const CartCard = ({ meal }) => {
+const CartCard = ({ meal, cart, setCart, cartRefresh, handleCartRefresh }) => {
   const [added, setAdded] = useState(false);
 
   return (
@@ -24,6 +24,11 @@ const CartCard = ({ meal }) => {
             color="forestgreen"
             added={added}
             setAdded={setAdded}
+            cart={cart}
+            setCart={setCart}
+            meal={meal}
+            cartRefresh={cartRefresh}
+            handleCartRefresh={handleCartRefresh}
           />
         </View>
       </View>
