@@ -35,7 +35,6 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
     if (mealSelection) {
       setMeal(mealSelection);
       setModalVisible(true);
-
     } else {
       setModalVisible(false);
     }
@@ -60,7 +59,6 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   const handleAddMeal = () => {
     const userId = user._id;
-    console.log(cart);
     const update = { currentCart: cart, deliverDate: '08/05/2023',  userId };
     update.currentCart.meals.push(meal._id)
     setCart(update);

@@ -15,8 +15,7 @@ export const getMeals = async () => {
 export const getOrders = async (userId) => {
   try {
     const orders = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, headers);
-    console.log(orders);
-    return orders;
+    return orders.data;
   } catch (error) {
     console.error('Error fetching orders: ', error);
     throw error;
