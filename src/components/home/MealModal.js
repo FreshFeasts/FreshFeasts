@@ -36,7 +36,6 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   useEffect(() => {
     if (mealSelection) {
-      console.log(mealSelection.reviews);
       setMeal(mealSelection);
       setModalVisible(true);
     } else {
@@ -62,10 +61,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   const handleAddMeal = () => {
     const userId = user._id;
-    const update = currCart;
-    console.log(update);
     update.meals.push(meal._id);
-    console.log(update);
+
     setCurrCart(update);
     updateCart(userId, update);
     setAdded(!added);
