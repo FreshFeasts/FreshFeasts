@@ -13,10 +13,11 @@ import {
 import { format, parseISO } from "date-fns";
 import DropDownPicker from "react-native-dropdown-picker";
 
+
 const Checkout = () => {
+  const { currCart, setCurrCart} = useContext(LogInScreenContext);
   const email = "Enid.Johns@yahoo.com";
   const [cartMeals, setCartMeals] = useState([]);
-  const [cart, setCart] = useState({});
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState();
@@ -41,43 +42,42 @@ const Checkout = () => {
   const submitOrder = () => {
     const final = {
       userId: user._id,
-      currentCart: { ...cart, orderDate: Date.now() },
+      currentCart: { ...currCart, orderDate: Date.now() },
     };
     let results = postCart(final);
   };
 
   useEffect(() => {
-    getUser(email).then((data) => {
-      const mealList = data.currentCart.meals;
-      setCart(data.currentCart);
-      setUser(data);
-      getUserDetails(data._id);
-      getMeals()
-        .then((meals) => {
-          const mealDetails = meals.filter((item) => {
-            return mealList.includes(item._id);
-          });
-          setCartMeals(mealDetails);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    });
+    const fetchData = async () => {
+      try {
+        const userData = await getUser(email);
+        const mealList = userData.currentCart.meals;
+        setCurrCart(userData.currentCart);
+        setUser(userData);
+        const contact = await getUserContact(userData._id);
+        setAddress(contact.deliveryAddress);
+        const payments = await getPayment(userData._id);
+        if (payments.length > 0) {
+          let card = payments[0].ccId.toString();
+          let last4 = "************" + card.slice(card.length - 4);
+          setPayment(last4);
+        } else {
+          setPayment("No Payment Information on File");
+        }
+
+        const meals = await getMeals();
+        const mealDetails = meals.filter((item) => mealList.includes(item._id));
+        setCartMeals(mealDetails);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
-  const getUserDetails = async (userId) => {
-    try {
-      let contact = await getUserContact(userId);
-      let payments = await getPayment(userId);
-      let card = payments[0].ccId.toString();
-      let last4 = "************" + card.slice(card.length - 4);
-      setAddress(contact.deliveryAddress);
-      setPayment(last4);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return (
     <>
@@ -121,15 +121,13 @@ const Checkout = () => {
               <CartCard
                 meal={meal}
                 key={meal.name}
-                cart={cart}
-                setCart={setCart}
               />
             ))}
           </ScrollView>
           <View className="bg-pakistangreen h-1 mt-1" />
           <View className="flex-row items-center">
           <AppText className="text-base text-pakistangreen mx-1 my-2">
-            Delivery Date: {format(parseISO(cart.deliveryDate), "MM/dd/yyyy")}
+            Delivery Date: {format(parseISO(currCart.deliveryDate), "MM/dd/yyyy")}
           </AppText>
           <DropDownPicker
             placeholderStyle={{
@@ -152,10 +150,10 @@ const Checkout = () => {
           />
           </View>
           <AppText className="text-base text-pakistangreen ml-1 mt-2">
-            Total Meals: {cart.meals.length}
+            Total Meals: {currCart.meals.length}
           </AppText>
           <AppText className="text-base text-pakistangreen ml-1 mt-2">
-            Weekly Cost: ${cart.meals.length * cost}
+            Weekly Cost: ${currCart.meals.length * cost}
           </AppText>
           <View className="justify-end items-center rounded-md">
             <Pressable onPress={submitOrder}>

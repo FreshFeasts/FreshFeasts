@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Pressable } from "react-native";
 import AppText from "./AppText";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {updateCart} from '../../utils/apis/api'
+import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx"
 
 const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal }) => {
   const [count, setCount] = useState(1);
+  const { currCart, setCurrCart, userId} = useContext(LogInScreenContext);
 
   const handleRemoveMeal = (mealId) => {
-    const updatedMeals = cart.meals.filter((meal) => meal !== mealId);
-    const update = { ...cart, meals: updatedMeals };
-    setCart(update);
-    updateCart(update);
+    const updatedMeals = currCart.meals.filter((meal) => meal !== mealId);
+    const update = { ...currCart, meals: updatedMeals };
+    setCurrCart(update);
+    updateCart('64c96db323bfcbd4a7159209', update);
+  };
+
+  const handleAddMeal = (mealId) => {
+    const update = {}
+    updateCart('64c96db323bfcbd4a7159209', update);
   };
 
   useEffect(() => {

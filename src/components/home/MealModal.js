@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, Pressable, Text, View, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
@@ -7,13 +7,14 @@ import DietChip from "../../utils/components/DietChip";
 import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
+import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
 const MealModal = ({ mealSelection, handleSelectMeal }) => {
+  const { currCart, setCurrCart} = useContext(LogInScreenContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
   const email = "Enid.Johns@yahoo.com";
   const [added, setAdded] = useState(false);
-  const [cart, setCart] = useState({});
   const [user, setUser] = useState({});
   const [meal, setMeal] = useState({
     _id: "",
@@ -35,6 +36,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   useEffect(() => {
     if (mealSelection) {
+      console.log(mealSelection.reviews);
       setMeal(mealSelection);
       setModalVisible(true);
     } else {
@@ -45,7 +47,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   useEffect(() => {
     getUser(email)
       .then((data) => {
-        setCart(data.currentCart);
+        setCurrCart(data.currentCart);
         setUser(data);
         if (data.currentCart.meals.includes(meal._id)) {
           setAdded(true);
@@ -60,10 +62,12 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   const handleAddMeal = () => {
     const userId = user._id;
-    const update = { currentCart: cart, deliveryDate: "08/05/2023", userId };
-    update.currentCart.meals.push(meal._id);
-    setCart(update);
-    updateCart(update);
+    const update = currCart;
+    console.log(update);
+    update.meals.push(meal._id);
+    console.log(update);
+    setCurrCart(update);
+    updateCart(userId, update);
     setAdded(!added);
   };
 
@@ -78,7 +82,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="bg-forestgreen w-11/12 h-[85%] items-center rounded-lg">
+          <View className="bg-forestgreen w-11/12 h-[80%] items-center rounded-lg">
             <View className="absolute top-2 right-2">
               <Pressable
                 onPress={() => {
@@ -150,19 +154,19 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   </View>
                   <ScrollView className="flex bg-white mt-10 rounded-md">
                   <AppText className="text-xl text-pakistangreen ml-2 mt-2">Reviews </AppText>
-                    {meal.reviews !== {} ? Object.entries(meal.reviews).map((review) => (
+                    {meal.reviews ? Object.entries(meal.reviews).map((review) => (
                       <View key={review.name} className="mt-5">
                         <AppText className="text-pakistangreen text-base ml-2 mt-2">Name: {review[1].name}</AppText>
                         <AppText className="text-pakistangreen text-base ml-2 mb-2">Review: {review[1].reviewText}</AppText>
                       </View>
-                    )) : <AppText>No Reviews Available</AppText>}
+                    )) : <AppText className='text-lg text-pakistangreen ml-2 mt-2'>No Reviews Available</AppText>}
                   </ScrollView>
                 </View>
               </View>
             </Modal>
             <View className="absolute bottom-2 left-2 w-56">
               <Pressable
-                className="w-[120px]"
+                className="w-[120px] bg-pakistangreen p-2 mb-2"
                 onPress={() => setReviewModalVisible(!reviewModalVisible)}
               >
                 <AppText className="text-white">Show Reviews</AppText>
@@ -177,8 +181,6 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   added={added}
                   setAdded={setAdded}
                   color="white"
-                  cart={cart}
-                  setCart={setCart}
                   meal={meal}
                 />
               </View>
