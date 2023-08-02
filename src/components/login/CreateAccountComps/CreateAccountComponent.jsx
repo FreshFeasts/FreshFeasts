@@ -1,12 +1,15 @@
 import { useContext, useState } from "react";
 import { Text, View, StatusBar, TouchableHighlight } from "react-native";
 import UserRegisterInfo from "./Pages/UserRegisterInfo";
-import PersonalInfoComponent from './Pages/PersonalInfoComponent';
+import PersonalInfoComponent from "./Pages/PersonalInfoComponent";
+import CardInfoComponent from "./Pages/CardInfoComponent";
+import DietTypeAndAllergen from "./Pages/DietTypeAndAllergen.jsx";
 // import { LogInScreenContext } from "../../../contexts/LogInScreenContext";
 const CreateAccountProcess = () => {
   const [pageOne, setPageOne] = useState(true);
   const [pageTwo, setPageTwo] = useState(false);
   const [pageThree, setPageThree] = useState(false);
+  const [pageFour, setPageFour] = useState(false);
   // const onCreateAccountHandler = async () => {
   //   console.log("Values", values);
   //   const { createUserEmail, createUserPassword } = values;
@@ -32,8 +35,26 @@ const CreateAccountProcess = () => {
       {pageOne && (
         <UserRegisterInfo setPageOne={setPageOne} setPageTwo={setPageTwo} />
       )}
+
       {pageTwo && (
-        <PersonalInfoComponent setPageOne = {setPageOne}setPageTwo={setPageTwo} setPageThree={setPageThree} />
+        <DietTypeAndAllergen
+          setPageOne={setPageOne}
+          setPageTwo={setPageTwo}
+          setPageThree={setPageThree}
+        />
+      )}
+      {pageThree && (
+        <PersonalInfoComponent
+          setPageFour={setPageFour}
+          setPageTwo={setPageTwo}
+          setPageThree={setPageThree}
+        />
+      )}
+      {pageFour && (
+        <CardInfoComponent
+          setPageThree={setPageThree}
+          setPageFour={setPageFour}
+        />
       )}
     </>
   );

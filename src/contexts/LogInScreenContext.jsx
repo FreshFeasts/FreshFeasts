@@ -5,19 +5,33 @@ const initialValues = {
   signInPassword: "",
   createUserEmail: "",
   createUserPassword: "",
-  firstName:'',
-  lastName: '',
-  address1:'',
-  address2:'',
-  city:'',
-  state:'',
-  zip:'',
-  DOB:'',
-  phone:'',
-
+  firstName: "",
+  lastName: "",
+  address1: "",
+  address2: "",
+  city: "",
+  state: "",
+  zip: "",
+  DOB: "",
+  phone: "",
+  ccNum: "",
+  ccAddress1: "",
+  ccAddress2: "",
+  ccCity: "",
+  ccState: "",
+  ccZip: "",
+  ccExp: "",
+  ccCVV:'',
 };
 
 export const LogInScreenContextProvider = ({ children }) => {
+  const [userId, setUserId] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
+  const [dietChoices, setDietChoices] = useState([]);
+  const [allergens, setAllergens] = useState([]);
+  const [darkTheme, setDarkTheme] = useState(false);
+  const [mealsRated, setMealsRated] = useState(null);
+  const [currCart, setCurrCart] = useState(null);
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
 
@@ -35,6 +49,20 @@ export const LogInScreenContextProvider = ({ children }) => {
         createAccountComp,
         setCreateAccountComp,
         onChangeHandler,
+        userId,
+        setUserId,
+        authToken,
+        setAuthToken,
+        dietChoices,
+        setDietChoices,
+        allergens,
+        setAllergens,
+        darkTheme,
+        setDarkTheme,
+        mealsRated,
+        setMealsRated,
+        currCart,
+        setCurrCart
       }}
     >
       {children}
