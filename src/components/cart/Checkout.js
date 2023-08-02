@@ -10,9 +10,10 @@ import {
   getUserContact,
   getPayment,
 } from "../../utils/apis/api";
-import { format } from 'date-fns';
+import { format, parseISO } from "date-fns";
+import DropDownPicker from 'react-native-dropdown-picker';
 
-const Checkout = ({cartRefresh, handleCartRefresh}) => {
+const Checkout = () => {
   const email = "Enid.Johns@yahoo.com";
   const [cartMeals, setCartMeals] = useState([]);
   const [cart, setCart] = useState({});
@@ -27,6 +28,7 @@ const Checkout = ({cartRefresh, handleCartRefresh}) => {
     zip: ''
   });
   const cost = 9.99;
+
 
   const submitOrder = () => {
     const final = {
@@ -54,7 +56,7 @@ const Checkout = ({cartRefresh, handleCartRefresh}) => {
           console.error(err);
         });
     });
-  }, [cartRefresh]);
+  }, []);
 
   const getUserDetails = async (userId) => {
     try {
@@ -101,15 +103,14 @@ const Checkout = ({cartRefresh, handleCartRefresh}) => {
           <AppText className="text-2xl text-pakistangreen ml-1 mt-2">
             Meals
           </AppText>
-          <ScrollView bounces={false} className="h-[250]" >
+          <ScrollView bounces={false} className="h-[25%]" >
             {cartMeals.map((meal) => (
-              <CartCard meal={meal} key={meal.name} cart={cart} setCart={setCart} cartRefresh={cartRefresh}
-              handleCartRefresh={handleCartRefresh}/>
+              <CartCard meal={meal} key={meal.name} cart={cart} setCart={setCart}/>
             ))}
           </ScrollView>
           <View className="bg-pakistangreen h-1 mt-1" />
           <AppText className="text-lg text-pakistangreen ml-1 mt-2">
-            Delivery Date: {cart.deliverDate}
+            Delivery Date: {format(parseISO(cart.deliveryDate),"MM/dd/yyyy")}
           </AppText>
           <AppText className="text-lg text-pakistangreen ml-1 mt-2">
             Total Meals: {cart.meals.length}
@@ -121,7 +122,7 @@ const Checkout = ({cartRefresh, handleCartRefresh}) => {
           <Pressable
             onPress={submitOrder}
           >
-            <AppText className="text-2xl bg-pakistangreen text-white p-4 m-4">
+            <AppText className="text-2xl bg-pakistangreen text-white p-2 m-2">
               Submit Order
             </AppText>
           </Pressable>

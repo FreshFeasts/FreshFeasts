@@ -42,22 +42,24 @@ export const postCart = async (body) => {
   }
 };
 
-export const rateMeal = async (rating) => {
+export const rateMeal = async (mealId, userId, rating) => {
   try {
-    await axios.put('http://localhost:3000/api/meals/add-rating', rating);
+    const body = { mealId, userId, rating }
+    await axios.post('http://localhost:3000/api/meals/add-rating', body, headers);
     return true;
   } catch (error) {
-    console.error('Error adding meal to cart: ', error);
+    console.error('Error adding rating: ', error);
     throw error;
   }
 };
 
-export const reviewMeal = async (rating) => {
+export const reviewMeal = async (mealId, userId,firstName, reviewText ) => {
   try {
-    await axios.put('http://localhost:3000/api/meals/add-review', review);
+    const body = { mealId, userId,firstName, reviewText }
+    await axios.post('http://localhost:3000/api/meals/add-review', body, headers);
     return true;
   } catch (error) {
-    console.error('Error adding meal to cart: ', error);
+    console.error('Error adding written review: ', error);
     throw error;
   }
 };

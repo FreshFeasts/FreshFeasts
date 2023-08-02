@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 
 const OrderHistory = ({ history, setHistory }) => {
   const userId = "64c96db323bfcbd4a7159209";
+  const firstName = 'Joe';
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,6 +20,7 @@ const OrderHistory = ({ history, setHistory }) => {
             const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
             const mealsWithDetails = mealDetails.map((meal) => {
               return {
+                id: meal._id,
                 name: meal.name,
                 photo: meal.photo,
               };
@@ -52,11 +54,11 @@ const OrderHistory = ({ history, setHistory }) => {
               );
               return (
                 <>
-                  <AppText className="text-xl" key={order.orderId}>
+                  <AppText className="text-xl" key={order.orderId} >
                     {formattedDate}
                   </AppText>
                   {order.meals.map((meal) => (
-                    <HistoryCard key={meal.name} meal={meal} />
+                    <HistoryCard key={meal.name} meal={meal} userId={userId} firstName={firstName}/>
                   ))}
                 </>
               );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Pressable, Text, View, Image } from "react-native";
+import { Modal, Pressable, Text, View, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Nutrition from "./Nutrition";
 import { getUser, updateCart } from "../../utils/apis/api";
@@ -10,6 +10,7 @@ import { calcAverageRating } from "../../utils/helpers";
 
 const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [reviewModalVisible, setReviewModalVisible] = useState(false);
   const email = "Enid.Johns@yahoo.com";
   const [added, setAdded] = useState(false);
   const [cart, setCart] = useState({});
@@ -17,7 +18,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const [meal, setMeal] = useState({
     _id: "",
     name: "",
-    description:"",
+    description: "",
     cuisine: "",
     dietType: "",
     numberOfRatings: 0,
@@ -25,10 +26,11 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
     recommended: true,
     favorites: 85,
     allergens: [],
-    photo:"",
+    photo: "",
     ingredients: [],
     nutrition: [],
     mealId: "",
+    reviews: {}
   });
 
   useEffect(() => {
@@ -45,22 +47,21 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
       .then((data) => {
         setCart(data.currentCart);
         setUser(data);
-        if(data.currentCart.meals.includes(meal._id)) {
-        setAdded(true);
-        console.log("already in cart")
-      } else {
-      setAdded(false);
-      }
+        if (data.currentCart.meals.includes(meal._id)) {
+          setAdded(true);
+        } else {
+          setAdded(false);
+        }
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [handleCartRefresh]);
+  }, []);
 
   const handleAddMeal = () => {
     const userId = user._id;
-    const update = { currentCart: cart, deliverDate: '08/05/2023',  userId };
-    update.currentCart.meals.push(meal._id)
+    const update = { currentCart: cart, deliveryDate: "08/05/2023", userId };
+    update.currentCart.meals.push(meal._id);
     setCart(update);
     updateCart(update);
     setAdded(!added);
@@ -77,12 +78,14 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="bg-forestgreen w-11/12 h-[650] items-center rounded-lg">
+          <View className="bg-forestgreen w-11/12 h-[85%] items-center rounded-lg">
             <View className="absolute top-2 right-2">
-              <Pressable onPress={() => {
-                handleSelectMeal(null);
-                setModalVisible(!modalVisible);
-              }}>
+              <Pressable
+                onPress={() => {
+                  handleSelectMeal(null);
+                  setModalVisible(!modalVisible);
+                }}
+              >
                 <Icon name="times-circle" size={24} color="white" />
               </Pressable>
             </View>
@@ -125,7 +128,45 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               ))}
             </View>
             <Nutrition nutrition={meal.nutrition} />
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={reviewModalVisible}
+              onRequestClose={() => {
+                setReviewModalVisible(!reviewModalVisible);
+              }}
+            >
+              <View className="flex-1 items-center justify-center">
+                <View className="bg-white w-11/12 h-[40%] items-center rounded-lg">
+                  <View className="absolute top-2 right-2">
+                    <Pressable
+                      onPress={() => {
+                        handleSelectMeal(null);
+                        setReviewModalVisible(!reviewModalVisible);
+                      }}
+                    >
+                      <Icon name="times-circle" size={24} color="forestgreen" />
+                    </Pressable>
+                  </View>
+                  <ScrollView className="flex bg-white mt-10 rounded-md">
+                  <AppText className="text-xl text-pakistangreen ml-2 mt-2">Reviews </AppText>
+                    {meal.reviews !== {} ? Object.entries(meal.reviews).map((review) => (
+                      <View key={review.name} className="mt-5">
+                        <AppText className="text-pakistangreen text-base ml-2 mt-2">Name: {review[1].name}</AppText>
+                        <AppText className="text-pakistangreen text-base ml-2 mb-2">Review: {review[1].reviewText}</AppText>
+                      </View>
+                    )) : <AppText>No Reviews Available</AppText>}
+                  </ScrollView>
+                </View>
+              </View>
+            </Modal>
             <View className="absolute bottom-2 left-2 w-56">
+              <Pressable
+                className="w-[120px]"
+                onPress={() => setReviewModalVisible(!reviewModalVisible)}
+              >
+                <AppText className="text-white">Show Reviews</AppText>
+              </Pressable>
               <AppText className="text-xs text-white">
                 {meal.favorites} other FreshFeast customers favorited this meal!
               </AppText>

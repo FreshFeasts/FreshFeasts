@@ -2,19 +2,20 @@ import React, {useState } from "react";
 import { Text, View, Image, Pressable, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { rateMeal, reviewMeal } from '../../utils/apis/api'
-import InputWithLabel from '../../utils/components/InputComponent.jsx'
+import AppText from "../../utils/components/AppText";
 
-const HistoryCard = ({ meal }) => {
+const HistoryCard = ({ meal, userId, firstName }) => {
   const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState('');
 
   const changeRating = (newRating) => {
     setRating(newRating);
-    rateMeal(newRating);
+    rateMeal(meal.id, userId, newRating);
   };
 
-  const handleReview = (review) => {
-    e.preventDefault();
-    reviewMeal(review);
+  const handleReview = () => {
+    reviewMeal(meal.id, userId, firstName, reviewText);
+    setReviewText('');
   };
 
 
@@ -22,7 +23,7 @@ const HistoryCard = ({ meal }) => {
     <View className="flex-1 items-center m-1">
       <View className="w-80 p-2 rounded-lg border-2 flex-row bg-lemonchiffon">
         <Image
-          className="w-24 h-24 rounded-lg mb-2 ml-2"
+          className="w-24 rounded-lg mb-2 ml-2"
           source={{
             uri: meal.photo,
           }}
@@ -52,8 +53,16 @@ const HistoryCard = ({ meal }) => {
             </View>
             <TextInput
               placeholder="Write a short review"
-              onChangeText={handleReview}
+              className="m-1 border-2 border-black  p-3 w-[180px]"
+              onChangeText={(text) => setReviewText(text)}
+              value={reviewText}
             />
+            <Pressable
+              className="p-2 m-1 bg-pakistangreen rounded-md w-[120px]"
+              onPress={handleReview}
+            >
+              <AppText className="text-white">Submit Review</AppText>
+            </Pressable>
         </View>
       </View>
     </View>
