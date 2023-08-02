@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import { Text, View, StatusBar, TouchableHighlight } from "react-native";
 import UserRegisterInfo from "./Pages/UserRegisterInfo";
 import PersonalInfoComponent from "./Pages/PersonalInfoComponent";
+import CardInfoComponent from "./Pages/CardInfoComponent";
 // import { LogInScreenContext } from "../../../contexts/LogInScreenContext";
 const CreateAccountProcess = () => {
   const [pageOne, setPageOne] = useState(true);
   const [pageTwo, setPageTwo] = useState(false);
   const [pageThree, setPageThree] = useState(false);
+  const [pageFour, setPageFour] = useState(false);
   // const onCreateAccountHandler = async () => {
   //   console.log("Values", values);
   //   const { createUserEmail, createUserPassword } = values;
@@ -39,6 +41,9 @@ const CreateAccountProcess = () => {
           setPageTwo={setPageTwo}
           setPageThree={setPageThree}
         />
+      )}
+      {pageThree && (
+        <CardInfoComponent setPageThree={setPageThree} setPageTwo={setPageTwo} />
       )}
     </>
   );

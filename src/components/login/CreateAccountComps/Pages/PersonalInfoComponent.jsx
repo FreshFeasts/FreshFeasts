@@ -15,7 +15,7 @@ import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
  * ! Need a state picker Drop down menu component
  */
 const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
-  const { onChangeHandler } = useContext(LogInScreenContext);
+  const { onChangeHandler, values } = useContext(LogInScreenContext);
   const onContinueHandler = () => {
     setPageTwo(false);
     setPageThree(true);
@@ -36,6 +36,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="First Name:"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.firstName}
                 onChangeText={(text) => onChangeHandler(text, "firstName")}
               />
             </View>
@@ -44,6 +45,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="Last Name:"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.lastName}
                 onChangeText={(text) => onChangeHandler(text, "lastName")}
               />
             </View>
@@ -54,6 +56,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="Date of birth:"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.DOB}
                 placeholder="MM/DD/YYYY"
                 onChangeText={(text) => onChangeHandler(text, "DOB")}
               />
@@ -63,6 +66,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="Phone #:"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.phone}
                 onChangeText={(text) => onChangeHandler(text, "phone")}
               />
             </View>
@@ -72,6 +76,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
               label="Address 1:"
               labelStyle="text-black"
               inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+              value={values.address1}
               onChangeText={(text) => onChangeHandler(text, "address1")}
             />
           </View>
@@ -80,6 +85,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
               label="Address 2:"
               labelStyle="text-black"
               inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+              value={values.address2}
               onChangeText={(text) => onChangeHandler(text, "address2")}
             />
           </View>
@@ -88,6 +94,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
               label="City:"
               labelStyle="text-black"
               inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+              value={values.city}
               onChangeText={(text) => onChangeHandler(text, "city")}
             />
           </View>
@@ -97,6 +104,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="DROPDOWN :"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.state}
                 onChangeText={(text) => onChangeHandler(text, "state")}
               />
             </View>
@@ -105,6 +113,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
                 label="Zip code:"
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                value={values.zip}
                 onChangeText={(text) => onChangeHandler(text, "zip")}
               />
             </View>
