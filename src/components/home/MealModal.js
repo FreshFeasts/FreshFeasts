@@ -15,62 +15,27 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const [cart, setCart] = useState({});
   const [user, setUser] = useState({});
   const [meal, setMeal] = useState({
-    _id: "64c59c1d32ab87d43f2bec71",
-    name: "Chef Basil's Bliss",
-    description:
-      "A delightful vegetable medley layered with fresh ingredients and a touch of love. Inspired by the famous dish from the movie Ratatouille.",
-    cuisine: "French",
-    dietType: "Protein Plus",
-    numberOfRatings: 150,
-    ratings: {
-      1: 5,
-      2: 10,
-      3: 20,
-      4: 45,
-      5: 70,
-    },
+    _id: "",
+    name: "",
+    description:"",
+    cuisine: "",
+    dietType: "",
+    numberOfRatings: 0,
+    ratings: {},
     recommended: true,
     favorites: 85,
     allergens: [],
-    photo:
-      "https://www.allrecipes.com/thmb/nu4Y5_nZgI82TzfaFaRHFX7MteI=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/165649roasted-vegetable-medley-DDMFS-001-4x3-f9c51738278e4c92aa53d51250f4ed10.jpg",
-    ingredients: [
-      "Eggplant",
-      "Zucchini",
-      "Red Bell Pepper",
-      "Yellow Bell Pepper",
-      "Tomato",
-      "Basil",
-      "Garlic",
-      "Olive Oil",
-    ],
-    nutrition: [
-      {
-        calories: "180",
-      },
-      {
-        protein: "5g",
-      },
-      {
-        carbohydrates: "25g",
-      },
-      {
-        fat: "7g",
-      },
-      {
-        fiber: "6g",
-      },
-      {
-        sugar: "8g",
-      },
-    ],
-    mealId: "64c59c1d32ab87d43f2bec71",
+    photo:"",
+    ingredients: [],
+    nutrition: [],
+    mealId: "",
   });
 
   useEffect(() => {
     if (mealSelection) {
       setMeal(mealSelection);
       setModalVisible(true);
+
     } else {
       setModalVisible(false);
     }
@@ -81,9 +46,12 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
       .then((data) => {
         setCart(data.currentCart);
         setUser(data);
-        if (data.currentCart.meals.includes(meal._id)) {
-          setAdded(true);
-        }
+        if(data.currentCart.meals.includes(meal._id)) {
+        setAdded(true);
+        console.log("already in cart")
+      } else {
+      setAdded(false);
+      }
       })
       .catch((err) => {
         console.error(err);
@@ -91,12 +59,13 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   }, []);
 
   const handleAddMeal = () => {
-    const userId = user._id
-    const update = { ...cart, userId };
-    update.meals.push(meal._id)
+    const userId = user._id;
+    console.log(cart);
+    const update = { currentCart: cart, deliverDate: '08/05/2023',  userId };
+    update.currentCart.meals.push(meal._id)
     setCart(update);
     updateCart(update);
-    setAdded(true);
+    setAdded(!added);
   };
 
   return (
@@ -110,7 +79,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="bg-forestgreen w-11/12 h-4/6 items-center rounded-lg">
+          <View className="bg-forestgreen w-11/12 h-[650] items-center rounded-lg">
             <View className="absolute top-2 right-2">
               <Pressable onPress={() => {
                 handleSelectMeal(null);
@@ -140,7 +109,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               <View className="h-8 w-20 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
                 <AppText className="text-xs">{meal.cuisine}</AppText>
               </View>
-              <View className="h-8 w-32 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
+              <View className="h-8 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
                 <AppText className="text-xs">
                   Rating: {calcAverageRating(meal.ratings)}
                   <Icon name="star" size={12} color="#0E4000" />

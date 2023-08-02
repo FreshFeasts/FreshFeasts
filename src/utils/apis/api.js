@@ -4,7 +4,7 @@ const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5c
 
 export const getMeals = async () => {
   try {
-    const meals = await axios.get('http://localhost:3000/api/meals', headers);
+    const meals = await axios.get('http://localhost:3000/api/meals?count=20', headers);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -36,7 +36,6 @@ export const updateCart = async (body) => {
 export const postCart = async (body) => {
   try {
     let cart = await axios.post('http://localhost:3000/api/users/cart', body, headers);
-    console.log(cart);
     return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);

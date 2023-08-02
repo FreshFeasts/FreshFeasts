@@ -10,5 +10,5 @@ export const calcAverageRating = (ratings) => {
 
     const averageRating = totalRatings / totalCount;
 
-    return averageRating.toFixed(2);
+    return averageRating.toFixed(1);
 };

@@ -8,7 +8,7 @@ const CartCard = ({ meal }) => {
 
   return (
     <View className="flex-1 items-center m-1">
-      <View className="w-80 p-2 m-2 rounded-lg border-2 flex-row bg-lemonchiffon">
+      <View className="w-80 p-2 rounded-lg border-2 flex-row bg-lemonchiffon">
         <Image
           className="w-16 h-16 rounded-lg ml-1 items-center"
           source={{
@@ -16,7 +16,7 @@ const CartCard = ({ meal }) => {
           }}
           resizeMode="cover"
         />
-        <View className="flex-1 flex-col ml-2 mb-2">
+        <View className="flex-1 flex-col ml-2 mb-1">
           <Text className="font-main text-base mb-1 truncate">{meal.name}</Text>
         </View>
         <View className="absolute bottom-2 right-2">
