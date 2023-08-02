@@ -3,6 +3,7 @@ import { Text, View, StatusBar, TouchableHighlight } from "react-native";
 import UserRegisterInfo from "./Pages/UserRegisterInfo";
 import PersonalInfoComponent from "./Pages/PersonalInfoComponent";
 import CardInfoComponent from "./Pages/CardInfoComponent";
+import DietTypeAndAllergen from './Pages/DietTypeAndAllergen.jsx'
 // import { LogInScreenContext } from "../../../contexts/LogInScreenContext";
 const CreateAccountProcess = () => {
   const [pageOne, setPageOne] = useState(true);
@@ -43,7 +44,10 @@ const CreateAccountProcess = () => {
         />
       )}
       {pageThree && (
-        <CardInfoComponent setPageThree={setPageThree} setPageTwo={setPageTwo} />
+        <CardInfoComponent setPageThree={setPageThree} setPageTwo={setPageTwo} setPageFour={setPageFour}/>
+      )}
+      {pageFour && (
+        <DietTypeAndAllergen setPageThree={setPageThree} setPageFour = {setPageFour} />
       )}
     </>
   );
