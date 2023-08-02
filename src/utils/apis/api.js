@@ -45,3 +45,13 @@ export const rateMeal = async (rating) => {
     throw error;
   }
 };
+
+export const createUser = async (bodyObject) => {
+  try{
+    const response = await axios.post('http://localhost:3000/register', bodyObject);
+    return response;
+  } catch(err){
+    console.log(err);
+    throw err;
+  }
+}

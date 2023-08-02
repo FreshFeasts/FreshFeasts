@@ -4,10 +4,13 @@ import InputWithLabel from "../../utils/components/InputComponent"
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
-const SignInComponent = () => {
+const SignInComponent = ({setLoggedIn}) => {
   const { setCreateAccountComp, onChangeHandler} = useContext(LogInScreenContext);
   const onCreateAccountHandler = () => {
     setCreateAccountComp(true);
+  }
+  const onSignInHandler = () => {
+    setLoggedIn(true);
   }
   return (
     <>
@@ -33,7 +36,7 @@ const SignInComponent = () => {
             onChangeText={text => onChangeHandler(text, "signInPassword")}
           />
           <View className="items-center">
-            <TouchableOpacity className="bg-[#FFEB69] p-3 rounded-lg mt-4">
+            <TouchableOpacity className="bg-[#FFEB69] p-3 rounded-lg mt-4" onPress={onSignInHandler}>
               <AppText className="text-black text-center">Sign in</AppText>
             </TouchableOpacity>
           </View>
