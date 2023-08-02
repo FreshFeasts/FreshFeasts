@@ -44,10 +44,10 @@ const CreateAccountProcess = () => {
         />
       )}
       {pageThree && (
-        <CardInfoComponent setPageThree={setPageThree} setPageTwo={setPageTwo} />
+        <CardInfoComponent setPageThree={setPageThree} setPageTwo={setPageTwo} setPageFour={setPageFour}/>
       )}
       {pageFour && (
-        <DietTypeAndAllergen setPageOne = {setPageOne}setPageTwo={setPageTwo} setPageThree={setPageThree} />
+        <DietTypeAndAllergen setPageThree={setPageThree} setPageFour = {setPageFour} />
       )}
     </>
   );

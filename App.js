@@ -14,7 +14,7 @@ import { useFonts } from 'expo-font';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState(true); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
+  const [user, setUser] = useState(false); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
 
   // const auth = getAuth();
 

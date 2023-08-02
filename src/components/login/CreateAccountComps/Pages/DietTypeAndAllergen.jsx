@@ -10,19 +10,19 @@ import AppText from "../../../../utils/components/AppText.js";
 import DietChip from "../../../../utils/components/DietChip.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
+const DietTypeAndAllergen = ({ setPageThree, setPageFour }) => {
   const [dietChoice, setDietChoice] = useState([]);
   const [allergens, setAllergens] = useState([]);
 
   const onContinueHandler = () => {
     console.log('dietChoice: ', dietChoice);
     console.log('allergens: ', allergens);
-    setPageThree(false);
+    setPageFour(false);
   }
 
   const onBackHandler = () => {
-    setPageThree(false);
-    setPageTwo(true);
+    setPageFour(false);
+    setPageThree(true);
   };
 
   return (
