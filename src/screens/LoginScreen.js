@@ -1,14 +1,22 @@
-import {  Text, View, StatusBar } from "react-native";
+import { useContext } from "react";
+import { Text, View, StatusBar } from "react-native";
+import { LogInScreenContext } from "../contexts/LogInScreenContext.jsx";
+import SignInComponent from "../components/login/SignInComponent.jsx";
+import CreateAccountProcess from '../components/login/CreateAccountComps/CreateAccountComponent.jsx';
 
-
-const LoginScreen = ({navigation}) => {
-
-  return (
+const LoginScreen = ({ navigation }) => {
+  const { createAccountComp } = useContext(LogInScreenContext);
+  return(
     <>
-    <View className="flex-1 items-center justify-center">
-      <Text>This is the login page</Text>
-    </View>
+      {!createAccountComp && <SignInComponent />}
+      {createAccountComp && <CreateAccountProcess/>}
     </>
-  );
+  )
 };
 export default LoginScreen;
+
+{
+  /* <View className="flex-1 items-center justify-center">
+  <Text>This is the login screen?</Text>
+</View>; */
+}
