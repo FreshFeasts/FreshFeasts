@@ -11,7 +11,7 @@ import { RadioButton } from "react-native-paper";
 import AppText from "../../../../utils/components/AppText.js";
 import InputWithLabel from "../../../../utils/components/InputComponent";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
-const CardInfoComponent = ({setPageTwo, setPageThree}) => {
+const CardInfoComponent = ({setPageTwo, setPageThree, setPageFour}) => {
   const { values, onChangeHandler } = useContext(LogInScreenContext);
   const [checked, setChecked] = useState(true);
 
@@ -22,7 +22,11 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
   const onBackHandler = () => {
     setPageThree(false);
     setPageTwo(true);
+  }
 
+  const onContinueHandler = () => {
+    setPageThree(false);
+    setPageFour(true);
   }
   //className={checked? `h-full w-full bg-forestgreen flex-1 items-center justify-center`:` h-full w-full bg-forestgreen p-4 `}
   return (
@@ -141,7 +145,7 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
           </TouchableOpacity>
           <TouchableOpacity
             className="bg-maize p-3 rounded-lg mt-4"
-            onPress=""
+            onPress={onContinueHandler}
           >
             <AppText className="text-black text-center">Continue</AppText>
           </TouchableOpacity>
