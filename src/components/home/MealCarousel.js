@@ -8,32 +8,32 @@ import MealModal from './MealModal';
 const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
 
-const MealCarousel = ({ mealList }) => {
+const MealCarousel = ({ meals, handleSelectMeal }) => {
   const [index, setIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
-  const chefRecommendedMeals = mealList.filter((item) => {
+  const chefRecommendedMeals = meals.filter((item) => {
     return item.recommended === true;
   })
   const carouselRef = useRef(null);
 
   const renderItem = ({ item }) => {
     return (
-      <Pressable className=' bg-transparent items-center' onPress={handlePress}>
+      <Pressable className=' bg-transparent items-center' onPress={() => { handlePress(item) }}>
         <Image className='object-cover h-full w-full rounded-xl' source={{url: item.photo}} />
         <AppText className='absolute text-center top-4 left-5 text-white text-xl'>{item.name}</AppText>
       </Pressable>
     )
   };
 
-  const handlePress = () => {
-    // console.log('pressed!')
+  const handlePress = (meal) => {
     carouselRef.current.stopAutoplay();
-    setIsClicked(true);
+    !isClicked ? setIsClicked(true) : setIsClicked(false);
+    handleSelectMeal(meal);
   };
 
 
   return (
-    <>
+    <View className="flex-1 justify-center">
       <View className='h-44'>
         <Carousel
           ref={(c) => (carouselRef.current = c)}
@@ -43,7 +43,7 @@ const MealCarousel = ({ mealList }) => {
           itemWidth={ITEM_WIDTH}
           loop={true}
           autoplay={true}
-          autoplayInterval={2000}
+          autoplayInterval={4000}
           onSnapToItem={index => setIndex(index)}
         />
         <Pagination
@@ -59,9 +59,8 @@ const MealCarousel = ({ mealList }) => {
             backgroundColor: 'white'
           }}
         />
-        {isClicked && <MealModal />}
       </View>
-    </>
+    </View>
   );
 };
 
