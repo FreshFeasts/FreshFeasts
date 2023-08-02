@@ -9,20 +9,23 @@ import { useContext, useState } from "react";
 import AppText from "../../../../utils/components/AppText.js";
 import DietChip from "../../../../utils/components/DietChip.js";
 import Icon from "react-native-vector-icons/FontAwesome";
+import {LogInScreenContext} from '../../../../contexts/LogInScreenContext.jsx';
+const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
+  const {setDietChoices,dietChoices,allergens, setAllergens} = useContext(LogInScreenContext);
 
-const DietTypeAndAllergen = ({ setPageThree, setPageFour }) => {
-  const [dietChoice, setDietChoice] = useState([]);
-  const [allergens, setAllergens] = useState([]);
+  // const [dietChoices, setDietChoices] = useState([]);
+  // const [allergens, setAllergens] = useState([]);
 
   const onContinueHandler = () => {
-    console.log('dietChoice: ', dietChoice);
+    console.log('dietChoices: ', dietChoices);
     console.log('allergens: ', allergens);
-    setPageFour(false);
+    setPageTwo(false);
+    setPageThree(true);
   }
 
   const onBackHandler = () => {
-    setPageFour(false);
-    setPageThree(true);
+    setPageTwo(false);
+    setPageOne(true);
   };
 
   return (
@@ -40,8 +43,8 @@ const DietTypeAndAllergen = ({ setPageThree, setPageFour }) => {
                 item={item}
                 allergens={allergens}
                 setAllergens={setAllergens}
-                dietChoice={dietChoice}
-                setDietChoice={setDietChoice}
+                dietChoices={dietChoices}
+                setDietChoices={setDietChoices}
               />
             )
           })}
@@ -58,8 +61,8 @@ const DietTypeAndAllergen = ({ setPageThree, setPageFour }) => {
                 item={item}
                 allergens={allergens}
                 setAllergens={setAllergens}
-                dietChoice={dietChoice}
-                setDietChoice={setDietChoice}
+                dietChoices={dietChoices}
+                setDietChoices={setDietChoices}
               />
             )
           })}
@@ -78,16 +81,17 @@ const DietTypeAndAllergen = ({ setPageThree, setPageFour }) => {
   );
 };
 
-const PressableTags = ({ item, dietChoice, setDietChoice, allergens, setAllergens }) => {
+const PressableTags = ({ item, dietChoices, setDietChoices, allergens, setAllergens }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handlePress = (item) => {
     if (item.type === 'diet') {
+
       if (isClicked) {
-        dietChoice.splice(dietChoice.indexOf(item.name), 1)
-        setDietChoice([...dietChoice]);
+        dietChoices.splice(dietChoices.indexOf(item.name), 1)
+        setDietChoices([...dietChoices]);
       } else {
-        setDietChoice([item.name, ...dietChoice]);
+        setDietChoices([item.name, ...dietChoices]);
       }
     } else {
       if (isClicked) {
@@ -97,6 +101,8 @@ const PressableTags = ({ item, dietChoice, setDietChoice, allergens, setAllergen
         setAllergens([item.name, ...allergens]);
       }
     };
+    console.log(dietChoices);
+    console.log('Allergens',allergens);
     setIsClicked(!isClicked);
   };
 
