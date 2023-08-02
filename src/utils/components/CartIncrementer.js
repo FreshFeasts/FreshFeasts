@@ -1,35 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Pressable } from "react-native";
 import AppText from "./AppText";
 import Icon from "react-native-vector-icons/FontAwesome";
+import {updateCart} from '../../utils/apis/api'
+import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx"
 
-const CartIncrementer = ( {added, setAdded}) => {
+const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal }) => {
   const [count, setCount] = useState(1);
+  const { currCart, setCurrCart, userId} = useContext(LogInScreenContext);
+
+  const handleRemoveMeal = (mealId) => {
+    const updatedMeals = currCart.meals.filter((meal) => meal !== mealId);
+    const update = { ...currCart, meals: updatedMeals };
+    setCurrCart(update);
+    updateCart('64c96db323bfcbd4a7159209', update);
+  };
+
+  const handleAddMeal = (mealId) => {
+    const update = {}
+    updateCart('64c96db323bfcbd4a7159209', update);
+  };
 
   useEffect(() => {
-    if (count === 0) {
-      setAdded(!added);
+    if(count === 0){
+      handleRemoveMeal(meal._id)
     }
-  }, [count]);
+  },[count])
 
   const handleDecrement = () => {
     if (count > 0) {
-      setCount(count - 1);
+      setCount((prevCount) => prevCount - 1);
     }
-  };
+
+  }
 
   const handleIncrement = () => {
-    setCount(count + 1);
+    setCount((prevCount) => prevCount + 1);
   };
+
+  // useEffect(() => {
+  //   if(cart.meals !== null){
+  //     console.log(cart.meals);
+  //   setCount(cart.meals.reduce((count, id) => (id === meal._id ? count + 1 : count), 0))
+  //   }
+  // },[cart])
 
   return (
     <View className="flex-row justify-center items-center">
       <Pressable onPress={handleDecrement}>
-        <Icon name="minus-square" size={24} color="white" />
+        <Icon name="minus-square" size={24} color={color} />
       </Pressable>
-      <AppText className="text-white mx-2 text-xl"> {count} </AppText>
+      <AppText className="text-{color} mx-2 text-xl"> {count} </AppText>
       <Pressable onPress={handleIncrement}>
-        <Icon name="plus-square" size={24} color="white" />
+        <Icon name="plus-square" size={24} color={color} />
       </Pressable>
     </View>
   );

@@ -25,6 +25,13 @@ const initialValues = {
 };
 
 export const LogInScreenContextProvider = ({ children }) => {
+  const [userId, setUserId] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
+  const [dietChoices, setDietChoices] = useState([]);
+  const [allergens, setAllergens] = useState([]);
+  const [darkTheme, setDarkTheme] = useState(false);
+  const [mealsRated, setMealsRated] = useState(null);
+  const [currCart, setCurrCart] = useState(null);
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
 
@@ -42,6 +49,20 @@ export const LogInScreenContextProvider = ({ children }) => {
         createAccountComp,
         setCreateAccountComp,
         onChangeHandler,
+        userId,
+        setUserId,
+        authToken,
+        setAuthToken,
+        dietChoices,
+        setDietChoices,
+        allergens,
+        setAllergens,
+        darkTheme,
+        setDarkTheme,
+        mealsRated,
+        setMealsRated,
+        currCart,
+        setCurrCart
       }}
     >
       {children}
