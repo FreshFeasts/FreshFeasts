@@ -4,8 +4,8 @@ import AppText from "./AppText";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {updateCart} from '../../utils/apis/api'
 
-const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal, cartRefresh, handleCartRefresh}) => {
-  const [count, setCount] = useState(cart.meals.reduce((count, id) => (id === meal._id ? count + 1 : count), 0));
+const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal }) => {
+  const [count, setCount] = useState(0);
 
   const handleRemoveMeal = (mealId) => {
     const updatedMeals = cart.meals.filter((meal) => meal !== mealId);
@@ -27,6 +27,13 @@ const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal, cartRefr
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
   };
+
+  // useEffect(() => {
+  //   if(cart.meals !== null){
+  //     console.log(cart.meals);
+  //   setCount(cart.meals.reduce((count, id) => (id === meal._id ? count + 1 : count), 0))
+  //   }
+  // },[cart])
 
   return (
     <View className="flex-row justify-center items-center">

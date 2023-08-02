@@ -8,7 +8,7 @@ import AppText from "../../utils/components/AppText";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 
-const MealModal = ({ mealSelection, handleSelectMeal, cartRefresh, handleCartRefresh }) => {
+const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const email = "Enid.Johns@yahoo.com";
   const [added, setAdded] = useState(false);
@@ -64,7 +64,6 @@ const MealModal = ({ mealSelection, handleSelectMeal, cartRefresh, handleCartRef
     setCart(update);
     updateCart(update);
     setAdded(!added);
-    handleCartRefresh();
   };
 
   return (
@@ -140,8 +139,6 @@ const MealModal = ({ mealSelection, handleSelectMeal, cartRefresh, handleCartRef
                   cart={cart}
                   setCart={setCart}
                   meal={meal}
-                  cartRefresh={cartRefresh}
-                  handleCartRefresh={handleCartRefresh}
                 />
               </View>
             ) : (

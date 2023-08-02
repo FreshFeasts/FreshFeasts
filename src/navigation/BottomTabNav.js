@@ -11,12 +11,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 const Tab = createBottomTabNavigator();
 
 const MainTabs = () => {
-const [ cartRefresh, setCartRefresh ] = useState(false);
-
-const handleCartRefresh = () => {
-  setCartRefresh(!cartRefresh);
-};
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -57,8 +51,6 @@ const handleCartRefresh = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          cartRefresh: cartRefresh,
-          handleCartRefresh: handleCartRefresh,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon name="cutlery" size={24} color="white" />
@@ -79,8 +71,6 @@ const handleCartRefresh = () => {
         name="Cart"
         component={CartScreen}
         options={{
-          cartRefresh: cartRefresh,
-          handleCartRefresh: handleCartRefresh,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon name="shopping-cart" size={24} color="white" />
