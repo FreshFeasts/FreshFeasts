@@ -12,17 +12,19 @@ const HistoryCard = ({ meal }) => {
   };
 
   return (
-    <View className="flex-1  items-center">
-      <View className='w-80 h-30 p-2 m-2 rounded-lg border-2 flex-row bg-lemonchiffon'>
+    <View className="flex-1 items-center m-1">
+      <View className="w-80 p-2 rounded-lg border-2 flex-row bg-lemonchiffon">
         <Image
           className="w-24 h-24 rounded-lg mb-2 ml-2"
           source={{
-            uri: meal.url,
+            uri: meal.photo,
           }}
           resizeMode="cover"
         />
         <View>
-          <Text className="font-main text-lg ml-2 mb-2">{meal.name}</Text>
+        <View className="ml-2 mb-2 flex-wrap">
+          <Text className="font-main text-sm truncate">{meal.name}</Text>
+        </View>
             <Text className="font-main text-sm ml-2">Rate this meal: </Text>
             <View className="flex-row ml-2">
             <Pressable onPress={() => changeRating(1)} className="m-1">
