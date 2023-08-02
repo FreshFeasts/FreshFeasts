@@ -11,9 +11,21 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
 const MealCarousel = ({ mealList }) => {
   const [index, setIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
-  const chefRecommendedMeals = mealList.filter((item) => {
-    return item.recommended === true;
-  })
+  // const chefRecommendedMeals = mealList.filter((item) => {
+  //   return item.recommended === true;
+  // })
+  const chefRecommendedMeals = [{
+    name: 'salmon',
+    photo: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80',
+  }, {
+    name: 'chicken',
+    photo: 'https://images.unsplash.com/photo-1572424117831-005b5e9b3ae4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+  }, {
+    name: 'steak',
+    photo: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80'
+  }]
+
+
   const carouselRef = useRef(null);
 
   const renderItem = ({ item }) => {
@@ -27,8 +39,12 @@ const MealCarousel = ({ mealList }) => {
 
   const handlePress = () => {
     // console.log('pressed!')
-    carouselRef.current.stopAutoplay();
-    setIsClicked(true);
+    if (!isClicked) {
+      carouselRef.current.stopAutoplay();
+    } else {
+      carouselRef.current.startAutoplay(instantly=false)
+    }
+    setIsClicked(!isClicked);
   };
 
 
