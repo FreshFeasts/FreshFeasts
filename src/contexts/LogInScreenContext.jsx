@@ -27,8 +27,8 @@ const initialValues = {
 export const LogInScreenContextProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [authToken, setAuthToken] = useState(null);
-  const [dietTypes, setDietTypes] = useState(null);
-  const [allergens, setAllergens] = useState(null);
+  const [dietChoices, setDietChoices] = useState([]);
+  const [allergens, setAllergens] = useState([]);
   const [darkTheme, setDarkTheme] = useState(false);
   const [mealsRated, setMealsRated] = useState(null);
   const [currCart, setCurrCart] = useState(null);
@@ -53,8 +53,8 @@ export const LogInScreenContextProvider = ({ children }) => {
         setUserId,
         authToken,
         setAuthToken,
-        dietTypes,
-        setDietTypes,
+        dietChoices,
+        setDietChoices,
         allergens,
         setAllergens,
         darkTheme,
