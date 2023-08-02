@@ -120,7 +120,7 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
             </View>
             <View className="zipcode">
               <InputWithLabel
-                label="Zip code:"
+                label="Zip code: "
                 labelStyle="text-black"
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
                 value={values.ccZip}
