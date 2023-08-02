@@ -5,13 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import {updateCart} from '../../utils/apis/api'
 
 const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal, cartRefresh, handleCartRefresh}) => {
-  const [count, setCount] = useState(1);
-
-  useEffect(() => {
-    if (count === 0) {
-      setAdded(!added);
-    }
-  }, [count]);
+  const [count, setCount] = useState(cart.meals.reduce((count, id) => (id === meal._id ? count + 1 : count), 0));
 
   const handleRemoveMeal = (mealId) => {
     const updatedMeals = cart.meals.filter((meal) => meal !== mealId);
@@ -22,15 +16,16 @@ const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal, cartRefr
 
   const handleDecrement = () => {
     if (count > 0) {
-      setCount(count - 1);
+      setCount((prevCount) => prevCount - 1);
     }
     if (count === 0){
       handleRemoveMeal(meal._id)
+      setAdded(!added)
     }
   };
 
   const handleIncrement = () => {
-    setCount(count + 1);
+    setCount((prevCount) => prevCount + 1);
   };
 
   return (

@@ -44,9 +44,18 @@ export const postCart = async (body) => {
 
 export const rateMeal = async (rating) => {
   try {
-    //update urls after confirmation from backend team,
-    // await axios.put(`/orders/user/${userId}/${mealId}`, rating);
-    // return true; //TBD what to return based on next action
+    await axios.put('http://localhost:3000/api/meals/add-rating', rating);
+    return true;
+  } catch (error) {
+    console.error('Error adding meal to cart: ', error);
+    throw error;
+  }
+};
+
+export const reviewMeal = async (rating) => {
+  try {
+    await axios.put('http://localhost:3000/api/meals/add-review', review);
+    return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
     throw error;
@@ -55,7 +64,7 @@ export const rateMeal = async (rating) => {
 
 export const getUser = async (email) => {
   try {
-    let user = await axios.get(`http://localhost:3000/api/users/${email}`, headers);
+    const user = await axios.get(`http://localhost:3000/api/users/${email}`, headers);
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);

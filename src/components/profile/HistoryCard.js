@@ -1,7 +1,8 @@
 import React, {useState } from "react";
-import { Text, View, Image, Pressable } from "react-native";
+import { Text, View, Image, Pressable, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { rateMeal } from '../../utils/apis/api'
+import { rateMeal, reviewMeal } from '../../utils/apis/api'
+import InputWithLabel from '../../utils/components/InputComponent.jsx'
 
 const HistoryCard = ({ meal }) => {
   const [rating, setRating] = useState(0);
@@ -10,6 +11,12 @@ const HistoryCard = ({ meal }) => {
     setRating(newRating);
     rateMeal(newRating);
   };
+
+  const handleReview = (review) => {
+    e.preventDefault();
+    reviewMeal(review);
+  };
+
 
   return (
     <View className="flex-1 items-center m-1">
@@ -25,7 +32,7 @@ const HistoryCard = ({ meal }) => {
         <View className="ml-2 mb-2 flex-wrap">
           <Text className="font-main text-sm truncate">{meal.name}</Text>
         </View>
-            <Text className="font-main text-sm ml-2">Rate this meal: </Text>
+            <Text className="font-main text-sm ml-2">Review this meal: </Text>
             <View className="flex-row ml-2">
             <Pressable onPress={() => changeRating(1)} className="m-1">
               <Icon name={rating >= 1 ? 'star' : 'star-o'} size={24} color="#0E4000" />
@@ -43,6 +50,10 @@ const HistoryCard = ({ meal }) => {
               <Icon name={rating >= 5 ? 'star' : 'star-o'} size={24} color="#0E4000" />
             </Pressable>
             </View>
+            <TextInput
+              placeholder="Write a short review"
+              onChangeText={handleReview}
+            />
         </View>
       </View>
     </View>
