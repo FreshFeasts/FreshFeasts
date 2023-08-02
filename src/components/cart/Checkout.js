@@ -10,6 +10,7 @@ import {
   getUserContact,
   getPayment,
 } from "../../utils/apis/api";
+import { format } from 'date-fns';
 
 const Checkout = () => {
   const email = "Enid.Johns@yahoo.com";
@@ -25,9 +26,15 @@ const Checkout = () => {
     state: '',
     zip: ''
   });
+  const cost = 9.99;
 
   const submitOrder = () => {
-    let results = postCart(cart);
+    const final = {
+      userId: user._id,
+      currentCart: {...cart, orderDate: Date.now()}
+    }
+    console.log(final)
+    let results = postCart(final);
     console.log(results);
   };
 
@@ -82,36 +89,44 @@ const Checkout = () => {
           <AppText className="text-2xl text-pakistangreen my-2">
             Customer Information
           </AppText>
-            <AppText className='mb-2'>
+            <AppText className='mb-1'>
               {user.firstName} {user.lastName}
             </AppText>
-            <AppText className='mb-2'>{user.email}</AppText>
-            <AppText className='mb-2'>{address.address1}</AppText>
+            <AppText className='mb-1'>{user.email}</AppText>
+            <AppText className='mb-1'>{address.address1}</AppText>
             {address.address2 === '' ? null : <AppText>{address.address2}</AppText>}
             <View className="flex-row">
-            <AppText className='mb-2'>{address.city}, {address.state} {address.zip} </AppText>
+            <AppText className='mb-1'>{address.city}, {address.state} {address.zip} </AppText>
             </View>
-            <AppText className='mb-2'>Card on File: {payment}</AppText>
+            <AppText className='mb-1'>Card on File: {payment}</AppText>
           </View>
           <AppText className="text-2xl text-pakistangreen ml-1 mt-2">
             Meals
           </AppText>
-          <ScrollView bounces={false}>
+          <ScrollView bounces={false} className="h-[250]" >
             {cartMeals.map((meal) => (
               <CartCard meal={meal} key={meal.name} />
             ))}
           </ScrollView>
-          <AppText className="text-xl text-pakistangreen ml-1 mt-2">
+          <View className="bg-pakistangreen h-1 mt-1" />
+          <AppText className="text-lg text-pakistangreen ml-1 mt-2">
             Delivery Date: {cart.deliverDate}
           </AppText>
+          <AppText className="text-lg text-pakistangreen ml-1 mt-2">
+            Total Meals: {cart.meals.length}
+          </AppText>
+          <AppText className="text-lg text-pakistangreen ml-1 mt-2">
+            Weekly Cost: ${cart.meals.length * cost}
+          </AppText>
+          <View className="justify-end items-center rounded-md">
           <Pressable
-            className="items-center justify-center rounded-md"
             onPress={submitOrder}
           >
             <AppText className="text-2xl bg-pakistangreen text-white p-4 m-4">
               Submit Order
             </AppText>
           </Pressable>
+          </View>
         </View>
       )}
     </>
