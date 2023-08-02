@@ -11,18 +11,22 @@ import { RadioButton } from "react-native-paper";
 import AppText from "../../../../utils/components/AppText.js";
 import InputWithLabel from "../../../../utils/components/InputComponent";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
-const CardInfoComponent = ({setPageTwo, setPageThree}) => {
+const CardInfoComponent = ({setPageThree, setPageFour}) => {
   const { values, onChangeHandler } = useContext(LogInScreenContext);
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const onRadioButtonHandler = () => {
     setChecked(!checked);
   };
 
   const onBackHandler = () => {
-    setPageThree(false);
-    setPageTwo(true);
+    setPageFour(false);
+    setPageThree(true);
+  }
 
+  const onCreateAccountHandler = () => {
+    setPageThree(false);
+    setPageFour(true);
   }
   //className={checked? `h-full w-full bg-forestgreen flex-1 items-center justify-center`:` h-full w-full bg-forestgreen p-4 `}
   return (
@@ -81,6 +85,7 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
       </View>
       {!checked && (
         <View className="mt-8 bg-yellowgreen p-4 rounded-md">
+          <AppText className = "text-center text-base">Billing Address</AppText>
           <View className="first-addy">
             <InputWithLabel
               label="Address 1:"
@@ -130,7 +135,7 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
           </View>
         </View>
       )}
-      <View className={checked ? "flex-row" :"flex-row justify-evenly mb-5" }>
+      <View className={checked ? "flex-row" :"flex-row justify-between mb-5" }>
           <TouchableOpacity
             className={checked? "bg-maize p-3 rounded-lg mt-4 mr-20" : "bg-maize p-3 rounded-lg mt-4"}
             onPress={onBackHandler}
@@ -141,9 +146,9 @@ const CardInfoComponent = ({setPageTwo, setPageThree}) => {
           </TouchableOpacity>
           <TouchableOpacity
             className="bg-maize p-3 rounded-lg mt-4"
-            onPress=""
+            onPress={onCreateAccountHandler}
           >
-            <AppText className="text-black text-center">Continue</AppText>
+            <AppText className="text-black text-center">Create Account</AppText>
           </TouchableOpacity>
         </View>
     </ScrollView>
