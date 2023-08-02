@@ -75,6 +75,7 @@ for(let i = 1; i <= restOfDays; i++){
     return(
       <>
       <Text
+      key = {index}
       style= {{
                 fontSize: 15,
                 color: 'white',
