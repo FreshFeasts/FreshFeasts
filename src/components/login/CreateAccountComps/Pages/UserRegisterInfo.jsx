@@ -3,47 +3,51 @@ import { Text, View, StatusBar, TouchableOpacity } from "react-native";
 import InputWithLabel from "../../../../utils/components/InputComponent";
 import AppText from "../../../../utils/components/AppText.js";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
-const UserRegisterInfo = ({setPageOne, setPageTwo}) => {
-  const { onChangeHandler, values, setCreateAccountComp } = useContext(LogInScreenContext);
+const UserRegisterInfo = ({ setPageOne, setPageTwo }) => {
+  const { onChangeHandler, values, setCreateAccountComp } =
+    useContext(LogInScreenContext);
 
   const onContinueHandler = () => {
     setPageOne(false);
     setPageTwo(true);
-  }
+  };
   const onHaveAccountHandler = () => {
     setPageOne(false);
     setCreateAccountComp(false);
-  }
+  };
+  //
   return (
     <View className="flex-1 items-center justify-center bg-forestgreen">
-        <View className="bg-yellowgreen p-8 rounded-2xl w-10/12">
-          <AppText className="text-2xl text-black text-center">
-            Create Account
-          </AppText>
-          <InputWithLabel
-            label="Email:"
-            labelStyle="text-white"
-            keyboardType="email-address"
-            placeholder="email address"
-            value = {values.createUserEmail}
-            inputStyle="border-solid border-black border-2 p-2 bg-white"
-            onChangeText={(text) => onChangeHandler(text, "createUserEmail")}
-          />
-          <InputWithLabel
-            label="Password:"
-            labelStyle="text-white"
-            secureTextEntry={true}
-            placeholder="password"
-            value = {values.createUserPassword}
-            inputStyle="border-solid border-black border-2 p-1 bg-white "
-            onChangeText={(text) => onChangeHandler(text, "createUserPassword")}
-          />
-          <View className="flex-row justify-evenly">
+      <View className="bg-yellowgreen p-8 rounded-md w-10/12">
+        <AppText className="text-2xl text-black text-center">
+          Create Account
+        </AppText>
+        <InputWithLabel
+          label="Email:"
+          labelStyle="text-black mb-3"
+          keyboardType="email-address"
+          placeholder="example@example.com"
+          value={values.createUserEmail}
+          inputStyle="border-none rounded-md p-3 bg-white mb-2 shadow-inner"
+          onChangeText={(text) => onChangeHandler(text, "createUserEmail")}
+        />
+        <InputWithLabel
+          label="Password:"
+          labelStyle="text-black mb-3"
+          secureTextEntry={true}
+          placeholder="password"
+          value={values.createUserPassword}
+          inputStyle="border-none rounded-md p-3 bg-white mb-2 shadow-inner"
+          onChangeText={(text) => onChangeHandler(text, "createUserPassword")}
+        />
+        <View className="flex-row justify-evenly">
           <TouchableOpacity
             className="bg-maize p-3 rounded-lg mt-4"
             onPress={onHaveAccountHandler}
           >
-            <AppText className="text-black text-center">Have an account?</AppText>
+            <AppText className="text-black text-center">
+              Have an account?
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity
             className="bg-maize p-3 rounded-lg mt-4"
@@ -51,9 +55,9 @@ const UserRegisterInfo = ({setPageOne, setPageTwo}) => {
           >
             <AppText className="text-black text-center">Continue</AppText>
           </TouchableOpacity>
-          </View>
         </View>
       </View>
-  )
-}
+    </View>
+  );
+};
 export default UserRegisterInfo;
