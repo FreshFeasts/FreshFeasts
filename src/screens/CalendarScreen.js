@@ -29,10 +29,9 @@ const CalendarScreen = ({navigation}) => {
   // console.log(userInitData.user._id)
 
   useEffect(() => {
-    getOrders(userInitData.token, userInitData.user._id)
+    getOrders(userInitData.user._id, userInitData.token)
       .then((response) => {
         setUserMeal(response)
-        console.log('hello',response)
 
         const updatedMarkedDates = {}
         for (let i = 0; i < response.length; i++) {
@@ -175,7 +174,7 @@ useEffect(() => {
     }
   }, [selected]);
 
-// if(userMeal && userMeal.length > 0){
+if(userMeal && userMeal.length > 0){
 
   const mapCal = userMeal.map((orders) => {
 
@@ -283,19 +282,19 @@ useEffect(() => {
       </View>
     )
   })
-// } else {
-//   return (
-//     <SafeAreaView>
-//       <Text
-//         style={{
-//           flex: 1,
-//           justifyContent: 'center',
-//           alignItems: 'center'
-//         }}
-//       >Loading...</Text>
-//     </SafeAreaView>
-//   );
-// }
+} else {
+  return (
+    <SafeAreaView>
+      <Text
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >Loading...</Text>
+    </SafeAreaView>
+  );
+}
 
 
 
@@ -304,7 +303,8 @@ if(Object.keys(markedDates).length > 0){
     <>
     <SafeAreaView>
         <CalendarList
-        futureScrollRange={6}
+        pastScrollRange={2}
+        futureScrollRange={2}
         scrollEnabled={true}
           onDayPress={(day) => {
             setSelected(day.dateString)
