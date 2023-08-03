@@ -13,9 +13,12 @@ export const getMeals = async (token) => {
   }
 };
 
-export const getOrders = async (userId) => {
+export const getOrders = async (token,userId) => {
+  console.log(token,userId)
   try {
-    const orders = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, headers);
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    const orders = await axios.get(`${config.SERVER_URL}/api/orders/user/${userId}?count=5&page=1`, headers);
+    console.log(orders.data)
     return orders.data;
   } catch (error) {
     console.error('Error fetching orders: ', error);
@@ -126,3 +129,15 @@ export const getPayment = async (userId) => {
     throw error;
   }
 };
+
+export const updateDeliveryDate = async (token ,userId) => {
+  try {
+    const body = { orderId, userId, orderDate, deliveryDate }
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    let user = await axios.put(`${config.SERVER_URL}/api/update-delivery`,body, headers);
+    return true;
+  } catch (error) {
+    console.error('Error updating delivery date: ', error);
+    throw error;
+  }
+}
