@@ -25,6 +25,7 @@ export const getOrders = async (userId) => {
 export const updateCart = async (userId, currentCart) => {
   try {
     let body = {userId, currentCart}
+    console.log("body ", body);
     let cart = await axios.put('http://localhost:3000/api/users/cart', body, headers);
     return true;
   } catch (error) {

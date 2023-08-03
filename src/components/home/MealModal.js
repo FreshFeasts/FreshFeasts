@@ -37,15 +37,20 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
     if (mealSelection) {
       setMeal(mealSelection);
       setModalVisible(true);
+      const mealList = cart.meals;
+      const mealCount = mealList.reduce((count, id) => id === mealSelection._id ? count + 1 : count, 0);
+      setCount(mealCount);
     } else {
       setModalVisible(false);
     }
   }, [mealSelection]);
 
-  const handleAddMeal = () => {
-    const update = cart;
-    update.meals.push(meal._id);
-    updateCart(userInitData.user._id, update);
+  const handleAddMeal = async () => {
+    console.log("CART HANDLE ADD MEAL:", userInitData.user.currentCart);
+    const updatedMeals = [...cart.meals, meal._id];
+    console.log("UDPATED MEALS:", updatedMeals);
+    const update = { ...cart, meals: updatedMeals };
+    console.log("UPDATE", update)
     setUserInitData((prevUserData) => ({
       ...prevUserData,
       user: {
@@ -53,6 +58,15 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         currentCart: update,
       },
     }));
+    try {
+      await updateCart(userInitData.user._id, update);
+    } catch (error) {
+      console.error('Error updating cart: ', error);
+    }
+  };
+
+  const handleCount = (count) => {
+    setCount(count);
   };
 
   return (
@@ -163,9 +177,9 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               <View className="absolute bottom-2 right-2">
                 <CartIncrementer
                   count={count}
-                  setCount={setCount}
                   color="white"
-                  meal={meal}
+                  mealId={meal._id}
+                  handleCount={handleCount}
                 />
               </View>
             ) : (
@@ -177,8 +191,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   <Text className="font-main text-white mr-2">Add to Cart</Text>
                   <Icon name="cart-plus" size={32} color="white" />
                 </Pressable>
-              </View>
-            )}
+              </View>)}
           </View>
         </View>
       </Modal>

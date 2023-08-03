@@ -5,13 +5,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { updateCart } from "../../utils/apis/api";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
-const CartIncrementer = ({ count, setCount, color, meal }) => {
+const CartIncrementer = ({ count, color, mealId, handleCount }) => {
   const { userInitData, setUserInitData } = useContext(LogInScreenContext);
   const cart = userInitData.user.currentCart;
 
   useEffect(() => {
     if (count === 0) {
-      handleRemoveMeal(meal._id);
+      handleRemoveMeal(mealId);
     }
   }, [count]);
 
@@ -36,9 +36,9 @@ const CartIncrementer = ({ count, setCount, color, meal }) => {
     }));
   };
 
-  const handleAddMeal = (mealId) => {
-    const update = cart;
-    update.meals.push(mealId);
+  const handleAddMeal = async (mealId) => {
+    const updatedMeals = [...cart.meals, mealId];
+    const update = { ...cart, meals: updatedMeals };
     updateCart(userInitData.user._id, update);
     setUserInitData((prevUserData) => ({
       ...prevUserData,
@@ -47,18 +47,23 @@ const CartIncrementer = ({ count, setCount, color, meal }) => {
         currentCart: update,
       },
     }));
+    try {
+      await updateCart(userInitData.user._id, update);
+    } catch (error) {
+      console.error('Error updating cart: ', error);
+    }
   };
 
   const handleDecrement = () => {
     if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
+      handleCount((prevCount) => prevCount - 1); // Correct state management
+      handleRemoveMeal(mealId);
     }
-    handleRemoveMeal(meal._id);
   };
 
   const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
-    handleAddMeal(meal._id);
+    handleCount((prevCount) => prevCount + 1); // Correct state management
+    handleAddMeal(mealId);
   };
 
   return (

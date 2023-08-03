@@ -4,8 +4,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import CartIncrementer from "../../utils/components/CartIncrementer";
 
 
-const CartCard = ({ meal }) => {
-  const [count, setCount] = useState(0);
+const CartCard = ({ meal, count }) => {
+  const [count2, setCount2] = useState(count);
+
+  const handleCount = (count) => {
+    setCount2(count);
+  };
 
   return (
     <View className="flex-1 items-center m-1">
@@ -24,8 +28,8 @@ const CartCard = ({ meal }) => {
           <CartIncrementer
             color="forestgreen"
             count={count}
-            setCount={count}
-            meal={meal}
+            handleCount={handleCount}
+            mealId={meal._id}
           />
         </View>
       </View>
