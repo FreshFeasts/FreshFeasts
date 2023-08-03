@@ -15,7 +15,7 @@ export const getMeals = async (token) => {
 export const getOrders = async (userId, token) => {
   try {
     const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    const orders = await axios.get(`${config.SERVER_URL}/api/orders/user/${userId}`, headers);
+    const orders = await axios.get(`${config.SERVER_URL}/api/orders/user/${userId}?count=3`, headers);
     return orders.data;
   } catch (error) {
     console.error('Error fetching orders: ', error);
@@ -48,7 +48,7 @@ export const postCart = async (body, token) => {
 
 export const createUser = async (bodyObject) => {
   try{
-    const response = await axios.post('http://localhost:3000/register', bodyObject);
+    const response = await axios.post(`${config.SERVER_URL}/register`, bodyObject);
     return response;
   } catch(err){
     console.log(err);
@@ -58,7 +58,7 @@ export const createUser = async (bodyObject) => {
 
 export const signInUser = async (signInObj) => {
   try{
-    const response = await axios.post('http://localhost:3000/login', signInObj);
+    const response = await axios.post(`${config.SERVER_URL}/login`, signInObj);
     return response;
   } catch (err) {
     console.log(err);
@@ -67,7 +67,7 @@ export const signInUser = async (signInObj) => {
 }
 export const getUserData = async(userId, token) => {
   try{
-    const response = await axios.get(`http://localhost:3000/api/initdata/${userId}`, {
+    const response = await axios.get(`${config.SERVER_URL}/api/initdata/${userId}`, {
       headers: {Authorization:`Bearer ${token}` }
     });
     return response;

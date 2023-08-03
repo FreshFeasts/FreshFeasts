@@ -60,7 +60,6 @@ const Checkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(userInitData.token)
         const nextWeek = addDays(new Date(), 7);
         if (!cart) {
           cart = {
@@ -110,15 +109,15 @@ const Checkout = () => {
             </AppText>
           </View>
           <ScrollView bounces={false} className="mb-28">
-          <View className="flex justify-end ml-2 mt-1 padding-20">
-            <AppText className="text-xl text-pakistangreen my-2">
+          <View className="flex justify-end ml-2 mt-1 mb-2 padding-20">
+            <AppText className="text-xl my-2">
               Customer Information
             </AppText>
             <View className="flex-row">
               <AppText className="mb-1">
                 {userInitData.user.firstName} {userInitData.user.lastName}
               </AppText>
-              <AppText className="mb-1 absolute right-0">
+              <AppText className="mb-1 absolute right-1">
                 {userInitData.user.email}
               </AppText>
             </View>
@@ -136,7 +135,7 @@ const Checkout = () => {
             ))}
           <View className="flex-row items-center">
             {cart.deliveryDate !== null ?
-          <AppText className="text-base text-pakistangreen mx-1 my-2">
+          <AppText className="text-base mx-1 mt-2">
           Delivery Date: {format(parseISO(deliveryDate), "MM/dd/yyyy")}
           </AppText> : <AppText> No Delivery selected</AppText> }
           {/* <View className="mt-1">
@@ -160,15 +159,15 @@ const Checkout = () => {
             />
             </View> */}
           </View>
-          <AppText className="text-base text-pakistangreen ml-1 mt-2">
+          <AppText className="text-base ml-1 mt-2">
             Total Meals: {cart.meals.length}
           </AppText>
-          <AppText className="text-base text-pakistangreen ml-1 mt-2">
-            Weekly Cost: ${cart.meals.length * cost}
+          <AppText className="text-base  ml-1 mt-2">
+            This Week's Cost: ${cart.meals.length * cost}
           </AppText>
-          <View className="justify-end items-center rounded-md">
+          <View className="justify-end items-center rounded-md bg-pakistangreen py-2 px-1 m-2">
             <Pressable onPress={submitOrder}>
-              <AppText className="text-2xl bg-pakistangreen text-white p-2 m-2 z-10">
+              <AppText className="text-2xl text-white">
                 Submit Order
               </AppText>
             </Pressable>

@@ -80,7 +80,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         }}
       >
         <View className="flex-1 items-center justify-end mb-5">
-          <View className="bg-pakistangreen w-[100%] h-[90%] items-start rounded-lg">
+          <View className="bg-pakistangreen w-[100%] items-start rounded-lg">
             <View className="absolute top-2 right-2 z-20">
               <Pressable
                 onPress={() => {
@@ -88,7 +88,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Icon name="times-circle" size={32} color="forestgreen" />
+                <Icon name="times-circle" size={32} color="white" />
               </Pressable>
             </View>
             <Image
@@ -127,7 +127,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
             </View>
             <AppText className="text-lg text-white ml-2 underline">Nutrition</AppText>
             <Nutrition nutrition={meal.nutrition} />
-            <View className="flex-row flex-wrap mx-2 my-3">
+            <View className="flex-row flex-wrap mx-2 my-1">
               <AppText className="text-xs text-white mr-1">
                 Ingredients:
               </AppText>
@@ -137,7 +137,16 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                 </AppText>
               ))}
             </View>
-
+          {meal.allergens.length > 0 ? <View className="flex-row flex-wrap mx-2 my-1">
+            <AppText className="text-xs text-white mr-1">
+              Allergens:
+            </AppText>
+            {meal.allergens.map((allergen, index) => (
+              <AppText key={index} className="text-xs text-white mr-1">
+                {allergen}
+              </AppText>
+            ))}
+          </View> : <></>}
             <Modal
               animationType="slide"
               transparent={true}
@@ -162,8 +171,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   <AppText className="text-xl text-pakistangreen ml-2 mt-2">Reviews </AppText>
                     {meal.reviews ? Object.entries(meal.reviews).map((review, index) => (
                       <View className="mt-5" key={index}>
-                        <AppText className="text-pakistangreen text-base ml-2 mt-2">Name: {review[1].name}</AppText>
-                        <AppText className="text-pakistangreen text-base ml-2 mb-2">Review: {review[1].reviewText}</AppText>
+                        <AppText className="text-pakistangreen text-base ml-2 mb-2">{review[1].reviewText}</AppText>
+                        <AppText className="text-pakistangreen text-base ml-2 mt-2"> - {review[1].name}</AppText>
                       </View>
                     )) : <AppText className='text-lg text-pakistangreen ml-2 mt-2'>No Reviews Available</AppText>}
                   </ScrollView>
@@ -171,8 +180,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               </View>
             </Modal>
             <View className="absolute bottom-4 left-2 w-56">
-
-              <AppText className="text-xs text-white">
+              <AppText className="text-sm text-white">
                 {meal.favorites} other FreshFeast customers favorited this meal!
               </AppText>
             </View>
