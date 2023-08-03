@@ -7,37 +7,38 @@ import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 import { format, parseISO } from "date-fns";
 
 const OrderHistory = ({ history, setHistory }) => {
-  const userId = "64c96db323bfcbd4a7159209";
-  const firstName = 'Joe';
+  const { userInitData, setUserInitData } = useContext(LogInScreenContext);
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getOrders(userId).then((orderData) => {
-      getMeals()
-        .then((meals) => {
-          const ordersMealDetail = orderData.map((order) => {
-            const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
-            const mealsWithDetails = mealDetails.map((meal) => {
-              return {
-                id: meal._id,
-                name: meal.name,
-                photo: meal.photo,
-              };
-            });
-            return {
-              ...order,
-              meals: mealsWithDetails,
-            };
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const orderData = await getOrders(userInitData.user._id, userInitData.token);
+        const meals = await getMeals(userInitData.token);
 
+        const ordersMealDetail = orderData.map((order) => {
+          const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
+          const mealsWithDetails = mealDetails.map((meal) => {
+            return {
+              id: meal._id,
+              name: meal.name,
+              photo: meal.photo,
+            };
           });
-          setOrders(ordersMealDetail);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
+          return {
+            ...order,
+            meals: mealsWithDetails,
+          };
         });
-    });
+        setOrders(ordersMealDetail);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -45,20 +46,20 @@ const OrderHistory = ({ history, setHistory }) => {
       {loading ? (
         <Text>Orders are loading...</Text>
       ) : (
-        <ScrollView bounces={false}>
+        <ScrollView bounces={false} horizontal={false}>
           <View className="flex-1 justify-center items-center">
-            {orders.map((order) => {
+            {orders.map((order, index) => {
               const formattedDate = format(
                 parseISO(order.deliveryDate),
                 "MM/dd/yyyy"
               );
               return (
                 <>
-                  <AppText className="text-xl" key={order.orderId} >
+                  <AppText className="text-xl" key={index}>
                     {formattedDate}
                   </AppText>
-                  {order.meals.map((meal) => (
-                    <HistoryCard key={meal.name} meal={meal} userId={userId} firstName={firstName}/>
+                  {order.meals.map((meal,index) => (
+                    <HistoryCard key={index} meal={meal} userId={userInitData.user._id} firstName={userInitData.user.firstName}/>
                   ))}
                 </>
               );

@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {View} from 'react-native'
+import { View } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CalendarScreen from "../screens/CalendarScreen";
@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator();
 const MainTabs = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#FFF7C6",
@@ -21,7 +22,7 @@ const MainTabs = () => {
         tabBarInactiveBackgroundColor: "#0E4000",
         tabBarStyle: [
           {
-           display: 'flex',
+            display: "flex",
           },
           null,
         ],
