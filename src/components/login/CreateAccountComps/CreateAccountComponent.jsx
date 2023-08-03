@@ -5,7 +5,7 @@ import PersonalInfoComponent from "./Pages/PersonalInfoComponent";
 import CardInfoComponent from "./Pages/CardInfoComponent";
 import DietTypeAndAllergen from "./Pages/DietTypeAndAllergen.jsx";
 // import { LogInScreenContext } from "../../../contexts/LogInScreenContext";
-const CreateAccountProcess = () => {
+const CreateAccountProcess = ({setLoggedIn}) => {
   const [pageOne, setPageOne] = useState(true);
   const [pageTwo, setPageTwo] = useState(false);
   const [pageThree, setPageThree] = useState(false);
@@ -54,6 +54,7 @@ const CreateAccountProcess = () => {
         <CardInfoComponent
           setPageThree={setPageThree}
           setPageFour={setPageFour}
+          setLoggedIn={setLoggedIn}
         />
       )}
     </>

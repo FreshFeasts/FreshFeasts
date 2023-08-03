@@ -45,6 +45,7 @@ const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
                 setAllergens={setAllergens}
                 dietChoices={dietChoices}
                 setDietChoices={setDietChoices}
+                isChosen={dietChoices.includes(item.name)}
               />
             )
           })}
@@ -63,6 +64,7 @@ const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
                 setAllergens={setAllergens}
                 dietChoices={dietChoices}
                 setDietChoices={setDietChoices}
+                isChosen={allergens.includes(item.name)}
               />
             )
           })}
@@ -81,8 +83,8 @@ const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
   );
 };
 
-const PressableTags = ({ item, dietChoices, setDietChoices, allergens, setAllergens }) => {
-  const [isClicked, setIsClicked] = useState(false);
+const PressableTags = ({ item, dietChoices, setDietChoices, allergens, setAllergens, isChosen }) => {
+  const [isClicked, setIsClicked] = useState(isChosen);
 
   const handlePress = (item) => {
     if (item.type === 'diet') {

@@ -43,6 +43,37 @@ export const postCart = async (body) => {
   }
 };
 
+export const createUser = async (bodyObject) => {
+  try{
+    const response = await axios.post('http://localhost:3000/register', bodyObject);
+    return response;
+  } catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
+export const signInUser = async (signInObj) => {
+  try{
+    const response = await axios.post('http://localhost:3000/login', signInObj);
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+export const getUserData = async(userId, token) => {
+  try{
+    const response = await axios.get(`http://localhost:3000/api/initdata/${userId}`, {
+      headers: {Authorization:`Bearer ${token}` }
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 export const rateMeal = async (mealId, userId, rating) => {
   try {
     const body = { mealId, userId, rating }

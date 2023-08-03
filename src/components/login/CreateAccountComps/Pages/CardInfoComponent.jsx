@@ -11,37 +11,59 @@ import { RadioButton } from "react-native-paper";
 import AppText from "../../../../utils/components/AppText.js";
 import InputWithLabel from "../../../../utils/components/InputComponent";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
-const CardInfoComponent = ({setPageThree, setPageFour}) => {
-  const { values, onChangeHandler } = useContext(LogInScreenContext);
-  const [checked, setChecked] = useState(false);
+import axios from "axios";
+import { createUser } from "../../../../utils/apis/api.js";
+const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
+  const {
+    values,
+    onChangeHandler,
+    isSameAddress,
+    setIsSameAddress,
+    createUserData,
+    setUserInitData,
+  } = useContext(LogInScreenContext);
 
   const onRadioButtonHandler = () => {
-    setChecked(!checked);
+    setIsSameAddress(!isSameAddress);
   };
 
   const onBackHandler = () => {
     setPageFour(false);
     setPageThree(true);
-  }
+  };
 
-  const onCreateAccountHandler = () => {
-    setPageThree(false);
-    setPageFour(true);
-  }
+  const onCreateAccountHandler = async () => {
+    try{
+      const response = await createUser(createUserData);
+      setUserInitData(response);
+      setPageFour(false);
+      setLoggedIn(true);
+    } catch(err) {
+      console.log(err);
+    }
+  };
   //className={checked? `h-full w-full bg-forestgreen flex-1 items-center justify-center`:` h-full w-full bg-forestgreen p-4 `}
   return (
-    <ScrollView  contentContainerStyle={
-      checked
-        ? { padding:10, flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'forestgreen' }
-        : { padding: 10, backgroundColor: 'forestgreen' }
-    }>
+    <ScrollView
+      contentContainerStyle={
+        isSameAddress
+          ? {
+              padding: 10,
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "forestgreen",
+            }
+          : { padding: 10, backgroundColor: "forestgreen" }
+      }
+    >
       <AppText className="text-2xl text-center mb-2">Card Info</AppText>
       <View className="bg-yellowgreen p-4 rounded-md">
         <View className="card-container flex-row items-center justify-center gap-2">
           <View className="border-solid border-2 rounded-lg">
             <RadioButton
               value="Billing address same as Shipping"
-              status={checked ? "checked" : "unchecked"}
+              status={isSameAddress ? "checked" : "unchecked"}
               color="red"
               uncheckedColor="black"
               onPress={onRadioButtonHandler}
@@ -83,9 +105,9 @@ const CardInfoComponent = ({setPageThree, setPageFour}) => {
           </View>
         </View>
       </View>
-      {!checked && (
+      {!isSameAddress && (
         <View className="mt-8 bg-yellowgreen p-4 rounded-md">
-          <AppText className = "text-center text-base">Billing Address</AppText>
+          <AppText className="text-center text-base">Billing Address</AppText>
           <View className="first-addy">
             <InputWithLabel
               label="Address 1:"
@@ -135,22 +157,26 @@ const CardInfoComponent = ({setPageThree, setPageFour}) => {
           </View>
         </View>
       )}
-      <View className={checked ? "flex-row" :"flex-row justify-between mb-5" }>
-          <TouchableOpacity
-            className={checked? "bg-maize p-3 rounded-lg mt-4 mr-20" : "bg-maize p-3 rounded-lg mt-4"}
-            onPress={onBackHandler}
-          >
-            <AppText className="text-black text-center">
-              Back
-            </AppText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="bg-maize p-3 rounded-lg mt-4"
-            onPress={onCreateAccountHandler}
-          >
-            <AppText className="text-black text-center">Create Account</AppText>
-          </TouchableOpacity>
-        </View>
+      <View
+        className={isSameAddress ? "flex-row" : "flex-row justify-between mb-5"}
+      >
+        <TouchableOpacity
+          className={
+            isSameAddress
+              ? "bg-maize p-3 rounded-lg mt-4 mr-20"
+              : "bg-maize p-3 rounded-lg mt-4"
+          }
+          onPress={onBackHandler}
+        >
+          <AppText className="text-black text-center">Back</AppText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-maize p-3 rounded-lg mt-4"
+          onPress={onCreateAccountHandler}
+        >
+          <AppText className="text-black text-center">Create Account</AppText>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };

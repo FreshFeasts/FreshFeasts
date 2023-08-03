@@ -14,7 +14,7 @@ import { useFonts } from 'expo-font';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState(true); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
+  const [loggedIn, setLoggedIn] = useState(false); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
 
   // const auth = getAuth();
 
@@ -37,7 +37,7 @@ export default function App() {
     <LogInScreenContextProvider>
       <NavigationContainer>
         <Stack.Navigator headerShown="false">
-          {user ? (
+          {loggedIn ? (
             <Stack.Screen
               name="MainTabs"
               component={MainTabs}
@@ -45,7 +45,9 @@ export default function App() {
             />
           ) : (
             <>
-              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Login">
+                {(props) => <LoginScreen {...props} setLoggedIn={setLoggedIn}/>}
+              </Stack.Screen>
               <Stack.Screen name="SignUp" component={SignUpScreen} />
             </>
           )}

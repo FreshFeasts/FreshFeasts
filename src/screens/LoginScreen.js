@@ -4,12 +4,12 @@ import { LogInScreenContext } from "../contexts/LogInScreenContext.jsx";
 import SignInComponent from "../components/login/SignInComponent.jsx";
 import CreateAccountProcess from '../components/login/CreateAccountComps/CreateAccountComponent.jsx';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, route, setLoggedIn }) => {
   const { createAccountComp } = useContext(LogInScreenContext);
   return(
     <>
-      {!createAccountComp && <SignInComponent />}
-      {createAccountComp && <CreateAccountProcess/>}
+      {!createAccountComp && <SignInComponent setLoggedIn={setLoggedIn} />}
+      {createAccountComp && <CreateAccountProcess setLoggedIn={setLoggedIn}/>}
     </>
   )
 };
