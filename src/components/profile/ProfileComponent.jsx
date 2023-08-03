@@ -8,19 +8,19 @@ import axios from "axios";
 import { SERVER_URL } from '../../../config.js';
 
 const ProfileComponent = () => {
-  const {values, userId, userInitData} = useContext(LogInScreenContext);
+  const {userInitData} = useContext(LogInScreenContext);
   const [profile, setProfile] = useState({
-    userId: userId,
-    firstName: values.firstName,
-    lastName: values.lastName,
-    email: values.createUserEmail || values.signInEmail,
-    address1: values.address1,
-    address2: values.address2,
-    city: values.city,
-    state: values.state,
-    zip: values.zip,
-    darkTheme: false,
-    phone: values.phone
+    userId: userInitData.user._id,
+    firstName: userInitData.user.firstName,
+    lastName: userInitData.user.lastName,
+    email: userInitData.user.email,
+    address1: userInitData.info.deliveryAddress.address1,
+    address2: userInitData.info.deliveryAddress.address2,
+    city: userInitData.info.deliveryAddress.city,
+    state: userInitData.info.deliveryAddress.state,
+    zip: userInitData.info.deliveryAddress.zip,
+    darkTheme: userInitData.user.darkTheme,
+    phone: userInitData.info.phone
   });
 
   let handleChange = function (text, input) {
@@ -29,10 +29,8 @@ const ProfileComponent = () => {
       [input]: text
     });
   };
-
-  let handleSubmit = function () {
-    axios.put(SERVER_URL + 'api/users/update', {
-        userId: profile.userId,
+const payload = {
+  userId: profile.userId,
         user: {
           firstName: profile.firstName,
           lastName: profile.lastName,
@@ -49,10 +47,12 @@ const ProfileComponent = () => {
           },
           phone: profile.phone
         }
-      }, {headers: {AUTHORIZATION: userInitData.token}})
+}
+  let handleSubmit = async function () {
+    axios.put(SERVER_URL + '/api/users/update', payload, {headers: {'Authorization': `Bearer ${userInitData.token}`}})
     .catch((err) => {
       throw err;
-    }).then((results) => {});
+    });
   }
   return (
     <>
@@ -83,6 +83,7 @@ const ProfileComponent = () => {
             labelStyle="text-white"
             keyboardType="email-address"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            defaultValue={profile.email}
             onChangeText={(text) => handleChange(text, 'email')}
           />
         </View>
@@ -91,6 +92,7 @@ const ProfileComponent = () => {
           labelStyle="text-white"
           keyboardType="email-address"
           inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+          defaultValue={profile.address1}
           onChangeText={(text) => handleChange(text, 'address1')}
         />
         <InputWithLabel
@@ -98,6 +100,7 @@ const ProfileComponent = () => {
           labelStyle="text-white"
           keyboardType="email-address"
           inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+          defaultValue={profile.address2}
           onChangeText={(text) => handleChange(text, 'address2')}
         />
         <View className="city">
@@ -105,6 +108,7 @@ const ProfileComponent = () => {
             label="City:"
             labelStyle="text-white"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            defaultValue={profile.city}
             onChangeText={(text) => handleChange(text, 'city')}
           />
         </View>
@@ -114,6 +118,7 @@ const ProfileComponent = () => {
               label="State:"
               labelStyle="text-white"
               inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+              defaultValue={profile.state}
               onChangeText={(text) => handleChange(text, 'state')}
             />
           </View>
@@ -122,15 +127,10 @@ const ProfileComponent = () => {
               label="Zip Code:"
               labelStyle="text-white"
               inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+              defaultValue={profile.zip}
               onChangeText={(text) => handleChange(text, 'zip')}
             />
           </View>
-        </View>
-        <View>
-          <Picker
-            selectedValue="english">
-              <Picker.Item label="English" value="english"/>
-            </Picker>
         </View>
         <View>
           <Picker
