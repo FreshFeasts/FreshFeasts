@@ -20,6 +20,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
     isSameAddress,
     setIsSameAddress,
     createUserData,
+    setUserInitData,
   } = useContext(LogInScreenContext);
 
   const onRadioButtonHandler = () => {
@@ -32,10 +33,14 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
   };
 
   const onCreateAccountHandler = async () => {
-    console.log(createUserData);
-    // setPageThree(false);
-    // setPageFour(true);
-    // setLoggedIn(true);
+    try{
+      const response = await createUser(createUserData);
+      setUserInitData(response);
+      setPageFour(false);
+      setLoggedIn(true);
+    } catch(err) {
+      console.log(err);
+    }
   };
   //className={checked? `h-full w-full bg-forestgreen flex-1 items-center justify-center`:` h-full w-full bg-forestgreen p-4 `}
   return (

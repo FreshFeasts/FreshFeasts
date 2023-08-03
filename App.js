@@ -45,7 +45,9 @@ export default function App() {
             />
           ) : (
             <>
-              <Stack.Screen name="Login" component={LoginScreen} setLoggedIn={setLoggedIn} />
+              <Stack.Screen name="Login">
+                {(props) => <LoginScreen {...props} setLoggedIn={setLoggedIn}/>}
+              </Stack.Screen>
               <Stack.Screen name="SignUp" component={SignUpScreen} />
             </>
           )}

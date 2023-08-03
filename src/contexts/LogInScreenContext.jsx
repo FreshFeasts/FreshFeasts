@@ -65,8 +65,8 @@ export const LogInScreenContextProvider = ({ children }) => {
       firstName: values.firstName,
       lastName: values.lastName,
       dietChoice: dietChoices,
-      allergen: allergens,
-      preferred: 0,
+      allergens: allergens,
+      preferredDay: 0,
     },
     info: {
       deliveryAddress: addressInfo,
