@@ -18,7 +18,7 @@ const HomeScreen = ({navigation, authToken}) => {
 
   const fetchMeals = async () => {
     try {
-      let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }});
+      let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGNhZjQ0NDY5NGNmMDI5YzBhYmQzZDUiLCJlbWFpbCI6Ikxhc3RUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTY5MTA4MzQyNX0._g1AXXvMBMDgy8en6AvjnWOEzryFmtAZmIUqfRZs6Q8' }});
       setMeals(response.data);
     } catch (err) {
       console.log(err);

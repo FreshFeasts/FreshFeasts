@@ -4,7 +4,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { compareAsc, format, addDays, addBusinessDays, parseISO} from 'date-fns'
-import {LoginScreenContext} from '../contexts/LogInScreenContext.jsx'
+import {LogInScreenContext} from '../contexts/LogInScreenContext.jsx'
+import {getOrders} from '../utils/apis/api'
 
 
 
@@ -24,10 +25,34 @@ const CalendarScreen = ({navigation}) => {
   const [userMeal, setUserMeal] = useState([])
   const [markedDates, setMarkedDates] = useState({});
 
+  console.log(userInitData.token)
+  console.log(userInitData.user._id)
+
+  // useEffect(() => {
+  //   getOrders(userInitData.user._id)
+  //     .then((response) => {
+  //       setUserMeal(response.data);
+  //       const updatedMarkedDates = {};
+  //       for (let i = 0; i < response.data.length; i++) {
+  //         const deliveryDay = format(
+  //           parseISO(response.data[i].deliveryDate),
+  //           'yyyy-MM-dd'
+  //         );
+  //         updatedMarkedDates[deliveryDay] = {
+  //           selected: true,
+  //           selectedColor: '#238A28',
+  //         };
+  //       }
+  //       setMarkedDates(updatedMarkedDates)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/orders/user/64c7ee260b1a4c73ee5b3047', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM3ZWUyNjBiMWE0YzczZWU1YjMwNDciLCJlbWFpbCI6IkplcnJvZF9NZWRodXJzdDUxQHlhaG9vLmNvbSIsImlhdCI6MTY5MTAxMTUyOX0.y0OWT6_jabnR1GeZR3wMAB4OkV7Ee2usoqwOtnzJjnU` }}).
-      then((response) => {
+    axios.get(`http://localhost:3000/api/orders/user/${userInitData.user._id}?count=5&page=1`, { headers: { "Authorization" : `Bearer ${userInitData.token}` }})
+      .then((response) => {
         setUserMeal(response.data)
         const updatedMarkedDates = {};
         for (let i = 0; i < response.data.length; i++) {
@@ -50,7 +75,7 @@ const CalendarScreen = ({navigation}) => {
 
   const fetchMeals = async () => {
     try {
-      let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM3ZWUyNjBiMWE0YzczZWU1YjMwNDciLCJlbWFpbCI6IkplcnJvZF9NZWRodXJzdDUxQHlhaG9vLmNvbSIsImlhdCI6MTY5MTAxMTUyOX0.y0OWT6_jabnR1GeZR3wMAB4OkV7Ee2usoqwOtnzJjnU` }});
+      let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer ${userInitData.token}` }});
       setFetchMeals(response.data);
     } catch (err) {
       console.log(err);
@@ -67,7 +92,7 @@ const CalendarScreen = ({navigation}) => {
       axios({
         method: "PUT",
         url: 'http://localhost:3000/api/orders/update-delivery',
-        headers: {"Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM3ZWUyNjBiMWE0YzczZWU1YjMwNDciLCJlbWFpbCI6IkplcnJvZF9NZWRodXJzdDUxQHlhaG9vLmNvbSIsImlhdCI6MTY5MTAxMTUyOX0.y0OWT6_jabnR1GeZR3wMAB4OkV7Ee2usoqwOtnzJjnU`},
+        headers: {"Authorization" : `Bearer ${userInitData.token}`},
         data: {
                 "orderId": orderId,
                 "userId": userId,
