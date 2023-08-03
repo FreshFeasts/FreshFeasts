@@ -17,7 +17,6 @@ const HomeScreen = ({navigation, authToken}) => {
 
   const fetchMeals = async () => {
     try {
-      console.log('token:', userInitData.token);
       let response = await getMeals(userInitData.token);
       setMeals(response);
     } catch (err) {
@@ -26,7 +25,6 @@ const HomeScreen = ({navigation, authToken}) => {
   };
 
   useEffect(() => {
-    console.log(userInitData);
     fetchMeals();
   }, []);
 
