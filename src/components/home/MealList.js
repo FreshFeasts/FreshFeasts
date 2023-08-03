@@ -2,11 +2,10 @@ import {  Text, View, StatusBar, ScrollView, Pressable } from "react-native";
 import React from 'react';
 
 import MealListCard from './MealListCard';
-import { user } from './mealListData.js'; // remove once connected to API
 
 const { useState, useEffect } = React;
 
-const MealList = ({meals, handleSelectMeal}) => { // add meals and user data once connected to API
+const MealList = ({meals, user, handleSelectMeal}) => { // add meals and user data once connected to API
   const [sortOption, setSortOption] = useState('rating');
   const [filterOption, setFilterOption] = useState([]);
   const [finalMeals, setFinalMeals] = useState([]);
