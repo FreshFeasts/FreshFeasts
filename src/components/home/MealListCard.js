@@ -25,10 +25,10 @@ const MealListCard = ({meal, handleSelectMeal}) => {
           </View>
           <View className="w-3/4">
             <View className="flex-row justify-between">
-              <Text className="ml-4 mr-2 font-main w-2/3">{meal.name}</Text>
-              <Text className="mr-4 font-main w-1/3">{`${getRating()} Stars`}</Text>
+              <Text className="ml-6 mr-2 font-main">{meal.name}</Text>
+              <Text className="mr-2 text-right font-main">{`${getRating()} Stars`}</Text>
             </View>
-            <Text className="p-4 font-main text-xs">{meal.description}</Text>
+            <Text className="p-4 ml-2 font-main text-xs text-ellipsis overflow-hidden">{meal.description}</Text>
           </View>
         </View>
       </View>

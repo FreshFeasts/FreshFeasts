@@ -1,4 +1,4 @@
-import {  Text, View, StatusBar, StyleSheet, SafeAreaView } from "react-native";
+import {  Text, View, StatusBar, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import MealModal from '../components/home/MealModal';
 import MealCarousel from '../components/home/MealCarousel';
 import MealList from '../components/home/MealList';
@@ -30,11 +30,11 @@ const HomeScreen = ({navigation, authToken}) => {
 
   return (
     <SafeAreaView className="h-full">
-      <View className="flex-1 items-center justify-between">
-        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
+      <ScrollView className="flex-1">
         <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
         <MealList meals={meals} user={userInitData.user} handleSelectMeal={handleSelectMeal} />
-      </View>
+        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
