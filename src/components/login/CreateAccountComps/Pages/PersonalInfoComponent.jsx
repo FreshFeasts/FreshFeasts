@@ -14,16 +14,16 @@ import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
  * !Need a date picker for date of birth
  * ! Need a state picker Drop down menu component
  */
-const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageOne }) => {
+const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
   const { onChangeHandler, values } = useContext(LogInScreenContext);
   const onContinueHandler = () => {
-    setPageTwo(false);
-    setPageThree(true);
+    setPageThree(false);
+    setPageFour(true);
   };
 
   const onBackHandler = () => {
-    setPageTwo(false);
-    setPageOne(true);
+    setPageThree(false);
+    setPageTwo(true);
   };
   return (
     <SafeAreaView>

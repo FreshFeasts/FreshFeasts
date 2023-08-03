@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CalendarScreen from "../screens/CalendarScreen";
@@ -12,7 +13,9 @@ const Tab = createBottomTabNavigator();
 const MainTabs = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
+        tabBarShowLabel: false,
         tabBarActiveTintColor: "#FFF7C6",
         tabBarInactiveTintColor: "#FFF7C6",
         tabBarActiveBackgroundColor: "#0E4000",
@@ -31,7 +34,7 @@ const MainTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
-            <Icon name="user" size={24} color="#FFF7C6" />
+            <Icon name="user" size={24} color="white" />
           ),
         }}
       />
@@ -41,7 +44,7 @@ const MainTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="calendar" size={24} color="#FFF7C6" />
+            <Icon name="calendar" size={24} color="white" />
           ),
         }}
       />
@@ -51,7 +54,7 @@ const MainTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="cutlery" size={24} color="#FFF7C6" />
+            <Icon name="cutlery" size={24} color="white" />
           ),
         }}
       />
@@ -61,7 +64,7 @@ const MainTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="comments" size={24} color="#FFF7C6" />
+            <Icon name="comments" size={24} color="white" />
           ),
         }}
       />
@@ -71,7 +74,7 @@ const MainTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="shopping-cart" size={24} color="#FFF7C6" />
+            <Icon name="shopping-cart" size={24} color="white" />
           ),
         }}
       />

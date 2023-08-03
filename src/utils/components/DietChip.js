@@ -44,8 +44,8 @@ const DietChip = ({dietName}) => {
   }
   return(
     <>
-    <View className="flex-row h-8 w-28 border-2 border-pakistangreen justify-center items-center bg-lemonchiffon rounded-2 m-1 p-1">
-    <View className={`${diet.color} rounded-full p-1 mx-1`}>
+    <View className="flex-row h-8 border-2 border-pakistangreen justify-center items-center bg-white rounded-md m-2 p-1">
+    <View className={`${diet.color} p-1 mx-1 rounded-full`}>
     <Icon name={diet.icon} size={12} color='white' />
     </View>
     <AppText className='text-xs mr-1'>{diet.name}</AppText>

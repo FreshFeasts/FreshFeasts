@@ -21,12 +21,61 @@ const initialValues = {
   ccState: "",
   ccZip: "",
   ccExp: "",
-  ccCVV:'',
+  ccCVV: "",
 };
 
+// useEffect to grab users info on login
 export const LogInScreenContextProvider = ({ children }) => {
+  const [userInitData, setUserInitData] = useState(null);
+  const [dietChoices, setDietChoices] = useState([]);
+  const [allergens, setAllergens] = useState([]);
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
+  const [isSameAddress, setIsSameAddress] = useState(false);
+  let addressInfo = {
+    address1: values.address1,
+    address2: values.address2,
+    city: values.city,
+    state: values.state,
+    zip: values.zip,
+  };
+  let cardAddressInfo = null;
+  if (isSameAddress) {
+    cardAddressInfo = addressInfo;
+  } else {
+    cardAddressInfo = {
+      address1: values.ccAddress1,
+      address2: values.ccAddress2,
+      city: values.ccCity,
+      state: values.ccState,
+      zip: values.ccZip,
+    };
+  }
+  const test = "HI";
+  const createUserData = {
+    user: {
+      email: values.createUserEmail,
+      password: values.createUserPassword,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      dietChoice: dietChoices,
+      allergens: allergens,
+      preferredDay: 0,
+    },
+    info: {
+      deliveryAddress: addressInfo,
+      DOB: values.DOB,
+      phone: values.phone,
+    },
+    paymentInfo: {
+      ccNum: values.ccNum,
+      ccDetails: cardAddressInfo,
+      ccExp: {
+        month: values.ccExp.split("/")[0],
+        year: values.ccExp.split("/")[1],
+      },
+    },
+  };
 
   const onChangeHandler = (text, input) => {
     setValues({
@@ -42,6 +91,15 @@ export const LogInScreenContextProvider = ({ children }) => {
         createAccountComp,
         setCreateAccountComp,
         onChangeHandler,
+        userInitData,
+        setUserInitData,
+        dietChoices,
+        setDietChoices,
+        allergens,
+        setAllergens,
+        isSameAddress,
+        setIsSameAddress,
+        createUserData,
       }}
     >
       {children}

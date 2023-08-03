@@ -15,14 +15,18 @@ const Nutrition = ({ nutrition }) => {
   };
 
   return (
-    <View className="justify-start">
-      <AppText className="text-xs text-white">Nutrition Facts</AppText>
+    <View className="flex-row justify-between ml-2">
+      <AppText className="text-white text-sm">Calories: {nutrition[0].calories} | </AppText>
+      <AppText className="text-white text-sm">Protein: {nutrition[1].protein} | </AppText>
+      <AppText className="text-white text-sm">Carbs: {nutrition[2].carbohydrates} | </AppText>
+      <AppText className="text-white text-sm">Fat: {nutrition[3].fat} </AppText>
+      {/* <AppText className="text-xs text-white">Nutrition Facts</AppText>
       <FlatList
         data={nutrition}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         scrollEnabled ={false}
-      />
+      /> */}
     </View>
   );
 };
