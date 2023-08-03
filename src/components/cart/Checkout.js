@@ -3,21 +3,20 @@ import { Pressable, Text, View, ScrollView } from "react-native";
 import AppText from "../../utils/components/AppText";
 import CartCard from "./CartCard";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
-import { postCart, getMeals, getPayment } from "../../utils/apis/api";
-import { format, parseISO, addDays } from "date-fns";
+import { postCart, getMeals, getPayment, updateCart } from "../../utils/apis/api";
+import { format, parseISO, addDays,formatISO } from "date-fns";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const Checkout = () => {
   const { userInitData, setUserInitData } = useContext(LogInScreenContext);
   const cart = userInitData.user.currentCart;
   const email = userInitData.user.email;
-  const deliveryDate = cart.deliverDate;
+  const deliveryDate = cart.deliveryDate;
   const address = userInitData.info.deliveryAddress;
   const [cartMeals, setCartMeals] = useState([]);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState();
-  const [trigger, setTrigger] = useState(false);
   const [mealCount, setMealCount] = useState({})
 
   const cost = 9.99;
@@ -31,22 +30,35 @@ const Checkout = () => {
     { label: "Friday", value: "4" },
   ]);
 
-  const submitOrder = () => {
-    // const final = {
-    //   userId: user._id,
-    //   currentCart: { ...currCart, orderDate: Date.now() },
-    // };
+  const submitOrder = async () => {
+    const final = {
+      userId: userInitData.user._id,
+      currentCart: { ...cart, orderDate: Date.now() },
+    };
     postCart(final);
-    const nextWeek = addDays(new Date(), 7);
-    // setCurrCart({
-    //   "deliveryDate": nextWeek,
-    //   "meals": []
-    // })
-    setTrigger(!trigger);
+    const parsedDate = parseISO(deliveryDate);
+    const nextWeek = addDays(parsedDate, 7);
+    const nextWeekISO = nextWeek.toISOString();
+    console.log(nextWeekISO)
+    const reset = {
+        "deliveryDate": nextWeekISO,
+        "meals": []
+      }
+    setUserInitData((prevUserData) => ({
+      ...prevUserData,
+      user: {
+        ...prevUserData.user,
+        currentCart: reset,
+      },
+    }))
+    try {
+      await updateCart(userInitData.user._id, reset);
+    } catch (error) {
+      console.error('Error updating cart: ', error);
+    }
   };
 
   useEffect(() => {
-    console.log("CART USE EFFECT:", userInitData.user.currentCart);
     const fetchData = async () => {
       try {
         const nextWeek = addDays(new Date(), 7);
@@ -97,13 +109,14 @@ const Checkout = () => {
               Order Summary
             </AppText>
           </View>
-          <View className="flex justify-end ml-2 mt-1">
+          <ScrollView bounces={false} className="mb-28">
+          <View className="flex justify-end ml-2 mt-1 padding-20">
             <AppText className="text-xl text-pakistangreen my-2">
               Customer Information
             </AppText>
             <View className="flex-row">
               <AppText className="mb-1">
-                {userInitData.user.firstName} {userInitData.user.firstName}
+                {userInitData.user.firstName} {userInitData.user.lastName}
               </AppText>
               <AppText className="mb-1 absolute right-0">
                 {userInitData.user.email}
@@ -118,35 +131,23 @@ const Checkout = () => {
             </AppText>
             <AppText className="mb-1">Card on File: {payment}</AppText>
           </View>
-          {/* <AppText className="text-xl text-pakistangreen ml-1 mt-1">
-            Meals
-          </AppText> */}
-          <View className="bg-pakistangreen h-1 mt-1" />
-          <ScrollView bounces={false} className="h-[50%]">
             {cartMeals.map((meal) => (
               <CartCard meal={meal} key={meal.name} count={mealCount[meal._id]} />
             ))}
-          </ScrollView>
-          <View className="bg-pakistangreen h-1 mt-1" />
           <View className="flex-row items-center">
-            <AppText className="text-base text-pakistangreen mx-1 my-2">
-              Delivery Date:
-            </AppText>
-            {/* {cart.deliveryDate !== null ?
+            {cart.deliveryDate !== null ?
           <AppText className="text-base text-pakistangreen mx-1 my-2">
           Delivery Date: {format(parseISO(deliveryDate), "MM/dd/yyyy")}
-          </AppText> : <AppText> No Delivery selected</AppText> } */}
+          </AppText> : <AppText> No Delivery selected</AppText> }
+          {/* <View className="mt-1">
             <DropDownPicker
-              placeholderStyle={{
-                color: "black",
-              }}
-              containerStyle={{
-                width: 150,
-                height: 20,
-                zIndex: 20,
-              }}
-              labelStyle={{
-                textAlign: "center",
+              placeholderStyle={{color: "black",}}
+              maxHeight={200}
+              containerStyle={{width: 150,zIndex: 20, paddingVertical: 0}}
+              labelStyle={{textAlign: "center"}}
+              textStyle={{
+                fontSize: 10,
+                fontFamily: "Comfortaa"
               }}
               placeholder="Change day"
               open={open}
@@ -155,7 +156,9 @@ const Checkout = () => {
               setOpen={setOpen}
               setValue={setValue}
               setItems={setItems}
+              dropDownDirection="TOP"
             />
+            </View> */}
           </View>
           <AppText className="text-base text-pakistangreen ml-1 mt-2">
             Total Meals: {cart.meals.length}
@@ -170,6 +173,7 @@ const Checkout = () => {
               </AppText>
             </Pressable>
           </View>
+          </ScrollView>
         </View>
       )}
     </>

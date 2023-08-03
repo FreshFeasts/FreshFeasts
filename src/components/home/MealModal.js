@@ -46,11 +46,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   }, [mealSelection]);
 
   const handleAddMeal = async () => {
-    console.log("CART HANDLE ADD MEAL:", userInitData.user.currentCart);
     const updatedMeals = [...cart.meals, meal._id];
-    console.log("UDPATED MEALS:", updatedMeals);
     const update = { ...cart, meals: updatedMeals };
-    console.log("UPDATE", update)
     setUserInitData((prevUserData) => ({
       ...prevUserData,
       user: {
@@ -68,6 +65,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const handleCount = (count) => {
     setCount(count);
   };
+
+
 
   return (
     <View>
@@ -123,8 +122,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
               <AppText className="text-xs text-white mr-1">
                 Ingredients:
               </AppText>
-              {meal.ingredients.map((ingredient) => (
-                <AppText key={ingredient} className="text-xs text-white mr-1">
+              {meal.ingredients.map((ingredient, index) => (
+                <AppText key={index} className="text-xs text-white mr-1">
                   {ingredient} |
                 </AppText>
               ))}
@@ -152,8 +151,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   </View>
                   <ScrollView className="flex bg-white mt-10 rounded-md">
                   <AppText className="text-xl text-pakistangreen ml-2 mt-2">Reviews </AppText>
-                    {meal.reviews ? Object.entries(meal.reviews).map((review) => (
-                      <View className="mt-5">
+                    {meal.reviews ? Object.entries(meal.reviews).map((review, index) => (
+                      <View className="mt-5" key={index}>
                         <AppText className="text-pakistangreen text-base ml-2 mt-2">Name: {review[1].name}</AppText>
                         <AppText className="text-pakistangreen text-base ml-2 mb-2">Review: {review[1].reviewText}</AppText>
                       </View>
