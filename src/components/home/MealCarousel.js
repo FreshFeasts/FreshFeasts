@@ -18,9 +18,11 @@ const MealCarousel = ({ meals, handleSelectMeal }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <Pressable className=' bg-transparent items-center' onPress={() => { handlePress(item) }}>
+      <Pressable className='bg-transparent items-center' onPress={() => { handlePress(item) }}>
         <Image className='object-cover h-full w-full rounded-xl' source={{url: item.photo}} />
-        <AppText className='absolute text-center top-4 left-5 text-white text-xl'>{item.name}</AppText>
+        <View className="absolute top-4 left-5 bg-lemonchiffon px-2 rounded-full shadow">
+          <AppText className='text-center text-black text-xl'>{item.name}</AppText>
+        </View>
       </Pressable>
     )
   };

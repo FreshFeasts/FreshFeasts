@@ -1,10 +1,13 @@
 import axios from 'axios';
+import config from '../../../config.js';
 
-const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }}
-
-export const getMeals = async () => {
+export const getMeals = async (token) => {
   try {
-    const meals = await axios.get('http://localhost:3000/api/meals?count=20', headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const meals = await axios.get(
+      `${config.SERVER_URL}/api/meals?count=20`,
+      headers
+    );
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -12,9 +15,13 @@ export const getMeals = async () => {
   }
 };
 
-export const getOrders = async (userId) => {
+export const getOrders = async (userId, token) => {
   try {
-    const orders = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const orders = await axios.get(
+      `${config.SERVER_URL}/api/orders/user/${userId}`,
+      headers
+    );
     return orders.data;
   } catch (error) {
     console.error('Error fetching orders: ', error);
@@ -22,10 +29,15 @@ export const getOrders = async (userId) => {
   }
 };
 
-export const updateCart = async (userId, currentCart) => {
+export const updateCart = async (userId, currentCart, token) => {
   try {
-    let body = {userId, currentCart}
-    let cart = await axios.put('http://localhost:3000/api/users/cart', body, headers);
+    let body = { userId, currentCart };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let cart = await axios.put(
+      `${config.SERVER_URL}/api/users/cart`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
@@ -33,9 +45,14 @@ export const updateCart = async (userId, currentCart) => {
   }
 };
 
-export const postCart = async (body) => {
+export const postCart = async (body, token) => {
   try {
-    let cart = await axios.post('http://localhost:3000/api/users/cart', body, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let cart = await axios.post(
+      `${config.SERVER_URL}/api/users/cart`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
@@ -44,40 +61,51 @@ export const postCart = async (body) => {
 };
 
 export const createUser = async (bodyObject) => {
-  try{
-    const response = await axios.post('http://localhost:3000/register', bodyObject);
+  try {
+    const response = await axios.post(
+      `${config.SERVER_URL}/register`,
+      bodyObject
+    );
     return response;
-  } catch(err){
+  } catch (err) {
     console.log(err);
     throw err;
   }
-}
+};
 
 export const signInUser = async (signInObj) => {
-  try{
-    const response = await axios.post('http://localhost:3000/login', signInObj);
-    return response;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-export const getUserData = async(userId, token) => {
-  try{
-    const response = await axios.get(`http://localhost:3000/api/initdata/${userId}`, {
-      headers: {Authorization:`Bearer ${token}` }
-    });
-    return response;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-
-export const rateMeal = async (mealId, userId, rating) => {
   try {
-    const body = { mealId, userId, rating }
-    await axios.post('http://localhost:3000/api/meals/add-rating', body, headers);
+    const response = await axios.post(`${config.SERVER_URL}/login`, signInObj);
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const getUserData = async (userId, token) => {
+  try {
+    const response = await axios.get(
+      `${config.SERVER_URL}/api/initdata/${userId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const rateMeal = async (mealId, userId, rating, token) => {
+  try {
+    const body = { mealId, userId, rating };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    await axios.post(
+      `${config.SERVER_URL}/api/meals/add-rating`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding rating: ', error);
@@ -85,10 +113,21 @@ export const rateMeal = async (mealId, userId, rating) => {
   }
 };
 
-export const reviewMeal = async (mealId, userId,firstName, reviewText ) => {
+export const reviewMeal = async (
+  mealId,
+  userId,
+  firstName,
+  reviewText,
+  token
+) => {
   try {
-    const body = { mealId, userId,firstName, reviewText }
-    await axios.post('http://localhost:3000/api/meals/add-review', body, headers);
+    const body = { mealId, userId, firstName, reviewText };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    await axios.post(
+      `${config.SERVER_URL}/api/meals/add-review`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding written review: ', error);
@@ -96,9 +135,13 @@ export const reviewMeal = async (mealId, userId,firstName, reviewText ) => {
   }
 };
 
-export const getUser = async (email) => {
+export const getUser = async (email, token) => {
   try {
-    const user = await axios.get(`http://localhost:3000/api/users/${email}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const user = await axios.get(
+      `${config.SERVER_URL}/api/users/${email}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
@@ -106,9 +149,13 @@ export const getUser = async (email) => {
   }
 };
 
-export const getUserContact = async (userId) => {
+export const getUserContact = async (userId, token) => {
   try {
-    let user = await axios.get(`http://localhost:3000/api/info/${userId}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let user = await axios.get(
+      `${config.SERVER_URL}/api/info/${userId}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
@@ -116,9 +163,13 @@ export const getUserContact = async (userId) => {
   }
 };
 
-export const getPayment = async (userId) => {
+export const getPayment = async (userId, token) => {
   try {
-    let user = await axios.get(`http://localhost:3000/api/cc/user/${userId}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let user = await axios.get(
+      `${config.SERVER_URL}/api/cc/user/${userId}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);

@@ -12,3 +12,5 @@ export const calcAverageRating = (ratings) => {
 
     return averageRating.toFixed(1);
 };
+
+
