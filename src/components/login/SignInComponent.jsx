@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Text, View, StatusBar, TouchableOpacity } from "react-native";
+import { Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import InputWithLabel from "../../utils/components/InputComponent"
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
@@ -42,7 +42,7 @@ const SignInComponent = ({setLoggedIn}) => {
     }
   }
   return (
-    <>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View className="flex-1 items-center justify-center bg-forestgreen">
         <View className="bg-yellowgreen p-6 rounded-2xl w-10/12">
           <AppText className="text-2xl font-semibold text-black text-center">
@@ -77,7 +77,7 @@ const SignInComponent = ({setLoggedIn}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </TouchableWithoutFeedback>
   );
 };
 

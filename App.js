@@ -20,7 +20,7 @@ export default function App() {
   useEffect(() => {
     const fetchLoginStatusFromStorage = async() => {
       const status = await AsyncStorage.getItem('loggedIn');
-      status ==='true' ? setLoggedIn(true): setLoggedIn(false);
+      status ==='true' ? setLoggedIn(false): setLoggedIn(false);
     }
     fetchLoginStatusFromStorage();
   },[])
