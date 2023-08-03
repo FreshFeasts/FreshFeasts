@@ -4,6 +4,7 @@ import InputWithLabel from "../../utils/components/InputComponent"
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 import {signInUser, getUserData} from '../../utils/apis/api.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // "Test2@gmail.com"
 // firstName: "Tesyt"
 // lastName: "Test"
@@ -26,9 +27,13 @@ const SignInComponent = ({setLoggedIn}) => {
       const response = await signInUser(signInObject);
       const {token, userId} = response.data;
       console.log( 'userId', userId)
-      const response2 = await getUserData(userId,token);
-      const {data} = response2
-      console.log({...data, token:token});
+      const userResponse = await getUserData(userId,token);
+      const {data} = userResponse;
+      console.log('PARSe',{...data, token:token});
+      const stringUserInitData = JSON.stringify({...data, token:token})
+      console.log('STRINGIFIED',stringUserInitData);
+      await AsyncStorage.setItem('loggedIn', 'true');
+      await AsyncStorage.setItem('stringUserInItData', stringUserInitData);
       setUserInitData({...data, token:token})
       setLoggedIn(true);
     } catch(err) {

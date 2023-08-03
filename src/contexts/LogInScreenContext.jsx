@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState,useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const LogInScreenContext = createContext();
 const initialValues = {
   signInEmail: "",
@@ -32,6 +33,17 @@ export const LogInScreenContextProvider = ({ children }) => {
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
   const [isSameAddress, setIsSameAddress] = useState(false);
+
+  useEffect(() => {
+    const fetchUserInitDataFromStorage = async() => {
+      const storageUserInItData = await AsyncStorage.getItem('stringUserInItData');
+      if(storageUserInItData) {
+        setUserInitData(JSON.parse(storageUserInItData));
+      }
+    }
+
+    fetchUserInitDataFromStorage();
+  }, [])
   let addressInfo = {
     address1: values.address1,
     address2: values.address2,
