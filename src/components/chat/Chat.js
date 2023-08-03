@@ -72,7 +72,7 @@ const Chat = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View className=''>
         <View>
           <Text>Chat Screen</Text>
         </View>
