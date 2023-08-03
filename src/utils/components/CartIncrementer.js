@@ -23,23 +23,9 @@ const CartIncrementer = ({ count, color, mealId, handleCount }) => {
     return arr;
   };
 
-  const handleRemoveMeal = (mealId) => {
+  const handleRemoveMeal = async (mealId) => {
     const updatedMeals = removeFirstOccurrence(cart.meals, mealId);
     const update = { ...cart, meals: updatedMeals };
-    updateCart(userInitData.user._id, update);
-    setUserInitData((prevUserData) => ({
-      ...prevUserData,
-      user: {
-        ...prevUserData.user,
-        currentCart: update,
-      },
-    }));
-  };
-
-  const handleAddMeal = async (mealId) => {
-    const updatedMeals = [...cart.meals, mealId];
-    const update = { ...cart, meals: updatedMeals };
-    updateCart(userInitData.user._id, update);
     setUserInitData((prevUserData) => ({
       ...prevUserData,
       user: {
@@ -48,7 +34,24 @@ const CartIncrementer = ({ count, color, mealId, handleCount }) => {
       },
     }));
     try {
-      await updateCart(userInitData.user._id, update);
+      await updateCart(userInitData.user._id, update, userInitData.token);
+    } catch (error) {
+      console.error('Error updating cart: ', error);
+    }
+  };
+
+  const handleAddMeal = async (mealId) => {
+    const updatedMeals = [...cart.meals, mealId];
+    const update = { ...cart, meals: updatedMeals };
+    setUserInitData((prevUserData) => ({
+      ...prevUserData,
+      user: {
+        ...prevUserData.user,
+        currentCart: update,
+      },
+    }));
+    try {
+      await updateCart(userInitData.user._id, update, userInitData.token);
     } catch (error) {
       console.error('Error updating cart: ', error);
     }
@@ -56,13 +59,13 @@ const CartIncrementer = ({ count, color, mealId, handleCount }) => {
 
   const handleDecrement = () => {
     if (count > 0) {
-      handleCount((prevCount) => prevCount - 1); // Correct state management
+      handleCount((prevCount) => prevCount - 1);
       handleRemoveMeal(mealId);
     }
   };
 
   const handleIncrement = () => {
-    handleCount((prevCount) => prevCount + 1); // Correct state management
+    handleCount((prevCount) => prevCount + 1);
     handleAddMeal(mealId);
   };
 
@@ -71,7 +74,7 @@ const CartIncrementer = ({ count, color, mealId, handleCount }) => {
       <Pressable onPress={handleDecrement}>
         <Icon name="minus-square" size={24} color={color} />
       </Pressable>
-      <AppText className="text-{color} mx-2 text-xl"> {count} </AppText>
+      <AppText className={`text-${color} mx-2 text-lg`}> {count} </AppText>
       <Pressable onPress={handleIncrement}>
         <Icon name="plus-square" size={24} color={color} />
       </Pressable>

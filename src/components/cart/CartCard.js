@@ -13,7 +13,7 @@ const CartCard = ({ meal, count }) => {
 
   return (
     <View className="flex-1 items-center m-1">
-      <View className="w-80 p-2 rounded-lg border-2 flex-row bg-lemonchiffon">
+      <View className="w-[90%] p-2 rounded-lg border-2 flex-row bg-white">
         <Image
           className="w-16 h-16 rounded-lg ml-1 items-center"
           source={{

@@ -35,11 +35,10 @@ const Checkout = () => {
       userId: userInitData.user._id,
       currentCart: { ...cart, orderDate: Date.now() },
     };
-    postCart(final);
+    postCart(final, userInitData.token);
     const parsedDate = parseISO(deliveryDate);
     const nextWeek = addDays(parsedDate, 7);
     const nextWeekISO = nextWeek.toISOString();
-    console.log(nextWeekISO)
     const reset = {
         "deliveryDate": nextWeekISO,
         "meals": []
@@ -52,7 +51,7 @@ const Checkout = () => {
       },
     }))
     try {
-      await updateCart(userInitData.user._id, reset);
+      await updateCart(userInitData.user._id, reset, userInitData.token);
     } catch (error) {
       console.error('Error updating cart: ', error);
     }
@@ -61,6 +60,7 @@ const Checkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(userInitData.token)
         const nextWeek = addDays(new Date(), 7);
         if (!cart) {
           cart = {
@@ -75,8 +75,8 @@ const Checkout = () => {
           return countObject;
         }, {});
         setMealCount(mealCountObject);
-        const payments = await getPayment(userInitData.user._id);
-        const meals = await getMeals();
+        const payments = await getPayment(userInitData.user._id, userInitData.token);
+        const meals = await getMeals(userInitData.token);
         if (payments.length > 0) {
           let card = payments[0].ccId.toString();
           let last4 = "************" + card.slice(card.length - 4);

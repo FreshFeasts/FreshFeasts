@@ -15,8 +15,8 @@ const OrderHistory = ({ history, setHistory }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const orderData = await getOrders(userInitData.user._id);
-        const meals = await getMeals();
+        const orderData = await getOrders(userInitData.user._id, userInitData.token);
+        const meals = await getMeals(userInitData.token);
 
         const ordersMealDetail = orderData.map((order) => {
           const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
@@ -46,7 +46,7 @@ const OrderHistory = ({ history, setHistory }) => {
       {loading ? (
         <Text>Orders are loading...</Text>
       ) : (
-        <ScrollView bounces={false}>
+        <ScrollView bounces={false} horizontal={false}>
           <View className="flex-1 justify-center items-center">
             {orders.map((order, index) => {
               const formattedDate = format(
