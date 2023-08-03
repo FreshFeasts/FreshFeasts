@@ -3,11 +3,38 @@ import { Text, View, StatusBar, TouchableOpacity } from "react-native";
 import InputWithLabel from "../../utils/components/InputComponent"
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
+import {signInUser, getUserData} from '../../utils/apis/api.js';
+// "Test2@gmail.com"
+// firstName: "Tesyt"
+// lastName: "Test"
+// password: "Test1"
+// preferredDay: 0
+// __proto__: Object
+// __proto__: Object
 
-const SignInComponent = () => {
-  const { setCreateAccountComp, onChangeHandler} = useContext(LogInScreenContext);
+const SignInComponent = ({setLoggedIn}) => {
+  const { setCreateAccountComp, onChangeHandler , values, setUserInitData} = useContext(LogInScreenContext);
   const onCreateAccountHandler = () => {
     setCreateAccountComp(true);
+  }
+  const onSignInHandler = async() => {
+    const signInObject = {
+      email: values.signInEmail,
+      password: values.signInPassword
+    }
+    try{
+      const response = await signInUser(signInObject);
+      const {token, userId} = response.data;
+      console.log( 'userId', userId)
+      const response2 = await getUserData(userId,token);
+      const {data} = response2
+      console.log({...data, token:token});
+      setUserInitData({...data, token:token})
+      setLoggedIn(true);
+    } catch(err) {
+      console.log(err);
+      throw err;
+    }
   }
   return (
     <>
@@ -33,7 +60,7 @@ const SignInComponent = () => {
             onChangeText={text => onChangeHandler(text, "signInPassword")}
           />
           <View className="items-center">
-            <TouchableOpacity className="bg-[#FFEB69] p-3 rounded-lg mt-4">
+            <TouchableOpacity className="bg-[#FFEB69] p-3 rounded-lg mt-4" onPress={onSignInHandler}>
               <AppText className="text-black text-center">Sign in</AppText>
             </TouchableOpacity>
           </View>
