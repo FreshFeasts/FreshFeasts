@@ -10,12 +10,11 @@ import { calcAverageRating } from "../../utils/helpers";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
 const MealModal = ({ mealSelection, handleSelectMeal }) => {
-  const { currCart, setCurrCart} = useContext(LogInScreenContext);
+  const { userInitData, setUserInitData} = useContext(LogInScreenContext);
+  const cart = userInitData.user.currentCart;
   const [modalVisible, setModalVisible] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
-  const email = "Enid.Johns@yahoo.com";
-  const [added, setAdded] = useState(false);
-  const [user, setUser] = useState({});
+  const [count, setCount] = useState(0);
   const [meal, setMeal] = useState({
     _id: "",
     name: "",
@@ -43,29 +42,17 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
     }
   }, [mealSelection]);
 
-  useEffect(() => {
-    getUser(email)
-      .then((data) => {
-        setCurrCart(data.currentCart);
-        setUser(data);
-        if (data.currentCart.meals.includes(meal._id)) {
-          setAdded(true);
-        } else {
-          setAdded(false);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
   const handleAddMeal = () => {
-    const userId = user._id;
-    const update = currCart;
+    const update = cart;
     update.meals.push(meal._id);
-    setCurrCart(update);
-    updateCart(userId, update);
-    setAdded(!added);
+    updateCart(userInitData.user._id, update);
+    setUserInitData((prevUserData) => ({
+      ...prevUserData,
+      user: {
+        ...prevUserData.user,
+        currentCart: update,
+      },
+    }));
   };
 
   return (
@@ -172,11 +159,11 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                 {meal.favorites} other FreshFeast customers favorited this meal!
               </AppText>
             </View>
-            {added ? (
+            {count > 0 ? (
               <View className="absolute bottom-2 right-2">
                 <CartIncrementer
-                  added={added}
-                  setAdded={setAdded}
+                  count={count}
+                  setCount={setCount}
                   color="white"
                   meal={meal}
                 />

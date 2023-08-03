@@ -2,11 +2,10 @@ import React, { useState, useContext } from "react";
 import { Text, View, Image, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CartIncrementer from "../../utils/components/CartIncrementer";
-import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
-const CartCard = ({ meal, cart, setCart }) => {
-  const [added, setAdded] = useState(false);
-  const { currCart, setCurrCart} = useContext(LogInScreenContext);
+
+const CartCard = ({ meal }) => {
+  const [count, setCount] = useState(0);
 
   return (
     <View className="flex-1 items-center m-1">
@@ -24,8 +23,8 @@ const CartCard = ({ meal, cart, setCart }) => {
         <View className="absolute bottom-2 right-2">
           <CartIncrementer
             color="forestgreen"
-            added={added}
-            setAdded={setAdded}
+            count={count}
+            setCount={count}
             meal={meal}
           />
         </View>
