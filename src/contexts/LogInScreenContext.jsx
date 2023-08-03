@@ -27,16 +27,10 @@ const initialValues = {
 // useEffect to grab users info on login
 export const LogInScreenContextProvider = ({ children }) => {
   const [userInitData, setUserInitData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [authToken, setAuthToken] = useState(null);
   const [dietChoices, setDietChoices] = useState([]);
   const [allergens, setAllergens] = useState([]);
-  const [darkTheme, setDarkTheme] = useState(false);
-  const [mealsRated, setMealsRated] = useState(null);
-  const [currCart, setCurrCart] = useState(null);
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
-  const [email, setEmail] = useState(null);
   const [isSameAddress, setIsSameAddress] = useState(false);
   let addressInfo = {
     address1: values.address1,
@@ -99,20 +93,10 @@ export const LogInScreenContextProvider = ({ children }) => {
         onChangeHandler,
         userInitData,
         setUserInitData,
-        userId,
-        setUserId,
-        authToken,
-        setAuthToken,
         dietChoices,
         setDietChoices,
         allergens,
         setAllergens,
-        darkTheme,
-        setDarkTheme,
-        mealsRated,
-        setMealsRated,
-        currCart,
-        setCurrCart,
         isSameAddress,
         setIsSameAddress,
         createUserData,
