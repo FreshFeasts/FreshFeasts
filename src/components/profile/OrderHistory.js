@@ -59,7 +59,7 @@ const OrderHistory = ({ history, setHistory }) => {
                     {formattedDate}
                   </AppText>
                   {order.meals.map((meal,index) => (
-                    <HistoryCard key={index} meal={meal} userId={userInitData.user._id} firstName={userInitData.user.firstName}/>
+                    <HistoryCard key={index} meal={meal} />
                   ))}
                 </>
               );
