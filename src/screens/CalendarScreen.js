@@ -153,7 +153,7 @@ for(let i = 1; i <= restOfDays; i++){
                 width: 130,
               }}
               labelStyle={{
-                textAlign: 'center', // Center the text
+                textAlign: 'center', 
               }}
               open={open}
               value={value}
