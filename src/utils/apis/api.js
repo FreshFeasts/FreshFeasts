@@ -1,10 +1,11 @@
 import axios from 'axios';
+import config from '../../../config.js';
 
-const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }}
-
-export const getMeals = async () => {
+export const getMeals = async (token) => {
   try {
-    const meals = await axios.get('http://localhost:3000/api/meals?count=20', headers);
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    console.log('headers:', headers);
+    const meals = await axios.get(`${config.SERVER_URL}/api/meals?count=20`, headers);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -42,6 +43,37 @@ export const postCart = async (body) => {
     throw error;
   }
 };
+
+export const createUser = async (bodyObject) => {
+  try{
+    const response = await axios.post('http://localhost:3000/register', bodyObject);
+    return response;
+  } catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
+export const signInUser = async (signInObj) => {
+  try{
+    const response = await axios.post('http://localhost:3000/login', signInObj);
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+export const getUserData = async(userId, token) => {
+  try{
+    const response = await axios.get(`http://localhost:3000/api/initdata/${userId}`, {
+      headers: {Authorization:`Bearer ${token}` }
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 export const rateMeal = async (mealId, userId, rating) => {
   try {
