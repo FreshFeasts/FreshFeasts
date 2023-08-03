@@ -10,7 +10,7 @@ import {
   getUserContact,
   getPayment,
 } from "../../utils/apis/api";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, addDays } from "date-fns";
 import DropDownPicker from "react-native-dropdown-picker";
 
 
@@ -28,6 +28,9 @@ const Checkout = () => {
     state: "",
     zip: "",
   });
+  const [trigger, setTrigger] = useState(false);
+
+
   const cost = 9.99;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -44,19 +47,36 @@ const Checkout = () => {
       userId: user._id,
       currentCart: { ...currCart, orderDate: Date.now() },
     };
-    let results = postCart(final);
+    postCart(final);
+    const nextWeek = addDays(new Date(), 7);
+    setCurrCart({
+      "deliveryDate": nextWeek,
+      "meals": []
+    })
+    setTrigger(!trigger);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const nextWeek = addDays(new Date(), 7);
+        if(!currCart){
+          setCurrCart({
+            "deliveryDate": nextWeek,
+            "meals": []
+          })
+        }
         const userData = await getUser(email);
         const mealList = userData.currentCart.meals;
-        setCurrCart(userData.currentCart);
-        setUser(userData);
         const contact = await getUserContact(userData._id);
-        setAddress(contact.deliveryAddress);
         const payments = await getPayment(userData._id);
+        const meals = await getMeals();
+        // if(!userData.currentCart.deliveryDate){
+        //   const nextWeek = addDays(new Date();, 7);
+        //   userData.currentCart.deliveryDate = nextWeek;
+        // }
+        setUser(userData);
+        setAddress(contact.deliveryAddress);
         if (payments.length > 0) {
           let card = payments[0].ccId.toString();
           let last4 = "************" + card.slice(card.length - 4);
@@ -64,11 +84,8 @@ const Checkout = () => {
         } else {
           setPayment("No Payment Information on File");
         }
-
-        const meals = await getMeals();
         const mealDetails = meals.filter((item) => mealList.includes(item._id));
         setCartMeals(mealDetails);
-
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -76,7 +93,11 @@ const Checkout = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [trigger]);
+
+  useEffect(() => {
+    console.log("test", currCart.deliveryDate)
+  }, [currCart])
 
 
   return (
@@ -116,7 +137,7 @@ const Checkout = () => {
             Meals
           </AppText> */}
           <View className="bg-pakistangreen h-1 mt-1" />
-          <ScrollView bounces={false} className="h-[40%]">
+          <ScrollView bounces={false} className="h-[50%]">
             {cartMeals.map((meal) => (
               <CartCard
                 meal={meal}
@@ -126,16 +147,18 @@ const Checkout = () => {
           </ScrollView>
           <View className="bg-pakistangreen h-1 mt-1" />
           <View className="flex-row items-center">
+          {currCart.deliveryDate !== null ?
           <AppText className="text-base text-pakistangreen mx-1 my-2">
-            Delivery Date: {format(parseISO(currCart.deliveryDate), "MM/dd/yyyy")}
-          </AppText>
+           Delivery Date: {format(parseISO(currCart.deliveryDate), "MM/dd/yyyy")}
+          </AppText> : <AppText>No Delivery selected</AppText> }
           <DropDownPicker
             placeholderStyle={{
               color: "black",
             }}
             containerStyle={{
               width: 150,
-              height: 20
+              height: 20,
+              zIndex: 20
             }}
             labelStyle={{
               textAlign: "center",
@@ -157,7 +180,7 @@ const Checkout = () => {
           </AppText>
           <View className="justify-end items-center rounded-md">
             <Pressable onPress={submitOrder}>
-              <AppText className="text-2xl bg-pakistangreen text-white p-2 m-2">
+              <AppText className="text-2xl bg-pakistangreen text-white p-2 m-2 z-10">
                 Submit Order
               </AppText>
             </Pressable>

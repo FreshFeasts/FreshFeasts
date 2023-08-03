@@ -7,19 +7,8 @@ import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx"
 
 const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal }) => {
   const [count, setCount] = useState(1);
-  const { currCart, setCurrCart, userId} = useContext(LogInScreenContext);
-
-  const handleRemoveMeal = (mealId) => {
-    const updatedMeals = currCart.meals.filter((meal) => meal !== mealId);
-    const update = { ...currCart, meals: updatedMeals };
-    setCurrCart(update);
-    updateCart('64c96db323bfcbd4a7159209', update);
-  };
-
-  const handleAddMeal = (mealId) => {
-    const update = {}
-    updateCart('64c96db323bfcbd4a7159209', update);
-  };
+  const { userInitData, setUserInitData} = useContext(LogInScreenContext);
+  const cart = userInitData.user.currentCart;
 
   useEffect(() => {
     if(count === 0){
@@ -27,23 +16,30 @@ const CartIncrementer = ( {added, setAdded, color, cart, setCart, meal }) => {
     }
   },[count])
 
+  const handleRemoveMeal = (mealId) => {
+    const updatedMeals = cart.meals.filter((meal) => meal !== mealId);
+    const update = { ...currCart, meals: updatedMeals };
+    setUserInitData
+    updateCart(userInitData.user._id, update);
+  };
+
+  const handleAddMeal = (mealId) => {
+    const update = currCart;
+    update.meals.push(mealId)
+    updateCart(userInitData.user._id, update);
+  };
+
+
   const handleDecrement = () => {
     if (count > 0) {
       setCount((prevCount) => prevCount - 1);
     }
-
   }
 
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
+    handleAddMeal(meal._id)
   };
-
-  // useEffect(() => {
-  //   if(cart.meals !== null){
-  //     console.log(cart.meals);
-  //   setCount(cart.meals.reduce((count, id) => (id === meal._id ? count + 1 : count), 0))
-  //   }
-  // },[cart])
 
   return (
     <View className="flex-row justify-center items-center">

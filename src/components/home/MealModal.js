@@ -61,8 +61,8 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
 
   const handleAddMeal = () => {
     const userId = user._id;
+    const update = currCart;
     update.meals.push(meal._id);
-
     setCurrCart(update);
     updateCart(userId, update);
     setAdded(!added);
@@ -152,7 +152,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                   <ScrollView className="flex bg-white mt-10 rounded-md">
                   <AppText className="text-xl text-pakistangreen ml-2 mt-2">Reviews </AppText>
                     {meal.reviews ? Object.entries(meal.reviews).map((review) => (
-                      <View key={review.name} className="mt-5">
+                      <View className="mt-5">
                         <AppText className="text-pakistangreen text-base ml-2 mt-2">Name: {review[1].name}</AppText>
                         <AppText className="text-pakistangreen text-base ml-2 mb-2">Review: {review[1].reviewText}</AppText>
                       </View>

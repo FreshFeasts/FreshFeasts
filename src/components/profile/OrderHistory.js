@@ -13,31 +13,33 @@ const OrderHistory = ({ history, setHistory }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getOrders(userId).then((orderData) => {
-      getMeals()
-        .then((meals) => {
-          const ordersMealDetail = orderData.map((order) => {
-            const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
-            const mealsWithDetails = mealDetails.map((meal) => {
-              return {
-                id: meal._id,
-                name: meal.name,
-                photo: meal.photo,
-              };
-            });
-            return {
-              ...order,
-              meals: mealsWithDetails,
-            };
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const orderData = await getOrders(userId);
+        const meals = await getMeals();
 
+        const ordersMealDetail = orderData.map((order) => {
+          const mealDetails = meals.filter((meal) => order.meals.includes(meal._id));
+          const mealsWithDetails = mealDetails.map((meal) => {
+            return {
+              id: meal._id,
+              name: meal.name,
+              photo: meal.photo,
+            };
           });
-          setOrders(ordersMealDetail);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
+          return {
+            ...order,
+            meals: mealsWithDetails,
+          };
         });
-    });
+        setOrders(ordersMealDetail);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -54,11 +56,11 @@ const OrderHistory = ({ history, setHistory }) => {
               );
               return (
                 <>
-                  <AppText className="text-xl" key={order.orderId} >
+                  <AppText className="text-xl" key={order.orderId}>
                     {formattedDate}
                   </AppText>
                   {order.meals.map((meal) => (
-                    <HistoryCard key={meal.name} meal={meal} userId={userId} firstName={firstName}/>
+                    <HistoryCard key={meal.id} meal={meal} userId={userId} firstName={firstName}/>
                   ))}
                 </>
               );
