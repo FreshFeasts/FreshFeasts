@@ -36,7 +36,11 @@ rl.on("line", (input) => {
       var str = input.slice(2);
       // send the broadcast event with its payload in JSON format to the server
       socket.emit("broadcast", {"sender": nickname, "action": "broadcast", "msg": str});
-  } else if ("ls;" === input) {
+    } else if (true === input.startsWith("c;")) {
+      var str = input.slice(2);
+      socket.emit('chat message', {"sender": nickname, "action": "chat", "msg": str});
+  }
+  else if ("ls;" === input) {
       socket.emit("list", {"sender": nickname, "action": "list"});
   } else if ("q;" === input) {
     socket.emit("quit", {"sender": nickname, "action": "quit"});
@@ -46,6 +50,10 @@ rl.on("line", (input) => {
 // display messages of other clients in our client
 socket.on("broadcast", (data) => {
   console.log("%s", data.msg);
+});
+
+socket.on('chat message', (msg) => {
+  console.log('New message:', msg);
 });
 
 // listen to the notification emitted from the server and displays it in our client
