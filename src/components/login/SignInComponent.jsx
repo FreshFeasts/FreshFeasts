@@ -29,7 +29,7 @@ const SignInComponent = ({setLoggedIn}) => {
       console.log( 'userId', userId)
       const userResponse = await getUserData(userId,token);
       const {data} = userResponse;
-      console.log('PARSe',{...data, token:token});
+      console.log('PARSE',{...data, token:token});
       const stringUserInitData = JSON.stringify({...data, token:token})
       console.log('STRINGIFIED',stringUserInitData);
       await AsyncStorage.setItem('loggedIn', 'true');
@@ -54,6 +54,7 @@ const SignInComponent = ({setLoggedIn}) => {
             keyboardType="email-address"
             placeholder="example@example.com"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            value={values.signInEmail}
             onChangeText={text => onChangeHandler(text, "signInEmail")}
           />
           <InputWithLabel
@@ -62,6 +63,7 @@ const SignInComponent = ({setLoggedIn}) => {
             secureTextEntry={true}
             placeholder="password"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            value={values.signInPassword}
             onChangeText={text => onChangeHandler(text, "signInPassword")}
           />
           <View className="items-center">
