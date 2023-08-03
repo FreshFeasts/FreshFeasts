@@ -5,7 +5,7 @@ export const getMeals = async (token) => {
   try {
     const headers = { headers: { "Authorization" : `Bearer ${token}` }};
     console.log('headers:', headers);
-    const meals = await axios.get(`${config.SERVER_URL}/meals?count=20`, headers);
+    const meals = await axios.get(`${config.SERVER_URL}/api/meals?count=20`, headers);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
