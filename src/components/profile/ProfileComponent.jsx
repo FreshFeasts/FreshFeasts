@@ -5,9 +5,10 @@ import InputWithLabel from "../../utils/components/InputComponent";
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext";
 import axios from "axios";
+import { SERVER_URL } from '../../../config.js';
 
 const ProfileComponent = () => {
-  const {values, userId, authToken} = useContext(LogInScreenContext);
+  const {values, userId, userInitData} = useContext(LogInScreenContext);
   const [profile, setProfile] = useState({
     userId: userId,
     firstName: values.firstName,
@@ -30,11 +31,7 @@ const ProfileComponent = () => {
   };
 
   let handleSubmit = function () {
-    axios({
-      method: 'PUT',
-      url: 'api/users/update',
-      headers: {AUTHORIZATION: authToken},
-      data: {
+    axios.put(SERVER_URL + 'api/users/update', {
         userId: profile.userId,
         user: {
           firstName: profile.firstName,
@@ -52,8 +49,10 @@ const ProfileComponent = () => {
           },
           phone: profile.phone
         }
-      }
-    });
+      }, {headers: {AUTHORIZATION: userInitData.token}})
+    .catch((err) => {
+      throw err;
+    }).then((results) => {});
   }
   return (
     <>
