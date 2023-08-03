@@ -1,10 +1,11 @@
 import axios from 'axios';
+import config from '../../../config.js';
 
-const headers = { headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NmRiMzIzYmZjYmQ0YTcxNTkyMDkiLCJlbWFpbCI6IkVuaWQuSm9obnNAeWFob28uY29tIiwiaWF0IjoxNjkwOTI2NTcxfQ.qNQaXsXDKeLU7CFuAVGIS9sdgLVEuyxBtxTGySaUsII' }}
-
-export const getMeals = async () => {
+export const getMeals = async (token) => {
   try {
-    const meals = await axios.get('http://localhost:3000/api/meals?count=20', headers);
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    console.log('headers:', headers);
+    const meals = await axios.get(`${config.SERVER_URL}/meals?count=20`, headers);
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
