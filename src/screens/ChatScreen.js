@@ -7,8 +7,8 @@ import chefThumb from '../../assets/images/cbthumb.png';
 const ChatScreen = ({ navigation }) => {
   return (
     <View className="flex flex-col items-center h-full">
-      <View className="w-full h-[15%] flex items-center justify-center  bg-forestgreen drop-shadow-md">
-        <View className="overflow-hidden rounded-[50%] h-20 w-20 self-center">
+      <View className="flex w-full h-[17.5%] pt-12 items-center justify-center bg-forestgreen drop-shadow-md">
+        <View className="overflow-hidden rounded-[50%] h-20 w-20   ">
           <ImageBackground
             source={chefThumb}
             className="bg-contain h-20 w-20 "

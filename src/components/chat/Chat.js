@@ -20,20 +20,21 @@ import io from 'socket.io-client';
 import AppText from '../../utils/components/AppText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { LogInScreenContext } from '../../contexts/LogInScreenContext';
+import { CHAT_URL } from '../../../config';
 import { formatDistanceToNow } from 'date-fns';
 
 // import MealModal from './MealModal';
 
-const SOCKET_SERVER_URL = 'http://44.211.123.112:3005'; // Replace with your socket server URL
+const SOCKET_SERVER_URL = CHAT_URL; // Replace with your socket server URL
 const socket = io(SOCKET_SERVER_URL);
 
 socket.on('connect', () => {
   console.log('Connected to server');
 });
 
-socket.on('disconnect', () => {
-  console.log('Disconnected from server');
-});
+// socket.on('disconnect', () => {
+//   console.log('Disconnected from server');
+// });
 
 socket.on('chat message', (msg) => {
   console.log('New message:', msg);
@@ -50,17 +51,22 @@ const sendMessage = (msg) => {
   console.log('user sent:', msg);
 };
 
-// display messages of other clients in our client
-socket.on('broadcast', (data) => {
-  console.log(data.msg);
-});
+const quitChat = () => {
+  socket.emit('quit');
+  //   socket.disconnect();
+};
+
+// // display messages of other clients in our client
+// socket.on('broadcast', (data) => {
+//   console.log(data.msg);
+// });
 
 const Chat = () => {
   // const { userInitData } = useContext(LogInScreenContext);
   const [messages, setMessages] = useState([
     {
       // msg: `hi ${userInitData.info.firstName} im the nutritionist`,
-      msg: `hi  im the nutritionist`,
+      msg: `hi im the nutritionist`,
       sender: 'nutritionist',
       time: new Date(),
     },
@@ -99,8 +105,16 @@ const Chat = () => {
 
   return (
     // <SafeAreaView style={styles.container}>
-    <View className="h-[87.5%] bg-inherit">
-      <ScrollView className="">
+    <View className="h-[81%] bg-inherit">
+      <ScrollView
+        className=""
+        ref={(ref) => {
+          this.scrollView = ref;
+        }}
+        onContentSizeChange={() =>
+          this.scrollView.scrollToEnd({ animated: true })
+        }
+      >
         {messages.map((item, index) => {
           return <Message key={index} item={item} />;
         })}
