@@ -177,11 +177,12 @@ export const getPayment = async (userId, token) => {
   }
 };
 
-export const updateDeliveryDate = async (token ,userId) => {
+export const updateDeliveryDate = async (token, orderId ,userId, orderDate, deliveryDate) => {
+  console.log(token, orderId ,userId, orderDate, deliveryDate)
   try {
     const body = { orderId, userId, orderDate, deliveryDate }
     const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    let user = await axios.put(`${config.SERVER_URL}/api/update-delivery`,body, headers);
+    let user = await axios.put(`${config.SERVER_URL}/api/orders/update-delivery`,body, headers);
     return true;
   } catch (error) {
     console.error('Error updating delivery date: ', error);

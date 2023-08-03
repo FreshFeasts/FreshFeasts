@@ -8,7 +8,6 @@ import {LogInScreenContext} from '../contexts/LogInScreenContext.jsx'
 import {getMeals, getOrders, updateDeliveryDate} from '../utils/apis/api'
 
 
-
 const CalendarScreen = ({navigation}) => {
   const { userInitData } = useContext(LogInScreenContext);
   const [selected, setSelected] = useState(null);
@@ -39,7 +38,7 @@ const CalendarScreen = ({navigation}) => {
             parseISO(response[i].deliveryDate),
             'yyyy-MM-dd'
           );
-          console.log(response[i])
+          // console.log(response[i])
           updatedMarkedDates[deliveryDay] = {
             selected: true,
             selectedColor: '#238A28',
@@ -70,7 +69,7 @@ const CalendarScreen = ({navigation}) => {
 
   useEffect(() => {
     if(value !== null){
-      updateDeliveryDate(userInitData.token, userInitData.user._id, format(orderDate, 'MM-dd-yyyy'), formatted[value - 1].label)
+      updateDeliveryDate(userInitData.token, orderId ,userInitData.user._id, format(orderDate, 'MM-dd-yyyy'), formatted[value - 1].label)
         .then((response) => {
           const updatedMarkedDates = { ...markedDates }
           updatedMarkedDates[selected] = undefined
@@ -86,71 +85,6 @@ const CalendarScreen = ({navigation}) => {
     }
   }, [value]);
 
-  // useEffect(() => {
-  //   axios.get(`http://localhost:3000/api/orders/user/${userInitData.user._id}?count=5&page=1`, { headers: { "Authorization" : `Bearer ${userInitData.token}` }})
-  //     .then((response) => {
-  //       setUserMeal(response.data)
-  //       const updatedMarkedDates = {};
-  //       for (let i = 0; i < response.data.length; i++) {
-  //         const deliveryDay = format(
-  //           parseISO(response.data[i].deliveryDate),
-  //           'yyyy-MM-dd'
-  //         );
-  //         updatedMarkedDates[deliveryDay] = {
-  //           selected: true,
-  //           selectedColor: '#238A28',
-  //         };
-  //       }
-  //       setMarkedDates(updatedMarkedDates);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  // }, []);
-
-
-  // const fetchMeals = async () => {
-  //   try {
-  //     let response = await axios.get('http://localhost:3000/api/meals?count=10', { headers: { "Authorization" : `Bearer ${userInitData.token}` }});
-  //     setFetchMeals(response.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchMeals();
-  // }, []);
-
-
-  // useEffect(() => {
-  //   if(value !== null){
-  //     axios({
-  //       method: "PUT",
-  //       url: 'http://localhost:3000/api/orders/update-delivery',
-  //       headers: {"Authorization" : `Bearer ${userInitData.token}`},
-  //       data: {
-  //               "orderId": orderId,
-  //               "userId": userId,
-  //               "orderDate": format(orderDate, 'MM-dd-yyyy'),
-  //               "deliveryDate": formatted[value - 1].label
-  //           }
-  //       })
-  //       .then((response) => {
-
-  //         const updatedMarkedDates = { ...markedDates }
-  //         updatedMarkedDates[selected] = undefined
-  //         updatedMarkedDates[formatted[value - 1].label] = {
-  //           selected: true,
-  //           selectedColor: "#238A28",
-  //         };
-  //         setMarkedDates(updatedMarkedDates);
-  //       })
-  //       .catch((error) => {
-  //         console.log("Error updating data:",error);
-  //       })
-  //   }
-  // }, [value]);
 
   const formatted = []
   for(let i = 1; i <= restOfDays; i++){
@@ -174,7 +108,6 @@ useEffect(() => {
     }
   }, [selected]);
 
-if(userMeal && userMeal.length > 0){
 
   const mapCal = userMeal.map((orders) => {
 
@@ -282,19 +215,7 @@ if(userMeal && userMeal.length > 0){
       </View>
     )
   })
-} else {
-  return (
-    <SafeAreaView>
-      <Text
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >Loading...</Text>
-    </SafeAreaView>
-  );
-}
+
 
 
 
