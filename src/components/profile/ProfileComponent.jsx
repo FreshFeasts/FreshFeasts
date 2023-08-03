@@ -4,12 +4,12 @@ import { Picker } from "@react-native-picker/picker";
 import InputWithLabel from "../../utils/components/InputComponent";
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext";
-const axios = require("axios");
+import axios from "axios";
 
 const ProfileComponent = () => {
-  const {values} = useContext(LogInScreenContext);
+  const {values, userId, authToken} = useContext(LogInScreenContext);
   const [profile, setProfile] = useState({
-    userId: values.userId,
+    userId: userId,
     firstName: values.firstName,
     lastName: values.lastName,
     email: values.createUserEmail || values.signInEmail,
@@ -33,7 +33,7 @@ const ProfileComponent = () => {
     axios({
       method: 'PUT',
       url: 'api/users/update',
-      headers: {AUTHORIZATION: token},
+      headers: {AUTHORIZATION: authToken},
       data: {
         userId: profile.userId,
         user: {
@@ -57,7 +57,7 @@ const ProfileComponent = () => {
   }
   return (
     <>
-      <ScrollView className="bg-yellowgreen p-6 rounded-2xl w-10/12">
+      <View className="bg-yellowgreen p-6 rounded-2xl">
         <View className="name-container flex-row gap-3 justify-evenly w-full items-center ">
           <View className="firstName w-1/2">
             <InputWithLabel
@@ -141,10 +141,10 @@ const ProfileComponent = () => {
               <Picker.Item label="Dark Theme" value={true}/>
             </Picker>
         </View>
-        <Pressable className="px-4 py-4 bg-pakistangreen rounded-md" onPress={() => console.log(profile)}>
+        <Pressable className="px-4 py-4 bg-pakistangreen rounded-md" onPress={() => handleSubmit()}>
           <Text className="text-lemonchiffon font-main">Save</Text>
         </Pressable>
-      </ScrollView>
+      </View>
     </>
   );
 }

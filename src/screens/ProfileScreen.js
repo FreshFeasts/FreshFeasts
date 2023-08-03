@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, View, StatusBar, Pressable } from "react-native";
+import { ScrollView, SafeAreaView, Text, View, StatusBar, Pressable } from "react-native";
 import OrderHistory from "../components/profile/OrderHistory";
 import ProfileComponent from "../components/profile/ProfileComponent";
 
@@ -7,6 +7,7 @@ const ProfileScreen = ({ navigation }) => {
   const [history, setHistory] = useState(false);
 
   return (
+    <ScrollView>
     <SafeAreaView className="flex-1 items-center">
       {history ? (
         <OrderHistory history={history} setHistory={setHistory} />
@@ -20,6 +21,7 @@ const ProfileScreen = ({ navigation }) => {
       )}
       <ProfileComponent/>
     </SafeAreaView>
+    </ScrollView>
   );
 };
 export default ProfileScreen;
