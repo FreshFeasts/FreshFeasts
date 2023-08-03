@@ -1,13 +1,15 @@
 import {  Text, View, StatusBar, TouchableOpacity, Modal, Pressable, Image, StyleSheet, TouchableWithoutFeedback, SafeAreaView} from "react-native";
 import {Calendar, LocaleConfig,Agenda, DateData, AgendaEntry, AgendaSchedule, CalendarList} from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { compareAsc, format, addDays, addBusinessDays, parseISO} from 'date-fns'
+import {LoginScreenContext} from '../contexts/LogInScreenContext.jsx'
+
 
 
 const CalendarScreen = ({navigation}) => {
-
+  const { userInitData } = useContext(LogInScreenContext);
   const [selected, setSelected] = useState(null);
   const [items, setItems] = useState({})
   const [orderDate, setOrderDate] = useState(new Date())
@@ -220,106 +222,7 @@ useEffect(() => {
       </View>
     )
   })
-//}
 
-
-
-  // const renderItem = () => {
-  //     return (
-  //       <View>
-  //       <Modal
-  //         animationType="slide"
-  //         transparent={true}
-  //         visible={selected !== null}
-  //         onRequestClose={() => {
-  //           setSelected(null);
-  //         }}
-  //       >
-  //           <Pressable style={{ flex: 1}} onPress={() => setSelected(null)}>
-
-  //         <View style={{ flex: 1}}>
-  //           <View
-  //             style={{
-  //               margin: 45,
-  //               backgroundColor: "#0E4000",
-  //               borderRadius: 20,
-  //               padding: 15,
-  //               alignItems: "center",
-  //               shadowColor: "#000",
-  //               shadowOffset: {
-  //                 width: 0,
-  //                 height: 2,
-  //               },
-  //               shadowOpacity: 0.25,
-  //               shadowRadius: 4,
-  //               elevation: 5,
-  //             }}
-  //           >
-
-  //             <Text
-  //             style= {{
-  //               fontWeight: 'bold',
-  //               fontSize: 20,
-  //               color: 'white',
-  //               padding: 10
-  //             }}>
-  //               Order Information
-  //             </Text>
-  //             <Text
-  //             style= {{
-  //               fontSize: 15,
-  //               color: 'white',
-  //               padding: 5
-  //             }}>Order Date: {orderDay}</Text>
-
-  //             {meals}
-
-  //             <Text
-  //             style= {{
-  //               fontWeight: 'bold',
-  //               fontSize: 15,
-  //               color: 'white',
-  //               padding: 5
-  //             }}>Delivery Date:</Text>
-  //             <DropDownPicker
-  //             textStyle={{ fontSize: 12 }}
-  //             placeholder = {selected}
-  //             placeholderStyle={{
-  //               color: 'black',
-  //             }}
-  //             containerStyle={{
-  //               width: 130,
-  //             }}
-  //             labelStyle={{
-  //               textAlign: 'center',
-  //             }}
-  //             open={open}
-  //             label = {label}
-  //             value={value}
-  //             items={formatted}
-  //             setOpen={setOpen}
-  //             setValue={setValue}
-  //             setLabel={setLabel}
-  //             setItems={setItems}
-  //             />
-  //           </View>
-  //         </View>
-  //       </Pressable>
-  //       </Modal>
-  //       </View>
-  //     )
-
-  // }
-// console.log(formatted[formatted.length-1])
-
-//get API from user to see what weekly date they'd want and use code to find all days and mark to dynamically render
-
-// const markedDates = {
-//   caldeliveryDate: { selected: true, selectedColor: "#238A28" },
-//   "2023-08-16": { selected: true, selectedColor: "#238A28" },
-//   "2023-08-23": { selected: true, selectedColor: "#238A28" },
-//   "2023-08-30": { selected: true, selectedColor: "#238A28" },
-// };
 
 
 if(Object.keys(markedDates).length > 0){
