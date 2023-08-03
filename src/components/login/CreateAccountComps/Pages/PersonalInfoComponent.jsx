@@ -104,9 +104,10 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
             <View className="state-zip-container flex-row gap-3 justify-between w-full ">
               <View className="state w-1/2 ">
                 <InputWithLabel
-                  label="DROPDOWN :"
+                  label="State:"
                   labelStyle="text-black"
                   inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  placeholder="OR"
                   value={values.state}
                   onChangeText={(text) => onChangeHandler(text, "state")}
                 />

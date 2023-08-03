@@ -37,7 +37,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
   const onCreateAccountHandler = async () => {
     try{
       const response = await createUser(createUserData);
-      setUserInitData(response);
+      setUserInitData(response.data);
       setPageFour(false);
       setLoggedIn(true);
     } catch(err) {
@@ -89,9 +89,9 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
           <View className="flex-row justify-between">
             <View className="w-1/2">
               <InputWithLabel
-                label="Card Number:"
+                label="Card Expiration:"
                 labelStyle="text-black mb-3"
-                placeholder="12/25"
+                placeholder="12/2025"
                 value={values.ccExp}
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
                 onChangeText={(text) => onChangeHandler(text, "ccExp")}
@@ -101,7 +101,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
               <InputWithLabel
                 label="CVV:"
                 labelStyle="text-black mb-3"
-                placeholder="12341231234"
+                placeholder="123"
                 value={values.ccCVV}
                 inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
                 onChangeText={(text) => onChangeHandler(text, "ccCVV")}
@@ -142,9 +142,10 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
             <View className="state-zip-container flex-row gap-3 justify-between w-full ">
               <View className="state w-1/2 ">
                 <InputWithLabel
-                  label="DROPDOWN :"
+                  label="State:"
                   labelStyle="text-black"
                   inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  placeholder="OR"
                   value={values.ccState}
                   onChangeText={(text) => onChangeHandler(text, "ccState")}
                 />
@@ -154,6 +155,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                   label="Zip code: "
                   labelStyle="text-black"
                   inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  placeholder="99999"
                   value={values.ccZip}
                   onChangeText={(text) => onChangeHandler(text, "ccZip")}
                 />
