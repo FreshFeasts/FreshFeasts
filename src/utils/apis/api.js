@@ -3,8 +3,11 @@ import config from '../../../config.js';
 
 export const getMeals = async (token) => {
   try {
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    const meals = await axios.get(`${config.SERVER_URL}/api/meals?count=20`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const meals = await axios.get(
+      `${config.SERVER_URL}/api/meals?count=20`,
+      headers
+    );
     return meals.data;
   } catch (error) {
     console.error('Error fetching meals: ', error);
@@ -25,9 +28,13 @@ export const getOrders = async (userId, token) => {
 
 export const updateCart = async (userId, currentCart, token) => {
   try {
-    let body = {userId, currentCart}
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    let cart = await axios.put(`${config.SERVER_URL}/api/users/cart`, body, headers);
+    let body = { userId, currentCart };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let cart = await axios.put(
+      `${config.SERVER_URL}/api/users/cart`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
@@ -37,8 +44,12 @@ export const updateCart = async (userId, currentCart, token) => {
 
 export const postCart = async (body, token) => {
   try {
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    let cart = await axios.post(`${config.SERVER_URL}/api/users/cart`, body, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let cart = await axios.post(
+      `${config.SERVER_URL}/api/users/cart`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding meal to cart: ', error);
@@ -50,11 +61,11 @@ export const createUser = async (bodyObject) => {
   try{
     const response = await axios.post(`${config.SERVER_URL}/register`, bodyObject);
     return response;
-  } catch(err){
+  } catch (err) {
     console.log(err);
     throw err;
   }
-}
+};
 
 export const signInUser = async (signInObj) => {
   try{
@@ -75,13 +86,17 @@ export const getUserData = async(userId, token) => {
     console.log(err);
     throw err;
   }
-}
+};
 
 export const rateMeal = async (mealId, userId, rating, token) => {
   try {
-    const body = { mealId, userId, rating }
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    await axios.post(`${config.SERVER_URL}/api/meals/add-rating`, body, headers);
+    const body = { mealId, userId, rating };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    await axios.post(
+      `${config.SERVER_URL}/api/meals/add-rating`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding rating: ', error);
@@ -89,11 +104,21 @@ export const rateMeal = async (mealId, userId, rating, token) => {
   }
 };
 
-export const reviewMeal = async (mealId, userId,firstName, reviewText, token ) => {
+export const reviewMeal = async (
+  mealId,
+  userId,
+  firstName,
+  reviewText,
+  token
+) => {
   try {
-    const body = { mealId, userId,firstName, reviewText };
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    await axios.post(`${config.SERVER_URL}/api/meals/add-review`, body, headers);
+    const body = { mealId, userId, firstName, reviewText };
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    await axios.post(
+      `${config.SERVER_URL}/api/meals/add-review`,
+      body,
+      headers
+    );
     return true;
   } catch (error) {
     console.error('Error adding written review: ', error);
@@ -103,8 +128,11 @@ export const reviewMeal = async (mealId, userId,firstName, reviewText, token ) =
 
 export const getUser = async (email, token) => {
   try {
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    const user = await axios.get(`${config.SERVER_URL}/api/users/${email}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    const user = await axios.get(
+      `${config.SERVER_URL}/api/users/${email}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
@@ -114,8 +142,11 @@ export const getUser = async (email, token) => {
 
 export const getUserContact = async (userId, token) => {
   try {
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    let user = await axios.get(`${config.SERVER_URL}/api/info/${userId}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let user = await axios.get(
+      `${config.SERVER_URL}/api/info/${userId}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
@@ -125,8 +156,11 @@ export const getUserContact = async (userId, token) => {
 
 export const getPayment = async (userId, token) => {
   try {
-    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
-    let user = await axios.get(`${config.SERVER_URL}/api/cc/user/${userId}`, headers);
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    let user = await axios.get(
+      `${config.SERVER_URL}/api/cc/user/${userId}`,
+      headers
+    );
     return user.data;
   } catch (error) {
     console.error('Error getting user: ', error);
