@@ -15,13 +15,13 @@ const HistoryCard = ({ meal, userId, firstName }) => {
 
   const handleReview = () => {
     reviewMeal(meal.id, userId, firstName, reviewText);
-    setReviewText('');
+    setReviewText('Review previously submitted');
   };
 
 
   return (
     <View className="flex-1 items-center m-1">
-      <View className="w-80 p-2 rounded-lg border-2 flex-row bg-lemonchiffon">
+      <View className="w-96 py-1 rounded-lg border-2 flex-row bg-lemonchiffon">
         <Image
           className="w-24 rounded-lg mb-2 ml-2"
           source={{
@@ -30,11 +30,11 @@ const HistoryCard = ({ meal, userId, firstName }) => {
           resizeMode="cover"
         />
         <View>
-        <View className="ml-2 mb-2 flex-wrap">
-          <Text className="font-main text-sm truncate">{meal.name}</Text>
+        <View className="flex-wrap ml-4 mb-2">
+          <Text className="font-main text-sm">{meal.name}</Text>
         </View>
-            <Text className="font-main text-sm ml-2">Review this meal: </Text>
-            <View className="flex-row ml-2">
+            <Text className="font-main text-sm ml-4">Review this meal: </Text>
+            <View className="flex-row ml-4">
             <Pressable onPress={() => changeRating(1)} className="m-1">
               <Icon name={rating >= 1 ? 'star' : 'star-o'} size={24} color="#0E4000" />
             </Pressable>
@@ -51,18 +51,20 @@ const HistoryCard = ({ meal, userId, firstName }) => {
               <Icon name={rating >= 5 ? 'star' : 'star-o'} size={24} color="#0E4000" />
             </Pressable>
             </View>
+            <View className="flex-row items-center">
             <TextInput
               placeholder="Write a short review"
-              className="m-1 border-2 border-black  p-3 w-[180px]"
+              className="ml-4 border-2 border-black  p-3 w-[180px]"
               onChangeText={(text) => setReviewText(text)}
               value={reviewText}
             />
             <Pressable
-              className="p-2 m-1 bg-pakistangreen rounded-md w-[120px]"
+              className="px-3 py-4 ml-2 bg-pakistangreen rounded-md"
               onPress={handleReview}
             >
-              <AppText className="text-white">Submit Review</AppText>
+              <AppText className="text-white">Add</AppText>
             </Pressable>
+            </View>
         </View>
       </View>
     </View>
