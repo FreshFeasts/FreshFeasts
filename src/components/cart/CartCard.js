@@ -28,6 +28,7 @@ const CartCard = ({ meal, count }) => {
           <CartIncrementer
             color="#0E4000"
             count={count}
+            size={24}
             handleCount={handleCount}
             mealId={meal._id}
           />

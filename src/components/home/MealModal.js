@@ -14,7 +14,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   const cart = userInitData.user.currentCart;
   const [modalVisible, setModalVisible] = useState(false);
   const [reviewModalVisible, setReviewModalVisible] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [meal, setMeal] = useState({
     _id: "",
     name: "",
@@ -46,27 +46,12 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
   }, [mealSelection]);
 
   const handleAddMeal = async () => {
-    const updatedMeals = [...cart.meals, meal._id];
-    const update = { ...cart, meals: updatedMeals };
-    handleCount((prevCount) => prevCount + 1);
-    setUserInitData((prevUserData) => ({
-      ...prevUserData,
-      user: {
-        ...prevUserData.user,
-        currentCart: update,
-      },
-    }));
-    try {
-      await updateCart(userInitData.user._id, update, userInitData.token);
-    } catch (error) {
-      console.error('Error updating cart: ', error);
-    }
+    setModalVisible(!modalVisible);
   };
 
   const handleCount = (count) => {
     setCount(count);
   };
-
 
 
   return (
@@ -80,7 +65,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
         }}
       >
         <View className="flex-1 items-center justify-end mb-5">
-          <View className="bg-pakistangreen w-[100%] items-start rounded-lg">
+          <View className="bg-pakistangreen w-[100%] h-[90%] items-start rounded-lg">
             <View className="absolute top-2 right-2 z-20">
               <Pressable
                 onPress={() => {
@@ -116,6 +101,9 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                 <AppText className="text-white text-sm underline"> (Read Reviews)</AppText>
               </Pressable>
             </View>
+            <AppText className="text-sm text-white ml-2">
+                {meal.favorites} other FreshFeast customers favorited this meal!
+            </AppText>
             <AppText className="text-sm text-white m-2">
               {meal.description}
             </AppText>
@@ -179,30 +167,24 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
                 </View>
               </View>
             </Modal>
-            <View className="absolute bottom-4 left-2 w-56">
-              <AppText className="text-sm text-white">
-                {meal.favorites} other FreshFeast customers favorited this meal!
-              </AppText>
-            </View>
-            {count > 0 ? (
-              <View className="absolute bottom-4 right-3">
-                <CartIncrementer
+            <View className="absolute bottom-2 right-2 flex-row justify-center items-center">
+            <CartIncrementer
                   count={count}
                   color="white"
+                  size={32}
                   mealId={meal._id}
                   handleCount={handleCount}
                 />
-              </View>
-            ) : (
-              <View className="absolute bottom-4 right-3">
+              <View className="bg-lemonchiffon rounded-md ml-2">
                 <Pressable
-                  className="flex-row items-center"
+                  className="flex-row items-center ml-2 p-2"
                   onPress={handleAddMeal}
                 >
-                  <Text className="font-main text-white mr-2">Add to Cart</Text>
-                  <Icon name="cart-plus" size={32} color="white" />
+                  <Text className="font-main text-pakistangreen mr-2">Add to Cart</Text>
+                  <Icon name="cart-plus" size={32} color="#0E4000" />
                 </Pressable>
-              </View>)}
+              </View>
+              </View>
           </View>
         </View>
       </Modal>
