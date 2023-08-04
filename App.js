@@ -20,7 +20,8 @@ export default function App() {
   useEffect(() => {
     const fetchLoginStatusFromStorage = async() => {
       const status = await AsyncStorage.getItem('loggedIn');
-      status ==='true' ? setLoggedIn(false): setLoggedIn(false);
+      console.log('status', status);
+      status ==='true' ? setLoggedIn(true): setLoggedIn(false);
     }
     fetchLoginStatusFromStorage();
   },[])
@@ -46,11 +47,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator headerShown="false">
           {loggedIn ? (
-            <Stack.Screen
-              name="MainTabs"
-              component={MainTabs}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="MainTabs" options={{headerShown:false}}>
+              {(props) => <MainTabs {...props} setLoggedIn={setLoggedIn} />}
+            </Stack.Screen>
+            // <Stack.Screen
+            //   name="MainTabs"
+            //   component={MainTabs}
+            //   options={{ headerShown: false }}
+            // />
           ) : (
             <>
               <Stack.Screen name="Login">

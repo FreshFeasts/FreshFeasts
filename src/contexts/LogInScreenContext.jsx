@@ -38,16 +38,17 @@ export const LogInScreenContextProvider = ({ children }) => {
   const [isSameAddress, setIsSameAddress] = useState(false);
 
   // Takes care of persistent  user login
-  useEffect(() => {
-    const fetchUserInitDataFromStorage = async() => {
-      const storageUserInItData = await AsyncStorage.getItem('stringUserInItData');
-      if(storageUserInItData) {
-        setUserInitData(JSON.parse(storageUserInItData));
-      }
-    }
+  // useEffect(() => {
+  //   const fetchUserInitDataFromStorage = async() => {
+  //     const storageUserInItData = await AsyncStorage.getItem('stringUserInItData');
+  //     console.log('CONTEXT', storageUserInItData);
+  //     if(storageUserInItData) {
+  //       setUserInitData(JSON.parse(storageUserInItData));
+  //     }
+  //   }
 
-    fetchUserInitDataFromStorage();
-  }, [])
+  //   fetchUserInitDataFromStorage();
+  // }, [])
   // More Variables used in sign up process
   let addressInfo = {
     address1: values.address1,

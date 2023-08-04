@@ -34,6 +34,8 @@ const SignInComponent = ({setLoggedIn}) => {
       console.log('STRINGIFIED',stringUserInitData);
       await AsyncStorage.setItem('loggedIn', 'true');
       await AsyncStorage.setItem('stringUserInItData', stringUserInitData);
+      const storedData = AsyncStorage.getItem('stringUserInItData');
+      console.log('STORED DATA', storedData);
       setUserInitData({...data, token:token})
       setLoggedIn(true);
     } catch(err) {
