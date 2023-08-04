@@ -111,10 +111,6 @@ useEffect(() => {
 
   const mapCal = userMeal.map((orders) => {
 
-    const orderDay = format(parseISO(orders.orderDate), 'MM-dd-yyyy')
-    // console.log(orderDay)
-    const date = format(new Date(selected), 'MM-dd-yyyy');
-    // console.log('testdate', deliveryDay)
     let filteredMeals = fetchmeals.filter((e) => orders.meals.includes(e._id)).map((e) => e.name);
     const meals = filteredMeals.map((name, index) => {
       //adding 1 to index so users will not see the 0th index at start and see #1.
@@ -131,6 +127,10 @@ useEffect(() => {
         </Text>
       );
     });
+    const orderDay = format(parseISO(orders.orderDate), 'MM-dd-yyyy')
+    // console.log(orderDay)
+    const date = format(new Date(selected), 'MM-dd-yyyy');
+    // console.log('testdate', deliveryDay)
 
 
     return (
@@ -244,6 +244,32 @@ if(Object.keys(markedDates).length > 0){
           />
 
       {markedDates[selected] ? mapCal : <></>}
+      </SafeAreaView>
+    </>
+  )
+} else {
+    return (
+    <>
+    <SafeAreaView>
+        <CalendarList
+        pastScrollRange={2}
+        futureScrollRange={2}
+        scrollEnabled={true}
+          onDayPress={(day) => {
+            setSelected(day.dateString)
+          }}
+          markedDates={markedDates}
+
+          theme={{
+            textMonthFontSize: 20,
+            calendarBackground: '#FFF7C6',
+            textSectionTitleColor: '#238A28',
+            selectedDayBackgroundColor: '#00adf5',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: '#238A28',
+            // dayTextColor: '#2d4150',
+          }}
+          />
       </SafeAreaView>
     </>
   )
