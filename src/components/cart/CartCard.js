@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Text, View, Image, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+
 import CartIncrementer from "../../utils/components/CartIncrementer";
 
 

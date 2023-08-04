@@ -24,6 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignInComponent = ({ setLoggedIn }) => {
   const { setCreateAccountComp, onChangeHandler, values, setUserInitData } =
     useContext(LogInScreenContext);
+  const [logInError, setLogInError] = useState(false);
   const onCreateAccountHandler = () => {
     setCreateAccountComp(true);
   };
@@ -35,21 +36,16 @@ const SignInComponent = ({ setLoggedIn }) => {
     try {
       const response = await signInUser(signInObject);
       const { token, userId } = response.data;
-      console.log("userId", userId);
       const userResponse = await getUserData(userId, token);
       const { data } = userResponse;
-      console.log("PARSE", { ...data, token: token });
       const stringUserInitData = JSON.stringify({ ...data, token: token });
-      console.log("STRINGIFIED", stringUserInitData);
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("stringUserInItData", stringUserInitData);
-      const storedData = AsyncStorage.getItem("stringUserInItData");
-      console.log("STORED DATA", storedData);
       setUserInitData({ ...data, token: token });
       setLoggedIn(true);
     } catch (err) {
       console.log(err);
-      throw err;
+      setLogInError(true);
     }
   };
   return (
@@ -71,7 +67,7 @@ const SignInComponent = ({ setLoggedIn }) => {
             labelStyle="text-black mb-0"
             keyboardType="email-address"
             placeholder="example@example.com"
-            inputStyle="border-b-2 border-black  p-3 "
+            inputStyle="border-b-2 border-black p-3 "
             value={values.signInEmail}
             onChangeText={(text) => onChangeHandler(text, "signInEmail")}
           />
@@ -92,6 +88,7 @@ const SignInComponent = ({ setLoggedIn }) => {
               <AppText className="text-black text-center">Sign in</AppText>
             </TouchableOpacity>
           </View>
+          {logInError && <AppText className = 'text-red-600 mt-4 underline'>Invalid username or password</AppText>}
           <AppText className="text-black text-center mt-4">
             Don't Have A FreshFeasts Account?
           </AppText>
