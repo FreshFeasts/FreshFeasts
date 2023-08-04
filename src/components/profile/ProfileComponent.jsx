@@ -2,26 +2,27 @@ import { useContext, useState } from "react";
 import {
   Text,
   View,
-  ScrollView,
-  StatusBar,
   TouchableOpacity,
   Pressable,
   Switch,
+  ScrollView,
 } from "react-native";
+import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
+import { useColorScheme } from "nativewind";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import InputWithLabel from "../../utils/components/InputComponent";
 import AppText from "../../utils/components/AppText.js";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext";
-import axios from "axios";
 import { SERVER_URL } from "../../../config.js";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import OrderHistory from "./OrderHistory.js";
-import { useColorScheme } from "nativewind";
 
 const ProfileComponent = ({ setLoggedIn }) => {
   const { userInitData } = useContext(LogInScreenContext);
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const [history, setHistory] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [profile, setProfile] = useState({
     userId: userInitData.user._id,
     firstName: userInitData.user.firstName,
@@ -41,12 +42,26 @@ const ProfileComponent = ({ setLoggedIn }) => {
     await AsyncStorage.removeItem("loggedIn");
     setLoggedIn(false);
   };
+
+  const handleDarkMode = (isEnabled) => {
+    setProfile({
+      ...profile,
+      darkTheme: isEnabled,
+    });
+    toggleColorScheme();
+  };
+
   let handleChange = function (text, input) {
     setProfile({
       ...profile,
       [input]: text,
     });
   };
+
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+  };
+
   const payload = {
     userId: profile.userId,
     user: {
@@ -67,13 +82,6 @@ const ProfileComponent = ({ setLoggedIn }) => {
     },
   };
 
-  const handleDarkMode = (isEnabled) => {
-    setProfile({
-      ...profile,
-      darkTheme: isEnabled,
-    });
-    toggleColorScheme();
-  };
   let handleSubmit = async function () {
     axios
       .put(SERVER_URL + "/api/users/update", payload, {
@@ -93,120 +101,141 @@ const ProfileComponent = ({ setLoggedIn }) => {
           Profile
         </AppText>
       </View>
-      <View className="bg-white p-6 rounded-2xl">
-        <View className="name-container flex-row gap-3 justify-evenly w-full items-center ">
-          <View className="firstName w-1/2">
+      <ScrollView bounces={false}>
+        <View className="bg-white p-3 rounded-2xl dark:bg-pakistangreen">
+          <View className="name-container flex-row gap-3 justify-evenly w-full items-center">
+            <View className="firstName w-1/2">
+              <InputWithLabel
+                label="First Name:"
+                labelStyle="text-black ml-2 dark:text-white"
+                inputStyle="border-b-2 border-black  p-2 ml-2 dark:border-white dark:text-white"
+                defaultValue={profile.firstName}
+                onChangeText={(text) => handleChange(text, "firstName")}
+              />
+            </View>
+            <View className="lastName w-1/2">
+              <InputWithLabel
+                label="Last Name:"
+                labelStyle="text-black dark:text-white"
+                inputStyle="border-b-2 border-black  p-2 dark:border-white dark:text-white"
+                defaultValue={profile.lastName}
+                onChangeText={(text) => handleChange(text, "lastName")}
+              />
+            </View>
+          </View>
+          <View>
             <InputWithLabel
-              label="First Name:"
-              labelStyle="text-black"
-              inputStyle="border-b-2 border-black  p-3"
-              defaultValue={profile.firstName}
-              onChangeText={(text) => handleChange(text, "firstName")}
+              label="Email:"
+              labelStyle="text-black dark:text-white"
+              keyboardType="email-address"
+              inputStyle="border-b-2 border-black p-2 dark:border-white dark:text-white"
+              defaultValue={profile.email}
+              onChangeText={(text) => handleChange(text, "email")}
             />
           </View>
-          <View className="lastName w-1/2">
-            <InputWithLabel
-              label="Last Name:"
-              labelStyle="text-black"
-              inputStyle="border-b-2 border-black  p-3"
-              defaultValue={profile.lastName}
-              onChangeText={(text) => handleChange(text, "lastName")}
-            />
-          </View>
-        </View>
-        <View>
           <InputWithLabel
-            label="Email:"
-            labelStyle="text-black"
+            label="Address:"
+            labelStyle="text-black dark:text-white"
             keyboardType="email-address"
-            inputStyle="border-b-2 border-black  p-3"
-            defaultValue={profile.email}
-            onChangeText={(text) => handleChange(text, "email")}
+            inputStyle="border-b-2 border-black p-2 dark:border-white dark:text-white"
+            defaultValue={profile.address1}
+            onChangeText={(text) => handleChange(text, "address1")}
           />
-        </View>
-        <InputWithLabel
-          label="Address:"
-          labelStyle="text-black"
-          keyboardType="email-address"
-          inputStyle="border-b-2 border-black  p-3"
-          defaultValue={profile.address1}
-          onChangeText={(text) => handleChange(text, "address1")}
-        />
-        <InputWithLabel
-          label="Address Line 2:"
-          labelStyle="text-black"
-          keyboardType="email-address"
-          inputStyle="border-b-2 border-black  p-3 "
-          defaultValue={profile.address2}
-          onChangeText={(text) => handleChange(text, "address2")}
-        />
-        <View className="city">
           <InputWithLabel
-            label="City:"
-            labelStyle="text-black"
-            inputStyle="border-b-2 border-black  p-3 "
-            defaultValue={profile.city}
-            onChangeText={(text) => handleChange(text, "city")}
+            label="Address Line 2:"
+            labelStyle="text-black dark:text-white"
+            keyboardType="email-address"
+            inputStyle="border-b-2 border-black p-2 dark:border-white dark:text-white"
+            defaultValue={profile.address2}
+            onChangeText={(text) => handleChange(text, "address2")}
           />
-        </View>
-        <View className="name-container flex-row gap-3 justify-evenly w-full items-center mt-2">
-          <View className="firstName w-1/2">
+          <View className="city">
             <InputWithLabel
-              label="State:"
-              labelStyle="text-black"
-              inputStyle="border-b-2 border-black  p-3 "
-              defaultValue={profile.state}
-              onChangeText={(text) => handleChange(text, "state")}
+              label="City:"
+              labelStyle="text-black dark:text-white"
+              inputStyle="border-b-2 border-black p-2 dark:border-white dark:text-white"
+              defaultValue={profile.city}
+              onChangeText={(text) => handleChange(text, "city")}
             />
           </View>
-          <View className="lastName w-1/2">
-            <InputWithLabel
-              label="Zip Code:"
-              labelStyle="text-black"
-              inputStyle="border-b-2 border-black  p-3 "
-              defaultValue={profile.zip}
-              onChangeText={(text) => handleChange(text, "zip")}
-            />
+          <View className="name-container flex-row gap-3 justify-evenly w-full items-center mt-2">
+            <View className="firstName w-1/2">
+              <InputWithLabel
+                label="State:"
+                labelStyle="text-black ml-2 dark:text-white"
+                inputStyle="border-b-2 border-black p-2 ml-2 dark:border-white dark:text-white"
+                defaultValue={profile.state}
+                onChangeText={(text) => handleChange(text, "state")}
+              />
+            </View>
+            <View className="lastName w-1/2">
+              <InputWithLabel
+                label="Zip Code:"
+                labelStyle="text-black dark:text-white"
+                inputStyle="border-b-2 border-black  p-2 dark:border-white dark:text-white"
+                defaultValue={profile.zip}
+                onChangeText={(text) => handleChange(text, "zip")}
+              />
+            </View>
           </View>
-        </View>
-        <View className="w-full">
-        <InputWithLabel
+          <View className="w-[100%]">
+            <InputWithLabel
               label="Preferred Language"
-              labelStyle="text-black"
-              inputStyle="border-b-2 border-black p-3 "
+              labelStyle="text-black dark:text-white"
+              inputStyle="border-b-2 border-black p-2 dark:border-white dark:text-white"
               defaultValue="Coming Soon"
             />
-        </View>
-        <View className="flex-row mb-2 items-center">
-          <Text className="font-main text-lg"> Dark Mode: </Text>
-          <Switch
-            value={colorScheme === "dark"}
-            onChange={handleDarkMode}
-            trackColor={{ true: "#0E4000", false: "#FFFFFF" }}
-          />
-        </View>
-        {history ? (
-          <OrderHistory history={history} setHistory={setHistory} />
-        ) : (
-          <>
-            <Pressable
-              className="px-4 py-4 bg-pakistangreen rounded-md mb-2"
-              onPress={() => setHistory(!history)}
+            {/* <AppText className="mb-10 dark:text-white">
+             Preferred language:
+            </AppText>
+            <Picker
+              selectedValue={selectedLanguage}
+              onValueChange={handleLanguageChange}
+              mode="modal"
+              style={{ width: 200, height: 40, marginTop: 0 }}
             >
-              <Text className="text-lemonchiffon font-main">View History</Text>
-            </Pressable>
-          </>
-        )}
+              <Picker.Item label="English" value="en" />
+              <Picker.Item label="Spanish" value="es" />
+              <Picker.Item label="French" value="fr" />
+            </Picker> */}
+          </View>
+          <View className="flex-row mb-2 items-center">
+            <Text className="font-main text-lg dark:text-white">
+              {" "}
+              Dark Mode:{" "}
+            </Text>
+            <Switch
+              value={colorScheme === "dark"}
+              onChange={handleDarkMode}
+              trackColor={{ true: "#238A28", false: "#FFFFFF" }}
+            />
+          </View>
+          <Pressable
+            className="px-4 py-4 bg-pakistangreen rounded-md mb-2 dark:bg-black"
+            onPress={() => handleSubmit()}
+          >
+            <Text className="text-white font-main">Save</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+      {history ? (
+        <View>
+          <OrderHistory history={history} setHistory={setHistory} />
+        </View>
+      ) : (
         <Pressable
-          className="px-4 py-4 bg-pakistangreen rounded-md mb-2"
-          onPress={() => handleSubmit()}
+          className="px-4 py-4 bg-pakistangreen rounded-md my-2 w-[92%] dark:bg-black"
+          onPress={() => setHistory(!history)}
         >
-          <Text className="text-lemonchiffon font-main">Save</Text>
+          <Text className="text-white font-main">View History</Text>
         </Pressable>
-        <TouchableOpacity className="px-4 py-4 bg-black rounded-md" onPress={onSignOutHandler}>
-          <Text className="text-white font-main">Sign Out</Text>
-        </TouchableOpacity>
-      </View>
+      )}
+      <TouchableOpacity
+        className="px-4 py-4 bg-black rounded-md my-2 w-[92%]"
+        onPress={onSignOutHandler}
+      >
+        <Text className="text-white font-main">Sign Out</Text>
+      </TouchableOpacity>
     </>
   );
 };
