@@ -11,92 +11,77 @@ import {LogInScreenContext} from '../contexts/LogInScreenContext.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator();
 
-const MainTabs = ({ setLoggedIn, navigation, route }) => {
-  const { userInitData, setUserInitData} = useContext(LogInScreenContext);
-  useEffect(() => {
-    const fetchUserInitDataFromStorage = async() => {
-      const storageUserInItData = await AsyncStorage.getItem('stringUserInItData');
-      if(storageUserInItData) {
-        setUserInitData(JSON.parse(storageUserInItData));
-      }
-    }
-
-    fetchUserInitDataFromStorage();
-  }, [])
-  if(userInitData) {
-    console.log('MAIN TAB RENDERED')
-    return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: "#FFF7C6",
-          tabBarInactiveTintColor: "#FFF7C6",
-          tabBarActiveBackgroundColor: "#0E4000",
-          tabBarInactiveBackgroundColor: "#0E4000",
-          tabBarStyle: [
-            {
-              display: "flex",
-            },
-            null,
-          ],
+const MainTabs = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "#FFF7C6",
+        tabBarInactiveTintColor: "#FFF7C6",
+        tabBarActiveBackgroundColor: "#0E4000",
+        tabBarInactiveBackgroundColor: "#0E4000",
+        tabBarStyle: [
+          {
+            display: "flex",
+            paddingBottom:0,
+          },
+          null,
+        ],
+      }}
+    >
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => (
+            <Icon name="user" size={24} color="white" />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Profile"
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => (
-              <Icon name="user" size={24} color="white" />
-            ),
-          }}
-        >
-          {(props) => <ProfileScreen {...props} setLoggedIn={setLoggedIn} />}
-        </Tab.Screen>
-        <Tab.Screen
-          name="Calendar"
-          component={CalendarScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="calendar" size={24} color="white" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="cutlery" size={24} color="white" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Chat"
-          component={ChatScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="comments" size={24} color="white" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Cart"
-          component={CartScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="shopping-cart" size={24} color="white" />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    );
-  }
-  return null;
+      />
+      <Tab.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="calendar" size={24} color="white" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="cutlery" size={24} color="white" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="comments" size={24} color="white" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="shopping-cart" size={24} color="white" />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
 };
 export default MainTabs;
 
