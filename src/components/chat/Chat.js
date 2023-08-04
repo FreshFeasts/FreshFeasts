@@ -41,23 +41,7 @@ const quitChat = () => {
 const Chat = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [messages, setMessages] = useState([
-    {
-      msg: `hi im the nutritionist`,
-      sender: 'nutritionist',
-      time: new Date(),
-    },
-    {
-      msg: 'what can I help you',
-      sender: 'nutritionist',
-      time: new Date(),
-    },
-    {
-      msg: 'yooooooo yooooooo yooooooo yooooooo yooooooo yooooooo yooooooo',
-      sender: 'chen',
-      time: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
