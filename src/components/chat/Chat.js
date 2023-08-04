@@ -152,7 +152,7 @@ const Message = ({ item }) => {
         <AppText className="text-pakistangreen">{item.msg}</AppText>
       </View>
       <AppText className="text-pakistangreen">
-        {formatDistanceToNow(new Date(item.time))}
+        {`${formatDistanceToNow(new Date(item.time))} ago`}
       </AppText>
     </View>
   );
