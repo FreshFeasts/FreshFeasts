@@ -1,4 +1,4 @@
-import {  Text, View, StatusBar, TouchableOpacity, Modal, Pressable, Image, StyleSheet, TouchableWithoutFeedback, SafeAreaView} from "react-native";
+import {  Text, View, StatusBar, TouchableOpacity, Modal, Pressable, Image, StyleSheet, TouchableWithoutFeedback, SafeAreaView, FlatList} from "react-native";
 import {Calendar, LocaleConfig,Agenda, DateData, AgendaEntry, AgendaSchedule, CalendarList} from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import React, {useState, useEffect, useContext} from 'react';
@@ -9,6 +9,7 @@ import {getMeals, getOrders, updateDeliveryDate} from '../utils/apis/api'
 
 
 const CalendarScreen = ({navigation}) => {
+
   const { userInitData } = useContext(LogInScreenContext);
   const [selected, setSelected] = useState(null);
   const [items, setItems] = useState({})
@@ -22,10 +23,10 @@ const CalendarScreen = ({navigation}) => {
   const [orderId, setOrderId] = useState('')
   const [label, setLabel] = useState('')
   const [userMeal, setUserMeal] = useState([])
-  const [markedDates, setMarkedDates] = useState({});
+  const [markedDates, setMarkedDates] = useState({})
 
-  // console.log(userInitData.token)
-  // console.log(userInitData.user._id)
+  // const [darkMode, setDarkMode] = useState(userInitData.user.darkTheme)
+  // const calendarBackgroundColor = Object.keys(markedDates).length > 0 ? '#FFF7C6' : '#ECECEC';
 
   useEffect(() => {
     getOrders(userInitData.user._id, userInitData.token)
@@ -50,7 +51,7 @@ const CalendarScreen = ({navigation}) => {
       .catch((error) => {
         console.log(error)
       });
-  }, []);
+  }, [markedDates]);
 
 
   const fetchMeals = async () => {
@@ -69,21 +70,21 @@ const CalendarScreen = ({navigation}) => {
 
   useEffect(() => {
     if(value !== null){
-      updateDeliveryDate(userInitData.token, orderId ,userInitData.user._id, format(orderDate, 'MM-dd-yyyy'), formatted[value - 1].label)
+      updateDeliveryDate(userInitData.token, orderId ,userInitData.user._id, format(orderDate, 'MM-dd-yyyy'), formatted[value].label)
         .then((response) => {
           const updatedMarkedDates = { ...markedDates }
           updatedMarkedDates[selected] = undefined
-          updatedMarkedDates[formatted[value - 1].label] = {
+          updatedMarkedDates[formatted[value].label] = {
             selected: true,
             selectedColor: "#238A28",
           };
-          setMarkedDates(updatedMarkedDates);
+          setMarkedDates(updatedMarkedDates)
         })
         .catch((error) => {
           console.log("Error updating data:",error);
         })
     }
-  }, [value]);
+  }, [value, userInitData.user._id, userInitData.token]);
 
 
   const formatted = []
@@ -99,22 +100,17 @@ useEffect(() => {
     if (selected !== null) {
       const selectedDateOrders = userMeal.find(
         (order) => format(parseISO(order.deliveryDate), 'yyyy-MM-dd') === selected
-      );
+      )
 
       if (selectedDateOrders) {
         setUserId(selectedDateOrders.userId);
         setOrderId(selectedDateOrders.orderId);
       }
     }
-  }, [selected]);
-
+  }, [selected, markedDates]);
 
   const mapCal = userMeal.map((orders) => {
 
-    const orderDay = format(parseISO(orders.orderDate), 'MM-dd-yyyy')
-    // console.log(orderDay)
-    const date = format(new Date(selected), 'MM-dd-yyyy');
-    // console.log('testdate', deliveryDay)
     let filteredMeals = fetchmeals.filter((e) => orders.meals.includes(e._id)).map((e) => e.name);
     const meals = filteredMeals.map((name, index) => {
       //adding 1 to index so users will not see the 0th index at start and see #1.
@@ -131,6 +127,10 @@ useEffect(() => {
         </Text>
       );
     });
+    const orderDay = format(parseISO(orders.orderDate), 'MM-dd-yyyy')
+    // console.log(orderDay)
+    const date = format(new Date(selected), 'MM-dd-yyyy');
+    // console.log('testdate', deliveryDay)
 
 
     return (
@@ -216,7 +216,35 @@ useEffect(() => {
     )
   })
 
+  // const flatMeal = ({mealCode, mealName, index}) => (
+  //   <View>
+  //     Meal #{index + 1}: {mealName}
+  //   </View>
+  // )
 
+  // const renderMeal = ({meal, index}) => (
+  //   <Item mealCode = {meal.mealCode} mealName = {meal.mealName} index = {index}/>
+  // )
+
+//   <View>
+//   {userMeal && (
+//     <FlatList
+//     userMeal = {userMeal}
+//     renderMeal = {renderMeal}
+//     />
+//   )}
+// </View>
+
+  // return (
+  //   <View>
+  //     {userMeal && (
+  //       <FlatList
+  //       userMeal = {userMeal}
+  //       renderMeal = {renderMeal}
+  //       />
+  //     )}
+  //   </View>
+  // )
 
 
 if(Object.keys(markedDates).length > 0){
@@ -239,11 +267,45 @@ if(Object.keys(markedDates).length > 0){
             selectedDayBackgroundColor: '#00adf5',
             selectedDayTextColor: '#ffffff',
             todayTextColor: '#238A28',
+            textDayFontSize: 20,
+            textDayHeaderFontSize: 15,
             // dayTextColor: '#2d4150',
           }}
           />
 
       {markedDates[selected] ? mapCal : <></>}
+
+
+
+
+      </SafeAreaView>
+    </>
+  )
+} else {
+    return (
+    <>
+    <SafeAreaView>
+        <CalendarList
+        pastScrollRange={2}
+        futureScrollRange={2}
+        scrollEnabled={true}
+          onDayPress={(day) => {
+            setSelected(day.dateString)
+          }}
+          markedDates={markedDates}
+
+          theme={{
+            textMonthFontSize: 20,
+            calendarBackground: '#FFF7C6',
+            textSectionTitleColor: '#238A28',
+            selectedDayBackgroundColor: '#00adf5',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: '#238A28',
+            textDayFontSize: 20,
+            textDayHeaderFontSize: 15,
+            // dayTextColor: '#2d4150',
+          }}
+          />
       </SafeAreaView>
     </>
   )
