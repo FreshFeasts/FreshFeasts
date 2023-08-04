@@ -30,15 +30,18 @@ const HomeScreen = ({ navigation, authToken }) => {
     fetchMeals();
   }, []);
 
-  return (
-    <SafeAreaView className="h-full">
-      <View className="flex-1 items-center justify-between">
-        <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
-        <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
-        <MealList meals={meals} user={userInitData.user} handleSelectMeal={handleSelectMeal} />
-      </View>
-    </SafeAreaView>
-  );
+  if (meals) {
+    return (
+      <SafeAreaView className="h-full">
+        <ScrollView className="flex-1">
+          <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
+          <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
+          <MealList meals={meals} user={userInitData.user} handleSelectMeal={handleSelectMeal} />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+  return null;
 };
 
 export default HomeScreen;
