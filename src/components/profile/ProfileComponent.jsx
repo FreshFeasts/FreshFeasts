@@ -204,7 +204,7 @@ const ProfileComponent = ({ setLoggedIn }) => {
           <Text className="text-lemonchiffon font-main">Save</Text>
         </Pressable>
         <TouchableOpacity className="px-4 py-4 bg-black rounded-md" onPress={onSignOutHandler}>
-          <Text className="text-white font-main">Sing Out</Text>
+          <Text className="text-white font-main">Sign Out</Text>
         </TouchableOpacity>
       </View>
     </>
