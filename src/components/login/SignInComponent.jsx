@@ -36,16 +36,11 @@ const SignInComponent = ({ setLoggedIn }) => {
     try {
       const response = await signInUser(signInObject);
       const { token, userId } = response.data;
-      console.log("userId", userId);
       const userResponse = await getUserData(userId, token);
       const { data } = userResponse;
-      console.log("PARSE", { ...data, token: token });
       const stringUserInitData = JSON.stringify({ ...data, token: token });
-      console.log("STRINGIFIED", stringUserInitData);
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("stringUserInItData", stringUserInitData);
-      const storedData = AsyncStorage.getItem("stringUserInItData");
-      console.log("STORED DATA", storedData);
       setUserInitData({ ...data, token: token });
       setLoggedIn(true);
     } catch (err) {
