@@ -23,7 +23,11 @@ const CalendarScreen = ({navigation}) => {
   const [orderId, setOrderId] = useState('')
   const [label, setLabel] = useState('')
   const [userMeal, setUserMeal] = useState([])
-  const [markedDates, setMarkedDates] = useState({});
+  const [markedDates, setMarkedDates] = useState({})
+
+  const [darkMode, setDarkMode] = useState(userInitData.user.darkTheme)
+  console.log(userInitData)
+  const calendarBackgroundColor = Object.keys(markedDates).length > 0 ? '#FFF7C6' : '#ECECEC';
 
   useEffect(() => {
     getOrders(userInitData.user._id, userInitData.token)
