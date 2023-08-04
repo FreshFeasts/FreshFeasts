@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
-import { Text, View, StatusBar, TouchableOpacity } from "react-native";
+import { Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import InputWithLabel from "../../utils/components/InputComponent"
 import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 import {signInUser, getUserData} from '../../utils/apis/api.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // "Test2@gmail.com"
 // firstName: "Tesyt"
 // lastName: "Test"
@@ -26,9 +27,15 @@ const SignInComponent = ({setLoggedIn}) => {
       const response = await signInUser(signInObject);
       const {token, userId} = response.data;
       console.log( 'userId', userId)
-      const response2 = await getUserData(userId,token);
-      const {data} = response2
-      console.log({...data, token:token});
+      const userResponse = await getUserData(userId,token);
+      const {data} = userResponse;
+      console.log('PARSE',{...data, token:token});
+      const stringUserInitData = JSON.stringify({...data, token:token})
+      console.log('STRINGIFIED',stringUserInitData);
+      await AsyncStorage.setItem('loggedIn', 'true');
+      await AsyncStorage.setItem('stringUserInItData', stringUserInitData);
+      const storedData = AsyncStorage.getItem('stringUserInItData');
+      console.log('STORED DATA', storedData);
       setUserInitData({...data, token:token})
       setLoggedIn(true);
     } catch(err) {
@@ -37,7 +44,7 @@ const SignInComponent = ({setLoggedIn}) => {
     }
   }
   return (
-    <>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View className="flex-1 items-center justify-center bg-forestgreen">
         <View className="bg-yellowgreen p-6 rounded-2xl w-10/12">
           <AppText className="text-2xl font-semibold text-black text-center">
@@ -49,6 +56,7 @@ const SignInComponent = ({setLoggedIn}) => {
             keyboardType="email-address"
             placeholder="example@example.com"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            value={values.signInEmail}
             onChangeText={text => onChangeHandler(text, "signInEmail")}
           />
           <InputWithLabel
@@ -57,6 +65,7 @@ const SignInComponent = ({setLoggedIn}) => {
             secureTextEntry={true}
             placeholder="password"
             inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            value={values.signInPassword}
             onChangeText={text => onChangeHandler(text, "signInPassword")}
           />
           <View className="items-center">
@@ -72,7 +81,7 @@ const SignInComponent = ({setLoggedIn}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </TouchableWithoutFeedback>
   );
 };
 

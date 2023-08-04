@@ -6,8 +6,9 @@ import AppText from '../../utils/components/AppText.js';
 import { LogInScreenContext } from "../../contexts/LogInScreenContext";
 import axios from "axios";
 import { SERVER_URL } from '../../../config.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ProfileComponent = () => {
+const ProfileComponent = ({setLoggedIn}) => {
   const {userInitData} = useContext(LogInScreenContext);
   const [profile, setProfile] = useState({
     userId: userInitData.user._id,
@@ -22,7 +23,12 @@ const ProfileComponent = () => {
     darkTheme: userInitData.user.darkTheme,
     phone: userInitData.info.phone
   });
-
+  const onSignOutHandler = async () => {
+    console.log('hi');
+    await AsyncStorage.removeItem('stringUserInItData');
+    await AsyncStorage.removeItem('loggedIn');
+    setLoggedIn(false);
+  }
   let handleChange = function (text, input) {
     setProfile({
       ...profile,
@@ -140,9 +146,12 @@ const payload = {
               <Picker.Item label="Dark Theme" value={true}/>
             </Picker>
         </View>
-        <Pressable className="px-4 py-4 bg-pakistangreen rounded-md" onPress={() => handleSubmit()}>
+        <Pressable className="px-4 py-4 bg-pakistangreen rounded-md mb-2" onPress={() => handleSubmit()}>
           <Text className="text-lemonchiffon font-main">Save</Text>
         </Pressable>
+        <TouchableOpacity className="px-4 py-4 bg-black rounded-md" onPress={onSignOutHandler}>
+          <Text className="text-white font-main">Sing Out</Text>
+        </TouchableOpacity>
       </View>
     </>
   );

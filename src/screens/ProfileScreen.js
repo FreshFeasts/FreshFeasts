@@ -3,7 +3,7 @@ import { ScrollView, SafeAreaView, Text, View, StatusBar, Pressable } from "reac
 import OrderHistory from "../components/profile/OrderHistory";
 import ProfileComponent from "../components/profile/ProfileComponent";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, setLoggedIn }) => {
   const [history, setHistory] = useState(false);
 
   return (
@@ -19,7 +19,7 @@ const ProfileScreen = ({ navigation }) => {
         </Pressable>
         </>
       )}
-      <ProfileComponent/>
+      <ProfileComponent setLoggedIn={setLoggedIn}/>
     </SafeAreaView>
     </ScrollView>
   );
