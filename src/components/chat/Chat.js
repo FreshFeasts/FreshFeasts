@@ -13,22 +13,11 @@ import io from 'socket.io-client';
 
 import AppText from '../../utils/components/AppText';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { LogInScreenContext } from '../../contexts/LogInScreenContext';
 import { CHAT_URL } from '../../../config';
 import { formatDistanceToNow } from 'date-fns';
 
-// import MealModal from './MealModal';
-
-const SOCKET_SERVER_URL = CHAT_URL; // Replace with your socket server URL
+const SOCKET_SERVER_URL = CHAT_URL;
 const socket = io(SOCKET_SERVER_URL);
-
-// socket.on('connect', () => {
-//   console.log('Connected to server');
-// });
-
-// socket.on('disconnect', () => {
-//   console.log('Disconnected from server');
-// });
 
 socket.on('chat message', (msg) => {
   console.log('New message:', msg);
@@ -41,24 +30,17 @@ const sendMessage = (msg) => {
     time: new Date(),
     msg: msg,
   });
-  // socket.emit("broadcast", {"sender": 'chen', "action": "broadcast", "msg": msg});
   console.log('user sent:', msg);
 };
 
 const quitChat = () => {
   socket.emit('quit');
-  //   socket.disconnect();
+  socket.disconnect();
 };
-
-// // display messages of other clients in our client
-// socket.on('broadcast', (data) => {
-//   console.log(data.msg);
-// });
 
 const Chat = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  // const { userInitData } = useContext(LogInScreenContext);
   const [messages, setMessages] = useState([
     {
       msg: `hi im the nutritionist`,
@@ -142,13 +124,10 @@ const Chat = () => {
           className="flex items-center justify-center h-10 bg-blue-600 px-2 py-1 rounded full  "
           onPress={handleSendMessage}
         >
-          {/* <Text className="text-lg text-white">Send</Text> */}
           <Icon name={'arrow-up'} size={20} color="white" />
         </TouchableOpacity>
       </View>
-      {/* Add your components and UI elements here */}
     </View>
-    // </SafeAreaView>
   );
 };
 
@@ -179,40 +158,14 @@ const Message = ({ item }) => {
   );
 };
 const styles = StyleSheet.create({
-  // container: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   margin: 10,
-  //   height: 230,
-  //   flexWrap: 'wrap',
-  // },
-  // itemContainer: {
-  //   position: 'relative',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   height: 50,
-  //   width: 160,
-  //   margin: 5,
-  //   borderWidth: 2,
-  //   borderRadius: 10,
-  // },
-  // item: {
-  //   height: 10,
-  // }
   container: {
     flex: 1,
   },
   item: {
-    // backgroundColor: '#f9c2ff',
     padding: 20,
     marginVertical: 8,
     maxWidth: 300,
-    // marginHorizontal: 16,
   },
-  // text: {
-  //   color: 'red
-  // }
 });
 
 export default Chat;
