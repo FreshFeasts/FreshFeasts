@@ -18,10 +18,10 @@ const UserRegisterInfo = ({ setPageOne, setPageTwo }) => {
   //
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View className="flex-1 items-center justify-center bg-forestgreen">
+      <View className="flex-1 items-center justify-center">
         <View className="bg-yellowgreen p-8 rounded-md w-10/12">
           <AppText className="text-2xl text-black text-center">
-            Create Account
+            Get Started with FreshFeasts
           </AppText>
           <InputWithLabel
             label="Email:"
