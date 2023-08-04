@@ -15,6 +15,7 @@ import InputWithLabel from "../../../../utils/components/InputComponent";
 import { LogInScreenContext } from "../../../../contexts/LogInScreenContext";
 import axios from "axios";
 import { createUser } from "../../../../utils/apis/api.js";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
   const {
     values,
@@ -36,8 +37,13 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
 
   const onCreateAccountHandler = async () => {
     try{
+      console.log(createUserData);
       const response = await createUser(createUserData);
-      setUserInitData(response.data);
+      const userData = response.data;
+      const stringUserInItData = JSON.stringify(userData);
+      await AsyncStorage.setItem("loggedIn", "true");
+      await AsyncStorage.setItem("stringUserInItData", stringUserInItData);
+      setUserInitData(userData);
       setPageFour(false);
       setLoggedIn(true);
     } catch(err) {
