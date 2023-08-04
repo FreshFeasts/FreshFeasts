@@ -3,8 +3,13 @@ import { Pressable, Text, View, ScrollView } from "react-native";
 import AppText from "../../utils/components/AppText";
 import CartCard from "./CartCard";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
-import { postCart, getMeals, getPayment, updateCart } from "../../utils/apis/api";
-import { format, parseISO, addDays,formatISO } from "date-fns";
+import {
+  postCart,
+  getMeals,
+  getPayment,
+  updateCart,
+} from "../../utils/apis/api";
+import { format, parseISO, addDays, formatISO, startOfWeek } from "date-fns";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const Checkout = () => {
@@ -17,7 +22,7 @@ const Checkout = () => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState();
-  const [mealCount, setMealCount] = useState({})
+  const [mealCount, setMealCount] = useState({});
 
   const cost = 9.99;
   const [open, setOpen] = useState(false);
@@ -40,34 +45,49 @@ const Checkout = () => {
     const nextWeek = addDays(parsedDate, 7);
     const nextWeekISO = nextWeek.toISOString();
     const reset = {
-        "deliveryDate": nextWeekISO,
-        "meals": []
-      }
+      deliveryDate: nextWeekISO,
+      meals: [],
+    };
     setUserInitData((prevUserData) => ({
       ...prevUserData,
       user: {
         ...prevUserData.user,
         currentCart: reset,
       },
-    }))
+    }));
     try {
       await updateCart(userInitData.user._id, reset, userInitData.token);
     } catch (error) {
-      console.error('Error updating cart: ', error);
+      console.error("Error updating cart: ", error);
     }
+  };
+
+  const getNextMonday = (currentDate) => {
+    const parsedDate = parseISO(currentDate);
+    const nextMonday = startOfWeek(parsedDate, { weekStartsOn: 1 });
+    return addDays(nextMonday, 7);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(userInitData.token)
-        const nextWeek = addDays(new Date(), 7);
-        if (!cart) {
-          cart = {
-            deliveryDate: nextWeek,
+        if (cart.deliveryDate === null) {
+          const today = new Date();
+          const stringToday = today.toISOString();
+          const monday = getNextMonday(stringToday).toISOString();
+          const start = {
+            deliveryDate: monday,
             meals: [],
           };
+          setUserInitData((prevUserData) => ({
+            ...prevUserData,
+            user: {
+              ...prevUserData.user,
+              currentCart: start,
+            },
+          }));
         }
+
         const mealList = cart.meals;
 
         const mealCountObject = mealList.reduce((countObject, mealId) => {
@@ -75,7 +95,10 @@ const Checkout = () => {
           return countObject;
         }, {});
         setMealCount(mealCountObject);
-        const payments = await getPayment(userInitData.user._id, userInitData.token);
+        const payments = await getPayment(
+          userInitData.user._id,
+          userInitData.token
+        );
         const meals = await getMeals(userInitData.token);
         if (payments.length > 0) {
           let card = payments[0].ccId.toString();
@@ -110,36 +133,41 @@ const Checkout = () => {
             </AppText>
           </View>
           <ScrollView bounces={false} className="mb-28">
-          <View className="flex justify-end ml-2 mt-1 padding-20">
-            <AppText className="text-xl text-pakistangreen my-2">
-              Customer Information
-            </AppText>
-            <View className="flex-row">
+            <View className="flex justify-end ml-2 mt-1 mb-2 padding-20">
+              <AppText className="text-xl my-2">Customer Information</AppText>
+              <View className="flex-row">
+                <AppText className="mb-1">
+                  {userInitData.user.firstName} {userInitData.user.lastName}
+                </AppText>
+                <AppText className="mb-1 absolute right-1">
+                  {userInitData.user.email}
+                </AppText>
+              </View>
+              <AppText className="mb-1">{address.address1}</AppText>
+              {address.address2 === "" ? null : (
+                <AppText>{address.address2}</AppText>
+              )}
               <AppText className="mb-1">
-                {userInitData.user.firstName} {userInitData.user.lastName}
+                {address.city}, {address.state} {address.zip}{" "}
               </AppText>
-              <AppText className="mb-1 absolute right-0">
-                {userInitData.user.email}
-              </AppText>
+              <AppText className="mb-1">Card on File: {payment}</AppText>
             </View>
-            <AppText className="mb-1">{address.address1}</AppText>
-            {address.address2 === "" ? null : (
-              <AppText>{address.address2}</AppText>
-            )}
-            <AppText className="mb-1">
-              {address.city}, {address.state} {address.zip}{" "}
-            </AppText>
-            <AppText className="mb-1">Card on File: {payment}</AppText>
-          </View>
             {cartMeals.map((meal) => (
-              <CartCard meal={meal} key={meal.name} count={mealCount[meal._id]} />
+              <CartCard
+                meal={meal}
+                key={meal.name}
+                count={mealCount[meal._id]}
+              />
             ))}
-          <View className="flex-row items-center">
-            {cart.deliveryDate !== null ?
-          <AppText className="text-base text-pakistangreen mx-1 my-2">
-          Delivery Date: {format(parseISO(deliveryDate), "MM/dd/yyyy")}
-          </AppText> : <AppText> No Delivery selected</AppText> }
-          {/* <View className="mt-1">
+            <View className="flex-row items-center">
+              {cart.deliveryDate !== null ? (
+                <AppText className="text-base mx-1 mt-2">
+                  Delivery Date: {format(parseISO(deliveryDate), "MM/dd/yyyy")}
+                </AppText>
+              ) : (
+                <AppText> No Delivery selected</AppText>
+              )}
+              {/* <View className="mt-1">
             <DropDownPicker
               placeholderStyle={{color: "black",}}
               maxHeight={200}
@@ -159,20 +187,18 @@ const Checkout = () => {
               dropDownDirection="TOP"
             />
             </View> */}
-          </View>
-          <AppText className="text-base text-pakistangreen ml-1 mt-2">
-            Total Meals: {cart.meals.length}
-          </AppText>
-          <AppText className="text-base text-pakistangreen ml-1 mt-2">
-            Weekly Cost: ${cart.meals.length * cost}
-          </AppText>
-          <View className="justify-end items-center rounded-md">
-            <Pressable onPress={submitOrder}>
-              <AppText className="text-2xl bg-pakistangreen text-white p-2 m-2 z-10">
-                Submit Order
-              </AppText>
-            </Pressable>
-          </View>
+            </View>
+            <AppText className="text-base ml-1 mt-2">
+              Total Meals: {cart.meals.length}
+            </AppText>
+            <AppText className="text-base  ml-1 mt-2">
+              This Week's Cost: ${cart.meals.length * cost}
+            </AppText>
+            <View className="justify-end items-center rounded-md bg-pakistangreen py-2 px-1 m-2">
+              <Pressable onPress={submitOrder}>
+                <AppText className="text-2xl text-white">Submit Order</AppText>
+              </Pressable>
+            </View>
           </ScrollView>
         </View>
       )}

@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState,useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const LogInScreenContext = createContext();
+// Ignore Initial Values These are for input fields for log in process
 const initialValues = {
   signInEmail: "",
   signInPassword: "",
@@ -26,12 +28,28 @@ const initialValues = {
 
 // useEffect to grab users info on login
 export const LogInScreenContextProvider = ({ children }) => {
+  // Sate with all the user data
   const [userInitData, setUserInitData] = useState(null);
+  // The rest of these states are for sign up process
   const [dietChoices, setDietChoices] = useState([]);
   const [allergens, setAllergens] = useState([]);
   const [values, setValues] = useState(initialValues);
   const [createAccountComp, setCreateAccountComp] = useState(false);
   const [isSameAddress, setIsSameAddress] = useState(false);
+
+  // Takes care of persistent  user login
+  // useEffect(() => {
+  //   const fetchUserInitDataFromStorage = async() => {
+  //     const storageUserInItData = await AsyncStorage.getItem('stringUserInItData');
+  //     console.log('CONTEXT', storageUserInItData);
+  //     if(storageUserInItData) {
+  //       setUserInitData(JSON.parse(storageUserInItData));
+  //     }
+  //   }
+
+  //   fetchUserInitDataFromStorage();
+  // }, [])
+  // More Variables used in sign up process
   let addressInfo = {
     address1: values.address1,
     address2: values.address2,
@@ -51,7 +69,7 @@ export const LogInScreenContextProvider = ({ children }) => {
       zip: values.ccZip,
     };
   }
-  const test = "HI";
+
   const createUserData = {
     user: {
       email: values.createUserEmail,
