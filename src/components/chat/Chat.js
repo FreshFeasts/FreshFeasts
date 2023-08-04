@@ -1,22 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+
 import {
-  Dimensions,
   Text,
   View,
   StyleSheet,
-  Image,
-  Pressable,
   TextInput,
-  Button,
-  FlatList,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import io from 'socket.io-client';
-// const socket = io("http://44.211.123.112:3005");
-// import ViewPropTypes from 'deprecated-react-native-prop-types';
-// import Carousel, { Pagination } from 'react-native-snap-carousel';
+
 import AppText from '../../utils/components/AppText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { LogInScreenContext } from '../../contexts/LogInScreenContext';
@@ -28,9 +22,9 @@ import { formatDistanceToNow } from 'date-fns';
 const SOCKET_SERVER_URL = CHAT_URL; // Replace with your socket server URL
 const socket = io(SOCKET_SERVER_URL);
 
-socket.on('connect', () => {
-  console.log('Connected to server');
-});
+// socket.on('connect', () => {
+//   console.log('Connected to server');
+// });
 
 // socket.on('disconnect', () => {
 //   console.log('Disconnected from server');
@@ -62,10 +56,11 @@ const quitChat = () => {
 // });
 
 const Chat = () => {
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
   // const { userInitData } = useContext(LogInScreenContext);
   const [messages, setMessages] = useState([
     {
-      // msg: `hi ${userInitData.info.firstName} im the nutritionist`,
       msg: `hi im the nutritionist`,
       sender: 'nutritionist',
       time: new Date(),
@@ -82,6 +77,24 @@ const Chat = () => {
     },
   ]);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      socket.disconnect();
+      console.log('User left this screen');
+    });
+
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      socket.connect();
+      socket.emit('join', { sender: 'user', action: 'join' });
+      console.log('User joined chat this screen');
+    });
+
+    return () => {
+      unsubscribeBlur();
+      unsubscribeFocus();
+    };
+  }, [navigation]);
 
   useEffect(() => {
     socket.on('chat message', (msg) => {
