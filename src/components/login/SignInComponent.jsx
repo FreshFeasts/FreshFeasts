@@ -24,6 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignInComponent = ({ setLoggedIn }) => {
   const { setCreateAccountComp, onChangeHandler, values, setUserInitData } =
     useContext(LogInScreenContext);
+  const [err, setErr] = useState(false);
   const onCreateAccountHandler = () => {
     setCreateAccountComp(true);
   };
@@ -71,7 +72,7 @@ const SignInComponent = ({ setLoggedIn }) => {
             labelStyle="text-black mb-0"
             keyboardType="email-address"
             placeholder="example@example.com"
-            inputStyle="border-b-2 border-black  p-3 "
+            inputStyle="border-b-2 border-black p-3 "
             value={values.signInEmail}
             onChangeText={(text) => onChangeHandler(text, "signInEmail")}
           />
