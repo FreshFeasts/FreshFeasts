@@ -23,6 +23,7 @@ const MainTabs = () => {
         tabBarStyle: [
           {
             display: "flex",
+            paddingBottom:0,
           },
           null,
         ],

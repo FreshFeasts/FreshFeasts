@@ -8,7 +8,7 @@ import { format, parseISO } from "date-fns";
 
 const OrderHistory = ({ history, setHistory }) => {
   const { userInitData, setUserInitData } = useContext(LogInScreenContext);
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,13 +39,13 @@ const OrderHistory = ({ history, setHistory }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [userInitData]);
 
   return (
     <>
       {loading ? (
         <Text>Orders are loading...</Text>
-      ) : (
+      ) : orders.length > 1 ? (
         <ScrollView bounces={false} horizontal={false}>
           <View className="flex-1 justify-center items-center">
             {orders.map((order, index) => {
@@ -59,7 +59,7 @@ const OrderHistory = ({ history, setHistory }) => {
                     {formattedDate}
                   </AppText>
                   {order.meals.map((meal,index) => (
-                    <HistoryCard key={index} meal={meal} userId={userInitData.user._id} firstName={userInitData.user.firstName}/>
+                    <HistoryCard key={index} meal={meal} />
                   ))}
                 </>
               );
@@ -72,7 +72,11 @@ const OrderHistory = ({ history, setHistory }) => {
             </Pressable>
           </View>
         </ScrollView>
-      )}
+      ) : (
+      <View className="flex-1 items-center justify-center">
+      <AppText className="text-xl mb-2">No order history!</AppText>
+      <AppText className="text-lg">Place an order to enjoy a fancy feast!</AppText>
+      </View>)}
     </>
   );
 };

@@ -26,8 +26,9 @@ const CartCard = ({ meal, count }) => {
         </View>
         <View className="absolute bottom-2 right-2">
           <CartIncrementer
-            color="forestgreen"
+            color="#0E4000"
             count={count}
+            size={24}
             handleCount={handleCount}
             mealId={meal._id}
           />

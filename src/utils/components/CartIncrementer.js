@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { updateCart } from "../../utils/apis/api";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
-const CartIncrementer = ({ count, color, mealId, handleCount }) => {
+const CartIncrementer = ({ count, color, mealId, handleCount, size }) => {
   const { userInitData, setUserInitData } = useContext(LogInScreenContext);
   const cart = userInitData.user.currentCart;
 
@@ -72,11 +72,11 @@ const CartIncrementer = ({ count, color, mealId, handleCount }) => {
   return (
     <View className="flex-row justify-center items-center">
       <Pressable onPress={handleDecrement}>
-        <Icon name="minus-square" size={24} color={color} />
+        <Icon name="minus-square" size={size} color={color} />
       </Pressable>
       <AppText className={`text-${color} mx-2 text-lg`}> {count} </AppText>
       <Pressable onPress={handleIncrement}>
-        <Icon name="plus-square" size={24} color={color} />
+        <Icon name="plus-square" size={size} color={color} />
       </Pressable>
     </View>
   );
