@@ -24,7 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignInComponent = ({ setLoggedIn }) => {
   const { setCreateAccountComp, onChangeHandler, values, setUserInitData } =
     useContext(LogInScreenContext);
-  const [err, setErr] = useState(false);
+  const [logInError, setLogInError] = useState(false);
   const onCreateAccountHandler = () => {
     setCreateAccountComp(true);
   };
@@ -50,7 +50,7 @@ const SignInComponent = ({ setLoggedIn }) => {
       setLoggedIn(true);
     } catch (err) {
       console.log(err);
-      throw err;
+      setLogInError(true);
     }
   };
   return (
@@ -93,6 +93,7 @@ const SignInComponent = ({ setLoggedIn }) => {
               <AppText className="text-black text-center">Sign in</AppText>
             </TouchableOpacity>
           </View>
+          {logInError && <AppText className = 'text-red-600 mt-4 underline'>Invalid username or password</AppText>}
           <AppText className="text-black text-center mt-4">
             Don't Have A FreshFeasts Account?
           </AppText>
