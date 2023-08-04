@@ -14,13 +14,14 @@ const HistoryCard = ({ meal }) => {
   const changeRating = (newRating) => {
     setRating(newRating);
     rateMeal(meal.id, userInitData.user._id, newRating, userInitData.token);
-    setUserInitData((prevUserData) => ({
-      ...prevUserData,
-      user: {
-        ...prevUserData.user,
-        ratedMeals: [...prevUserData.user.ratedMeals, meal.id],
-      }
-    }));
+    console.log(userInitData.user.mealsRated)
+    // setUserInitData((prevUserData) => ({
+    //   ...prevUserData,
+    //   user: {
+    //     ...prevUserData.user,
+    //     mealsRated: [...prevUserData.user.mealsRated, meal.id],
+    //   }
+    // }));
   };
 
   const handleReview = () => {

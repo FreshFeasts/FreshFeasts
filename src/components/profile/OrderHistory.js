@@ -39,7 +39,7 @@ const OrderHistory = ({ history, setHistory }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [userInitData]);
 
   return (
     <>
