@@ -24,7 +24,7 @@ export default function App() {
     const fetchLoginStatusFromStorage = async() => {
       const status = await AsyncStorage.getItem('loggedIn');
       console.log('status', status);
-      status ==='true' ? setLoggedIn(true): setLoggedIn(false);
+      status ==='true' ? setLoggedIn(false): setLoggedIn(false);
     }
     fetchLoginStatusFromStorage();
   },[])

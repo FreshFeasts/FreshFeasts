@@ -37,11 +37,12 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
 
   const onCreateAccountHandler = async () => {
     try{
+      console.log(createUserData);
       const response = await createUser(createUserData);
       const userData = response.data;
       const stringUserInItData = JSON.stringify(userData);
       await AsyncStorage.setItem("loggedIn", "true");
-      await AsyncStorage.setItem("stringUserInItData", stringUserInitData);
+      await AsyncStorage.setItem("stringUserInItData", stringUserInItData);
       setUserInitData(userData);
       setPageFour(false);
       setLoggedIn(true);
