@@ -14,14 +14,13 @@ const HistoryCard = ({ meal }) => {
   const changeRating = (newRating) => {
     setRating(newRating);
     rateMeal(meal.id, userInitData.user._id, newRating, userInitData.token);
-    console.log(userInitData.user.mealsRated)
-    // setUserInitData((prevUserData) => ({
-    //   ...prevUserData,
-    //   user: {
-    //     ...prevUserData.user,
-    //     mealsRated: [...prevUserData.user.mealsRated, meal.id],
-    //   }
-    // }));
+    setUserInitData((prevUserData) => ({
+      ...prevUserData,
+      user: {
+        ...prevUserData.user,
+        mealsRated: [...prevUserData.user.mealsRated, meal.id],
+      }
+    }));
   };
 
   const handleReview = () => {
@@ -32,7 +31,7 @@ const HistoryCard = ({ meal }) => {
   useEffect(() => {
     let rated = userInitData.user.mealsRated;
     setReviewed(rated.includes(meal.id));
-  });
+  },[]);
 
   return (
     <View className="flex-1 items-center m-1">

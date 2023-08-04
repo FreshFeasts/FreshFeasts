@@ -9,8 +9,6 @@ import MainTabs from "./src/navigation/BottomTabNav";
 import { LogInScreenContextProvider } from "./src/contexts/LogInScreenContext.jsx";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFonts } from 'expo-font';
-// import * as firebaseConfig from './firebaseConfig';
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Ignore all log notifications:
 LogBox.ignoreAllLogs(); // --- Un-Comment For DEMO ---
@@ -18,7 +16,7 @@ LogBox.ignoreAllLogs(); // --- Un-Comment For DEMO ---
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchLoginStatusFromStorage = async() => {
@@ -28,13 +26,6 @@ export default function App() {
     }
     fetchLoginStatusFromStorage();
   },[])
-  // const auth = getAuth();
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //   });
-  // }, [auth]);
 
   const [fontsLoaded] = useFonts({
     Comfortaa: require('./assets/fonts/Comfortaa-Regular.ttf'),
