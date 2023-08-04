@@ -17,11 +17,8 @@ export const getMeals = async (token) => {
 
 export const getOrders = async (userId, token) => {
   try {
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
-    const orders = await axios.get(
-      `${config.SERVER_URL}/api/orders/user/${userId}`,
-      headers
-    );
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    const orders = await axios.get(`${config.SERVER_URL}/api/orders/user/${userId}?count=3`, headers);
     return orders.data;
   } catch (error) {
     console.error('Error fetching orders: ', error);
@@ -61,11 +58,8 @@ export const postCart = async (body, token) => {
 };
 
 export const createUser = async (bodyObject) => {
-  try {
-    const response = await axios.post(
-      `${config.SERVER_URL}/register`,
-      bodyObject
-    );
+  try{
+    const response = await axios.post(`${config.SERVER_URL}/register`, bodyObject);
     return response;
   } catch (err) {
     console.log(err);
@@ -74,22 +68,19 @@ export const createUser = async (bodyObject) => {
 };
 
 export const signInUser = async (signInObj) => {
-  try {
+  try{
     const response = await axios.post(`${config.SERVER_URL}/login`, signInObj);
     return response;
   } catch (err) {
     console.log(err);
     throw err;
   }
-};
-export const getUserData = async (userId, token) => {
-  try {
-    const response = await axios.get(
-      `${config.SERVER_URL}/api/initdata/${userId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+}
+export const getUserData = async(userId, token) => {
+  try{
+    const response = await axios.get(`${config.SERVER_URL}/api/initdata/${userId}`, {
+      headers: {Authorization:`Bearer ${token}` }
+    });
     return response;
   } catch (err) {
     console.log(err);
@@ -176,3 +167,17 @@ export const getPayment = async (userId, token) => {
     throw error;
   }
 };
+
+export const updateDeliveryDate = async (token, orderId ,userId, orderDate, deliveryDate) => {
+  console.log(token, orderId ,userId, orderDate, deliveryDate)
+  try {
+    const body = { orderId, userId, orderDate, deliveryDate }
+    const headers = { headers: { "Authorization" : `Bearer ${token}` }};
+    let user = await axios.put(`${config.SERVER_URL}/api/orders/update-delivery`,body, headers);
+    return true;
+  } catch (error) {
+    console.error('Error updating delivery date: ', error);
+    throw error;
+  }
+}
+
