@@ -1,16 +1,15 @@
+//external imports
 import React, { useState, useContext, useEffect } from "react";
 import { Pressable, Text, View, ScrollView } from "react-native";
-import AppText from "../../utils/components/AppText";
-import CartCard from "./CartCard";
-import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
-import {
-  postCart,
-  getMeals,
-  getPayment,
-  updateCart,
-} from "../../utils/apis/api";
 import { format, parseISO, addDays, formatISO, startOfWeek } from "date-fns";
 import DropDownPicker from "react-native-dropdown-picker";
+
+//internal imports
+import AppText from "../../utils/components/AppText";
+import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
+import {postCart,getMeals,getPayment,updateCart,} from "../../utils/apis/api";
+import CartCard from "./CartCard";
+
 
 const Checkout = () => {
   const { userInitData, setUserInitData } = useContext(LogInScreenContext);
@@ -18,14 +17,15 @@ const Checkout = () => {
   const email = userInitData.user.email;
   const deliveryDate = cart.deliveryDate;
   const address = userInitData.info.deliveryAddress;
+
   const [cartMeals, setCartMeals] = useState([]);
-  const [user, setUser] = useState({});
+
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState();
   const [mealCount, setMealCount] = useState({});
 
   const cost = 9.99;
-  const [open, setOpen] = useState(false);
+/*   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     { label: "Monday", value: "0" },
@@ -34,7 +34,7 @@ const Checkout = () => {
     { label: "Thursday", value: "3" },
     { label: "Friday", value: "4" },
   ]);
-
+ */
   const submitOrder = async () => {
     const final = {
       userId: userInitData.user._id,
@@ -71,6 +71,8 @@ const Checkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const meals = await getMeals(userInitData.token);
+
         if (cart.deliveryDate === null) {
           const today = new Date();
           const stringToday = today.toISOString();
@@ -87,27 +89,12 @@ const Checkout = () => {
             },
           }));
         }
-
-        const mealList = cart.meals;
-
-        const mealCountObject = mealList.reduce((countObject, mealId) => {
+        const mealCountObject = cart.meals.reduce((countObject, mealId) => {
           countObject[mealId] = (countObject[mealId] || 0) + 1;
           return countObject;
         }, {});
         setMealCount(mealCountObject);
-        const payments = await getPayment(
-          userInitData.user._id,
-          userInitData.token
-        );
-        const meals = await getMeals(userInitData.token);
-        if (payments.length > 0) {
-          let card = payments[0].ccId.toString();
-          let last4 = "************" + card.slice(card.length - 4);
-          setPayment(last4);
-        } else {
-          setPayment("No Payment Information on File");
-        }
-        const mealDetails = meals.filter((item) => mealList.includes(item._id));
+        const mealDetails = meals.filter((item) => cart.meals.includes(item._id));
         setCartMeals(mealDetails);
         setLoading(false);
       } catch (error) {
@@ -117,6 +104,24 @@ const Checkout = () => {
     };
     fetchData();
   }, [userInitData]);
+
+  useEffect(() => {
+    const getPayments = async () => {
+      try {
+        const payments = await getPayment(userInitData.user._id,userInitData.token);
+        if (payments.length > 0) {
+          let card = payments[0].ccId.toString();
+          let last4 = "************" + card.slice(card.length - 4);
+          setPayment(last4);
+        } else {
+          setPayment("No Payment Information on File");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getPayments();
+  },[userInitData])
 
   return (
     <>
@@ -150,7 +155,7 @@ const Checkout = () => {
               <AppText className="mb-1">
                 {address.city}, {address.state} {address.zip}{" "}
               </AppText>
-              <AppText className="mb-1">Card on File: {payment}</AppText>
+              {/* <AppText className="mb-1">Card on File: {payment}</AppText> */}
             </View>
             {cartMeals.map((meal) => (
               <CartCard

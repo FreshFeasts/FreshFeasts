@@ -29,7 +29,7 @@ const DietTypeAndAllergen = ({ setPageThree, setPageTwo, setPageOne }) => {
   };
 
   return (
-    <SafeAreaView className='h-full justify-center bg-forestgreen'>
+    <SafeAreaView className='h-full justify-center '>
       <View className='items-center'>
         <AppText className='text-xl text-pakistangreen'>
           Choose your diet types
