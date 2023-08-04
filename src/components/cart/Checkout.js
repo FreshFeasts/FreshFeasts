@@ -155,7 +155,7 @@ const Checkout = () => {
               <AppText className="mb-1">
                 {address.city}, {address.state} {address.zip}{" "}
               </AppText>
-              {/* <AppText className="mb-1">Card on File: {payment}</AppText> */}
+              <AppText className="mb-1">Card on File: {payment}</AppText>
             </View>
             {cartMeals.map((meal) => (
               <CartCard
