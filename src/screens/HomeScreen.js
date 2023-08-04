@@ -1,9 +1,9 @@
-import { Text, View, StatusBar, StyleSheet, SafeAreaView } from "react-native";
-import MealModal from "../components/home/MealModal";
-import MealCarousel from "../components/home/MealCarousel";
-import MealList from "../components/home/MealList";
-import { getMeals } from "../utils/apis/api";
-import { useEffect, useState, useContext } from "react";
+import {  Text, View, StatusBar, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import MealModal from '../components/home/MealModal';
+import MealCarousel from '../components/home/MealCarousel';
+import MealList from '../components/home/MealList';
+import { getMeals } from '../utils/apis/api';
+import { useEffect, useState, useContext } from 'react';
 import { LogInScreenContext } from "../contexts/LogInScreenContext.jsx";
 
 const HomeScreen = ({ navigation, authToken }) => {
@@ -29,21 +29,15 @@ const HomeScreen = ({ navigation, authToken }) => {
   useEffect(() => {
     fetchMeals();
   }, []);
+
   if (meals) {
     return (
       <SafeAreaView className="h-full">
-        <View className="flex-1 items-center justify-between">
-          <MealModal
-            mealSelection={mealSelection}
-            handleSelectMeal={handleSelectMeal}
-          />
+        <ScrollView className="flex-1">
+          <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
           <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
-          <MealList
-            meals={meals}
-            user={userInitData.user}
-            handleSelectMeal={handleSelectMeal}
-          />
-        </View>
+          <MealList meals={meals} user={userInitData.user} handleSelectMeal={handleSelectMeal} />
+        </ScrollView>
       </SafeAreaView>
     );
   }
