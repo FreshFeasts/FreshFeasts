@@ -30,15 +30,15 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView>
-        <ScrollView className="p-2 bg-yellowgreen h-full">
+        <ScrollView className="p-2  h-full">
           <AppText className="text-2xl text-center">Delivery Address</AppText>
-          <View className="bg-yellowgreen p-3">
+          <View className=" p-3">
             <View className="name-container flex-row gap-3 justify-evenly w-full items-center ">
               <View className="firstName w-1/2">
                 <InputWithLabel
                   label="First Name:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   value={values.firstName}
                   onChangeText={(text) => onChangeHandler(text, "firstName")}
                 />
@@ -47,7 +47,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
                 <InputWithLabel
                   label="Last Name:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   value={values.lastName}
                   onChangeText={(text) => onChangeHandler(text, "lastName")}
                 />
@@ -58,7 +58,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
                 <InputWithLabel
                   label="Date of birth:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   value={values.DOB}
                   placeholder="MM/DD/YYYY"
                   onChangeText={(text) => onChangeHandler(text, "DOB")}
@@ -68,7 +68,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
                 <InputWithLabel
                   label="Phone #:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   value={values.phone}
                   onChangeText={(text) => onChangeHandler(text, "phone")}
                 />
@@ -78,7 +78,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
               <InputWithLabel
                 label="Address 1:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 value={values.address1}
                 onChangeText={(text) => onChangeHandler(text, "address1")}
               />
@@ -87,7 +87,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
               <InputWithLabel
                 label="Address 2:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 value={values.address2}
                 onChangeText={(text) => onChangeHandler(text, "address2")}
               />
@@ -96,7 +96,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
               <InputWithLabel
                 label="City:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3"
                 value={values.city}
                 onChangeText={(text) => onChangeHandler(text, "city")}
               />
@@ -106,7 +106,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
                 <InputWithLabel
                   label="State:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   placeholder="OR"
                   value={values.state}
                   onChangeText={(text) => onChangeHandler(text, "state")}
@@ -116,7 +116,7 @@ const PersonalInfoComponent = ({ setPageThree, setPageTwo, setPageFour }) => {
                 <InputWithLabel
                   label="Zip code:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3"
                   value={values.zip}
                   onChangeText={(text) => onChangeHandler(text, "zip")}
                 />

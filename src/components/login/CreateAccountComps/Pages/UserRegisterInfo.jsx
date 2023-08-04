@@ -18,10 +18,10 @@ const UserRegisterInfo = ({ setPageOne, setPageTwo }) => {
   //
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View className="flex-1 items-center justify-center bg-forestgreen">
-        <View className="bg-yellowgreen p-8 rounded-md w-10/12">
+      <View className="flex-1 items-center justify-center">
+        <View className="p-8 rounded-md w-10/12">
           <AppText className="text-2xl text-black text-center">
-            Create Account
+            Get Started with FreshFeasts
           </AppText>
           <InputWithLabel
             label="Email:"
@@ -29,7 +29,7 @@ const UserRegisterInfo = ({ setPageOne, setPageTwo }) => {
             keyboardType="email-address"
             placeholder="example@example.com"
             value={values.createUserEmail}
-            inputStyle="border-none rounded-md p-3 bg-white mb-2 shadow-inner"
+            inputStyle="border-b-2 border-black p-3 "
             onChangeText={(text) => onChangeHandler(text, "createUserEmail")}
           />
           <InputWithLabel
@@ -38,7 +38,7 @@ const UserRegisterInfo = ({ setPageOne, setPageTwo }) => {
             secureTextEntry={true}
             placeholder="password"
             value={values.createUserPassword}
-            inputStyle="border-none rounded-md p-3 bg-white mb-2 shadow-inner"
+            inputStyle="border-b-2 border-black p-3 "
             onChangeText={(text) => onChangeHandler(text, "createUserPassword")}
           />
           <View className="flex-row justify-evenly">
