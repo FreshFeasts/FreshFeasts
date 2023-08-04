@@ -39,14 +39,16 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
       setModalVisible(true);
       const mealList = cart.meals;
       const mealCount = mealList.reduce((count, id) => id === mealSelection._id ? count + 1 : count, 0);
-      setCount(mealCount === 0 ? 1 : mealCount);
+      setCount(mealCount);
     } else {
       setModalVisible(false);
     }
   }, [mealSelection]);
 
   const handleAddMeal = async () => {
+    if(count > 0){
     setModalVisible(!modalVisible);
+    }
   };
 
   const handleCount = (count) => {
