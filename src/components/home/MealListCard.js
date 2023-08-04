@@ -10,6 +10,25 @@ const MealListCard = ({meal, handleSelectMeal}) => {
     return average;
   };
 
+  const truncateTitle = (string) => {
+    let words = string.split(' ');
+    if (words.length <= 3) {
+      return string;
+    } else {
+      return `${words[0]} ${words[1]} ${words[2]}`;
+    }
+  };
+
+  const truncateDescription = (string) => {
+    if (string.length < 100) {
+      return string;
+    } else {
+      let result = string.slice(0, 100);
+      result += '...';
+      return result;
+    }
+  };
+
   return (
     <Pressable
       onPress={() => {
@@ -17,18 +36,18 @@ const MealListCard = ({meal, handleSelectMeal}) => {
       }}
     >
       <View className="m-1 p-2 rounded-lg bg-lemonchiffon shadow-sm">
-        <View className="flex-row">
+        <View className="flex-row max-h-full">
           <View className="w-1/4">
-            <Image className="h-24 w-24 rounded-lg"
+            <Image className="h-24 rounded-lg"
               source={{uri: meal.photo}}
             />
           </View>
           <View className="w-3/4">
-            <View className="flex-row justify-between">
-              <Text className="ml-6 mr-2 font-main">{meal.name}</Text>
+            <View className="ml-2 flex-row justify-between">
+              <Text className="mr-2 font-main max-w-[70%]">{truncateTitle(meal.name)}</Text>
               <Text className="mr-2 text-right font-main">{`${getRating()} Stars`}</Text>
             </View>
-            <Text className="p-4 ml-2 font-main text-xs text-ellipsis overflow-hidden">{meal.description}</Text>
+            <Text className="px-2 pt-4 pb-2 font-main text-xs text-ellipsis overflow-hidden">{truncateDescription(meal.description)}</Text>
           </View>
         </View>
       </View>
