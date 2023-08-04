@@ -39,7 +39,7 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
       setModalVisible(true);
       const mealList = cart.meals;
       const mealCount = mealList.reduce((count, id) => id === mealSelection._id ? count + 1 : count, 0);
-      setCount(mealCount);
+      setCount(mealCount === 0 ? 1 : mealCount);
     } else {
       setModalVisible(false);
     }
