@@ -71,8 +71,6 @@ const Checkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        const payments = await getPayment(userInitData.user._id,userInitData.token);
         const meals = await getMeals(userInitData.token);
 
         if (cart.deliveryDate === null) {
@@ -96,15 +94,7 @@ const Checkout = () => {
           return countObject;
         }, {});
         setMealCount(mealCountObject);
-
-        if (payments.length > 0) {
-          let card = payments[0].ccId.toString();
-          let last4 = "************" + card.slice(card.length - 4);
-          setPayment(last4);
-        } else {
-          setPayment("No Payment Information on File");
-        }
-        const mealDetails = meals.filter((item) => mealList.includes(item._id));
+        const mealDetails = meals.filter((item) => cart.meals.includes(item._id));
         setCartMeals(mealDetails);
         setLoading(false);
       } catch (error) {
@@ -114,6 +104,24 @@ const Checkout = () => {
     };
     fetchData();
   }, [userInitData]);
+
+  useEffect(() => {
+    const getPayments = async () => {
+      try {
+        const payments = await getPayment(userInitData.user._id,userInitData.token);
+        if (payments.length > 0) {
+          let card = payments[0].ccId.toString();
+          let last4 = "************" + card.slice(card.length - 4);
+          setPayment(last4);
+        } else {
+          setPayment("No Payment Information on File");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getPayments();
+  },[userInitData])
 
   return (
     <>
@@ -147,7 +155,7 @@ const Checkout = () => {
               <AppText className="mb-1">
                 {address.city}, {address.state} {address.zip}{" "}
               </AppText>
-              <AppText className="mb-1">Card on File: {payment}</AppText>
+              {/* <AppText className="mb-1">Card on File: {payment}</AppText> */}
             </View>
             {cartMeals.map((meal) => (
               <CartCard
