@@ -65,7 +65,7 @@ const OrderHistory = ({ history, setHistory }) => {
               );
             })}
             <Pressable
-              className="px-4 py-2 bg-pakistangreen rounded-md"
+              className="px-4 py-4 bg-pakistangreen rounded-md mt-2 w-[100%]"
               onPress={() => setHistory(!history)}
             >
               <AppText className="text-lemonchiffon"> Close History </AppText>

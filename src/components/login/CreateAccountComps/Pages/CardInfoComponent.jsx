@@ -56,13 +56,13 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "forestgreen",
+
               }
-            : { padding: 10, backgroundColor: "forestgreen" }
+            : { padding: 10, }
         }
       >
         <AppText className="text-2xl text-center mb-2">Card Info</AppText>
-        <View className="bg-yellowgreen p-4 rounded-md">
+        <View className=" p-4 rounded-md">
           <View className="card-container flex-row items-center justify-center gap-2">
             <View className="border-solid border-2 rounded-lg">
               <RadioButton
@@ -83,7 +83,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
             labelStyle="text-black mb-3"
             placeholder="12341231234"
             value={values.ccNum}
-            inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+            inputStyle="border-b-2 border-black  p-3 "
             onChangeText={(text) => onChangeHandler(text, "ccNum")}
           />
           <View className="flex-row justify-between">
@@ -93,7 +93,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                 labelStyle="text-black mb-3"
                 placeholder="12/2025"
                 value={values.ccExp}
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 onChangeText={(text) => onChangeHandler(text, "ccExp")}
               />
             </View>
@@ -103,20 +103,20 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                 labelStyle="text-black mb-3"
                 placeholder="123"
                 value={values.ccCVV}
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 onChangeText={(text) => onChangeHandler(text, "ccCVV")}
               />
             </View>
           </View>
         </View>
         {!isSameAddress && (
-          <View className="mt-8 bg-yellowgreen p-4 rounded-md">
+          <View className="mt-8  p-4 rounded-md">
             <AppText className="text-center text-base">Billing Address</AppText>
             <View className="first-addy">
               <InputWithLabel
                 label="Address 1:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 value={values.ccAddress1}
                 onChangeText={(text) => onChangeHandler(text, "ccAddress1")}
               />
@@ -125,7 +125,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
               <InputWithLabel
                 label="Address 2:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 value={values.ccAddress2}
                 onChangeText={(text) => onChangeHandler(text, "ccAddress2")}
               />
@@ -134,7 +134,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
               <InputWithLabel
                 label="City:"
                 labelStyle="text-black"
-                inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                inputStyle="border-b-2 border-black  p-3 "
                 value={values.ccCity}
                 onChangeText={(text) => onChangeHandler(text, "ccCity")}
               />
@@ -144,7 +144,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                 <InputWithLabel
                   label="State:"
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   placeholder="OR"
                   value={values.ccState}
                   onChangeText={(text) => onChangeHandler(text, "ccState")}
@@ -154,7 +154,7 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
                 <InputWithLabel
                   label="Zip code: "
                   labelStyle="text-black"
-                  inputStyle="border-b-2 border-black  p-3 bg-yellowgreen"
+                  inputStyle="border-b-2 border-black  p-3 "
                   placeholder="99999"
                   value={values.ccZip}
                   onChangeText={(text) => onChangeHandler(text, "ccZip")}
@@ -189,6 +189,6 @@ const CardInfoComponent = ({ setPageThree, setPageFour, setLoggedIn }) => {
 };
 export default CardInfoComponent;
 
-// <View className="bg-yellowgreen">
+// <View className="">
 
 // </View>

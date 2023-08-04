@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { Text, View, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./src/screens/LoginScreen";
@@ -11,6 +11,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFonts } from 'expo-font';
 // import * as firebaseConfig from './firebaseConfig';
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+// Ignore all log notifications:
+LogBox.ignoreAllLogs(); // --- Un-Comment For DEMO ---
 
 const Stack = createStackNavigator();
 
