@@ -7,7 +7,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import InputWithLabel from "../../utils/components/InputComponent";
 import AppText from "../../utils/components/AppText.js";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
@@ -49,7 +51,12 @@ const SignInComponent = ({ setLoggedIn }) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <KeyboardAwareScrollView
+      extraScrollHeight={20}
+      className="flex-grow"
+      keyboardShouldPersistTaps="handled"
+    >
+      {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> */}
       <View className="flex-1 items-center bg-white">
         <View>
           <Image
@@ -88,7 +95,11 @@ const SignInComponent = ({ setLoggedIn }) => {
               <AppText className="text-black text-center">Sign in</AppText>
             </TouchableOpacity>
           </View>
-          {logInError && <AppText className = 'text-red-600 mt-4 underline'>Invalid username or password</AppText>}
+          {logInError && (
+            <AppText className="text-red-600 mt-4 underline">
+              Invalid username or password
+            </AppText>
+          )}
           <AppText className="text-black text-center mt-4">
             Don't Have A FreshFeasts Account?
           </AppText>
@@ -100,7 +111,8 @@ const SignInComponent = ({ setLoggedIn }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+      {/* </TouchableWithoutFeedback> */}
+    </KeyboardAwareScrollView>
   );
 };
 

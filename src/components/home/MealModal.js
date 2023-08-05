@@ -9,7 +9,7 @@ import CartIncrementer from "../../utils/components/CartIncrementer";
 import { calcAverageRating } from "../../utils/helpers";
 import { LogInScreenContext } from "../../contexts/LogInScreenContext.jsx";
 
-const MealModal = ({ mealSelection, handleSelectMeal }) => {
+const MealModal = ({ mealSelection, handleSelectMeal, carouselRef }) => {
   const { userInitData, setUserInitData} = useContext(LogInScreenContext);
   const cart = userInitData.user.currentCart;
   const [modalVisible, setModalVisible] = useState(false);
@@ -71,6 +71,9 @@ const MealModal = ({ mealSelection, handleSelectMeal }) => {
             <View className="absolute top-2 right-2 z-20">
               <Pressable
                 onPress={() => {
+                  if (!carouselRef.current._autoplaying) {
+                    carouselRef.current.startAutoplay(instantly=false);
+                  }
                   handleSelectMeal(null);
                   setModalVisible(!modalVisible);
                 }}
