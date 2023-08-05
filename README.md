@@ -35,7 +35,7 @@ Through the app, users are able to access and use the following features:
 ![Login](screenshots/LoginScreen.gif)
 ![Register](screenshots/RegisterScreen.gif)
 
-The login feature ensures users will have their own FreshFeasts experience from the creation of the account. The app asks the user for basic personal information, diet preferences, and allergens. Upon logging in, curated meals will be personalized for each user's choice.
+The Login and Register feature ensures users will have their own FreshFeasts experience from the creation of the account. The app asks the user for basic personal information, diet preferences, and allergens. Upon logging in, curated meals will be personalized for each user's choice.
 
 ## Profile Screen Demo:
 ![Profile](screenshots/ProfileScreen.gif)
