@@ -51,7 +51,7 @@ const CalendarScreen = ({navigation}) => {
       .catch((error) => {
         console.log(error)
       });
-  }, [markedDates]);
+  }, []);
 
 
   const fetchMeals = async () => {
@@ -111,7 +111,7 @@ useEffect(() => {
 
   const mapCal = userMeal.map((orders) => {
 
-    let filteredMeals = fetchmeals.filter((e) => orders.meals.includes(e._id)).map((e) => e.name);
+    let filteredMeals = fetchmeals.filter((e) => orders.meals.includes(e._id)).map((e) => e.name)
     const meals = filteredMeals.map((name, index) => {
       //adding 1 to index so users will not see the 0th index at start and see #1.
       return (
@@ -178,7 +178,7 @@ useEffect(() => {
               padding: 5
             }}>Order Date: {orderDay}</Text>
 
-            {meals}
+            {/* {meals} */}
 
             <Text
             style= {{
