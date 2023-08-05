@@ -3,13 +3,14 @@ import MealModal from '../components/home/MealModal';
 import MealCarousel from '../components/home/MealCarousel';
 import MealList from '../components/home/MealList';
 import { getMeals } from '../utils/apis/api';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { LogInScreenContext } from "../contexts/LogInScreenContext.jsx";
 
 const HomeScreen = ({ navigation, authToken }) => {
   const [meals, setMeals] = useState();
   const [mealSelection, setMealSelection] = useState(null);
   const { userInitData } = useContext(LogInScreenContext);
+  const carouselRef = useRef(null);
 
   const handleSelectMeal = (meal) => {
     setMealSelection(meal);
@@ -34,8 +35,8 @@ const HomeScreen = ({ navigation, authToken }) => {
     return (
       <SafeAreaView className="h-full">
         <ScrollView className="flex-1">
-          <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} />
-          <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} />
+          <MealModal mealSelection={mealSelection} handleSelectMeal={handleSelectMeal} carouselRef={carouselRef}/>
+          <MealCarousel meals={meals} handleSelectMeal={handleSelectMeal} carouselRef={carouselRef} />
           <MealList meals={meals} user={userInitData.user} handleSelectMeal={handleSelectMeal} />
         </ScrollView>
       </SafeAreaView>
