@@ -96,7 +96,7 @@ const MealList = ({meals, user, handleSelectMeal}) => { // add meals and user da
   }, [meals, sortOption, filterOption]);
 
   return (
-    <View className="flex-3 m-2 p-4 h-4/6 justify-center">
+    <View className="flex-1 mt-4 px-4">
       <View className="mb-2">
         <SortSelector
           sortOption={sortOption}
@@ -107,13 +107,13 @@ const MealList = ({meals, user, handleSelectMeal}) => { // add meals and user da
           handleUpdateFilters={handleUpdateFilters}
         />
       </View>
-      <ScrollView>
+      <View>
         {finalMeals ? finalMeals.map((meal) => {
           return (
             <MealListCard key={meal._id} meal={meal} handleSelectMeal={handleSelectMeal} />
           )
         }) : ''}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -129,7 +129,7 @@ const SortSelector = ({sortOption, handleUpdateSort}) => {
   };
 
   return (
-    <View className="flex-row my-1 shadow-sm">
+    <View className="flex-row mb-1 shadow-sm">
       <Pressable
         className={`pl-2 pr-1 py-1 border-l border-y rounded-l-full border-pakistangreen ${getStyle(sortOption === 'rating' ? 'selected' : 'notSelected')}`}
         onPress={() => { handleUpdateSort('rating') }}

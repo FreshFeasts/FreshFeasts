@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Text, View, Image, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+
 import CartIncrementer from "../../utils/components/CartIncrementer";
 
 
@@ -26,8 +27,9 @@ const CartCard = ({ meal, count }) => {
         </View>
         <View className="absolute bottom-2 right-2">
           <CartIncrementer
-            color="forestgreen"
+            color="#0E4000"
             count={count}
+            size={24}
             handleCount={handleCount}
             mealId={meal._id}
           />

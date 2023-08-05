@@ -1,14 +1,13 @@
-import {  SafeAreaView, Text, View } from "react-native";
+import {  SafeAreaView, Text, View, StatusBar } from "react-native";
 import Checkout from '../components/cart/Checkout';
 
 const CartScreen = ({navigation}) => {
 
   return (
-    <>
-    <SafeAreaView>
+    <View>
+      <StatusBar barStyle="light-content"/>
       <Checkout />
-    </SafeAreaView>
-    </>
+    </View>
   );
 };
 export default CartScreen;

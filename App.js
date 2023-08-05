@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { Text, View, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./src/screens/LoginScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import MainTabs from "./src/navigation/BottomTabNav";
 import { LogInScreenContextProvider } from "./src/contexts/LogInScreenContext.jsx";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFonts } from 'expo-font';
-// import * as firebaseConfig from './firebaseConfig';
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+// Ignore all log notifications:
+LogBox.ignoreAllLogs(); // --- Un-Comment For DEMO ---
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false); //update with Firebase auth once installed. To work on main screens, set to True. To work on login, set to false
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  // const auth = getAuth();
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //   });
-  // }, [auth]);
+  useEffect(() => {
+    const fetchLoginStatusFromStorage = async() => {
+      const status = await AsyncStorage.getItem('loggedIn');
+      console.log('status', status);
+      status ==='true' ? setLoggedIn(true): setLoggedIn(false);
+    }
+    fetchLoginStatusFromStorage();
+  },[])
 
   const [fontsLoaded] = useFonts({
     Comfortaa: require('./assets/fonts/Comfortaa-Regular.ttf'),
@@ -38,11 +41,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator headerShown="false">
           {loggedIn ? (
-            <Stack.Screen
-              name="MainTabs"
-              component={MainTabs}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="MainTabs" options={{headerShown:false}}>
+              {(props) => <MainTabs {...props} setLoggedIn={setLoggedIn} />}
+            </Stack.Screen>
+            // <Stack.Screen
+            //   name="MainTabs"
+            //   component={MainTabs}
+            //   options={{ headerShown: false }}
+            // />
           ) : (
             <>
               <Stack.Screen name="Login">
