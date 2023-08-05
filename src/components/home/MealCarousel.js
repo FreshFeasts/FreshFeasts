@@ -8,13 +8,12 @@ import MealModal from './MealModal';
 const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
 
-const MealCarousel = ({ meals, handleSelectMeal }) => {
+const MealCarousel = ({ meals, handleSelectMeal, carouselRef }) => {
   const [index, setIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
   const chefRecommendedMeals = meals.filter((item) => {
     return item.recommended === true;
   })
-  const carouselRef = useRef(null);
 
   const renderItem = ({ item }) => {
     return (
@@ -35,7 +34,7 @@ const MealCarousel = ({ meals, handleSelectMeal }) => {
 
 
   return (
-    <View className="flex-1 justify-center">
+    <View className="flex-1 justify-center items-center">
       <View className='h-44'>
         <Carousel
           ref={(c) => (carouselRef.current = c)}
