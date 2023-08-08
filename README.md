@@ -66,7 +66,7 @@ The Checkout Cart feature ensures users can see the current cart of picked meals
 ## Software Developers
  * [@Caroline Robbins](https://github.com/carolinerobbins)
  * [@Yichen Lin](https://github.com/echenlin)
- * [@Andy Moc](https://github.com/andymoch)
+ * [@Andy Moc](https://github.com/ndmoc)
  * [@Patrick Daly](https://github.com/pdaly91)
  * [@Girijesh Thodupunuri](https://github.com/girithodu)
  * [@Jack Pape](https://github.com/RaccoonGem)
